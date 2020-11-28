@@ -82,6 +82,20 @@ flavors to fill the variables `flavor_k8s_master` and `flavor_k8s_node`:
 openstack flavor list
 ```
 
+The list of images for the variable `image` can be obtained with:
+
+```bash
+openstack image list
+```
+
+The terraform template will deploy one kubernetes master, and a number of
+kubernetes nodes specified in variables `nnodes` and `ns`, these 2 variables should
+match.
+
+The terraform `resource "local_file" "AnsibleInventory"` is used to produce automatically
+an ansible inventory file for the kubernetes host, filling the yet unknown private
+IPs of the k8s nodes, and the public IP of the k8s master.
+
 Initialize the provider:
 
 ```bash
