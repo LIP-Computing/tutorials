@@ -15,7 +15,7 @@ variable "pub_net" {
 
 variable "priv_net" {
   type    = string
-  default = "incd"
+  default = "incd_net"
 }
 
 variable "flavor_k8s_master" {

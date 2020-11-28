@@ -93,7 +93,7 @@ kubernetes nodes specified in variables `nnodes` and `ns`, these 2 variables sho
 match.
 
 The terraform `resource "local_file" "AnsibleInventory"` is used to produce automatically
-an ansible inventory file for the kubernetes host, filling the yet unknown private
+an ansible inventory file for the kubernetes cluster, filling the yet unknown private
 IPs of the k8s nodes, and the public IP of the k8s master.
 
 Initialize the provider:
@@ -101,6 +101,15 @@ Initialize the provider:
 ```bash
 terraform init
 ```
+
+If this `Error: Failed to install providers` appear, follow the suggestion, and execute
+init again:
+
+```bash
+terraform 0.13upgrade .
+terraform init
+```
+
 
 Plan the deployment, thiis step is optional and can be used to verify the deployment:
 
