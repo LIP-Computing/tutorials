@@ -137,4 +137,68 @@ in the next step by ansible.
 
 ### install, configure and start with Ansible
 
-Change to the `ansible` directory. 
+Change to the `ansible` directory. This directory has an inventory file called
+`hosts-k8s` created in the last step of the previous section on running terraform.
+It also contains a `ansible.cfg` configuration file. It has 2 ansible playbooks:
+
+* `centos-python-min.yml`: installs a minimal python3 necessary to run
+ansible in the hosts
+* `k8s.yml`: the playbook that will install and configure the kunernetes cluster.
+
+This latest playbook makes use of 2 roles, that yu should install in the `roles`
+directory:
+
+```bash
+mkdir -p roles
+ansible-galaxy install geerlingguy.docker
+ansible-galaxy install geerlingguy.kubernetes
+```
+
+[Ansible Galaxy](https://galaxy.ansible.com/) is a public repository for ansible roles.
+We are using two of those roles. More information can be found
+[here](https://github.com/geerlingguy/ansible-role-kubernetes).
+
+The following step is to execute the ansible playbooks:
+
+```bash
+ansible-playbook -i hosts-k8s centos-python-min.yml
+ansible-playbook -i hosts-k8s k8s.yml
+```
+
+The variables pertaining the roles can be found in the `group_vars/` directory,
+where the name of the variables files are the same as the host group name found in
+the inventory file, that is *k8s_master* and *k8s_node*:
+
+```bash
+cat hosts-k8s 
+[k8s_master]
+<PublicIP> ansible_user=centos
+
+[k8s_node]
+<PrivateIP_0> ansible_user=centos
+<PrivateIP_1> ansible_user=centos
+
+[k8s_node:vars]
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@<PublicIP>"'
+
+[all:vars]
+ansible_python_interpreter=/bin/python3
+```
+
+### Kubernetes cluster up and running
+
+Enter into the k8s-master and execute:
+
+```bash
+ssh centos@<PublicIP>
+sudo -s
+kubectl get nodes
+
+NAME                   STATUS   ROLES    AGE   VERSION
+k8s-master.novalocal   Ready    master   19m   v1.19.0
+k8s-node-0.novalocal   Ready    <none>   18m   v1.19.0
+k8s-node-1.novalocal   Ready    <none>   18m   v1.19.0
+
+kubectl cluster-info
+kubectl get namespaces
+```
