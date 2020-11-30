@@ -63,6 +63,14 @@ export OS_INTERFACE=public
 export OS_IDENTITY_API_VERSION=3
 ```
 
+## Deployment of a Kubernetes cluster
+
+Terraform templates will be used to instantiate 3 VMs in an Openstack cloud
+infrastructure and after, Ansible playbooks will be used to install, configure
+and start the cluster. The cluster has one master (k8s-master) and 2 nodes (k8s-node).
+
+### VMs instantiated with terraform
+
 Go to the `tf-k8s` directory:
 
 ```bash
@@ -123,3 +131,10 @@ Create the deployment:
 terraform apply
 ```
 
+In the last step of the terraform template, is the creation of an Ansible
+inventory file containing the IPs of the k8s master and nodes ready to be used
+in the next step by ansible.
+
+### install, configure and start with Ansible
+
+Change to the `ansible` directory. 
