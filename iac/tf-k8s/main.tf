@@ -47,5 +47,5 @@ resource "local_file" "AnsibleInventory" {
       priv_ip = openstack_compute_instance_v2.k8s_node[*].network[0].fixed_ip_v4
     }
   )
-  filename = "../hosts-k8s"
+  filename = "../ansible/hosts-k8s"
 }

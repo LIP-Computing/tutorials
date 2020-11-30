@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: true
+  vars:
+    kubernetes_allow_pods_on_master: true
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.kubernetes
+
+  pre_tasks:
+    - name: Run initial tasks
+      hosts: all
+      become: true
+      gather_facts: false
+      tasks:
+      - name: Install minimal python
+        raw: test -e /bin/python3 || (yum -y update && yum install -y python3)
+        changed_when: False
+      - setup:
+
+    - name: Update packages
+      hosts: all
+      become: true
+      tasks:
+      - name: update operating system
+        dnf:
+          name: '*'
+          state: latest
+
+      - name: autoremove
+        dnf:
+          autoremove: yes
+
+  post_tasks:
+    - name: Reboot
+      hosts: all
+      become: true
+      tasks:
+      - name: Reboot all nodes
+        reboot:
+          reboot_timeout: 120
