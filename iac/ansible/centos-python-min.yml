@@ -1,0 +1,10 @@
+---
+- name: Run initial tasks
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+  - name: Install minimal python
+    raw: test -e /bin/python3 || (yum -y update && yum install -y python3)
+    changed_when: False
+  - setup:
