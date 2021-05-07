@@ -6,3 +6,10 @@ Repository hosting tutorials:
 * [Openstack CLI](openstack-cli/oscli.md)
 * [Big Data](big-data/bigdata.md)
 * [HOWTO on lxd containers](lxd/lxd.md)
+* [udocker tutorial](udocker/udocker.md)
+
+## Authors
+
+* Mario David
+* Jorge Gomes
+* (Add more contributers here)
