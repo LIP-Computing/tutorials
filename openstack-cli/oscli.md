@@ -45,6 +45,7 @@ From here on you should be able to do the rest of the tutorial. Test with:
     openstack project list
 
 ---
+
 ## Create an ssh keypair
 
 The access to VM instances is done through an ssh key pair, where your public
@@ -70,6 +71,7 @@ to choose a keypair name that does not yet exist:
     openstack keypair create --public-key .ssh/id_rsa.pub ${LOGNAME}-key
 
 ---
+
 ## Instantiate a VM
 
 In order to instantiate a VM, the following information is needed:
@@ -113,6 +115,7 @@ network:
     | addresses  | tutorial_net=192.168.1.157 
 
 ---
+
 ## Associate a floating public IP with the VM
 
 In the previous section you have listed the available networks, it includes
@@ -146,6 +149,7 @@ You can now access the VM with ssh:
     ssh centos@194.210.120.240
 
 ---
+
 ## Cleanup
 
 To delete the server:
