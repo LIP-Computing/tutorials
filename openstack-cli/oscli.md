@@ -1,14 +1,30 @@
+---
+marp: true
+---
 # Openstack CLI tutorial
 
-Tutorial showing how to use the Openstack CLI
+Based on Openstack Stein
 
-## Access to machine for the tutorial
+Mario David <david@lip.pt>
+Jorge Gomes <jorge@lip.pt>
 
-The openstack clients are pre-installed in this machine, you can access with:
+---
 
-    ssh <USERNAME>@tut.ncg.ingrid.pt
+## Pre-requisites
 
-You will find the openstack credentials for your user, so you can set the
+* Install Openstack command line clients in your laptop or desktop, either
+  with pip or from packages:
+  * <https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html>
+
+* Set the Openstack environment variables, an rc shell file can be
+  obtained from the Openstack dashboard, that are your credentials
+  to access Openstack through the CLI.
+
+---
+
+## Access to Openstack through the CLI
+
+The openstack credentials for your user, so you can set the
 environment variables with:
 
     source os-tut.sh
@@ -28,6 +44,7 @@ From here on you should be able to do the rest of the tutorial. Test with:
 
     openstack project list
 
+---
 ## Create an ssh keypair
 
 The access to VM instances is done through an ssh key pair, where your public
@@ -52,6 +69,7 @@ to choose a keypair name that does not yet exist:
 
     openstack keypair create --public-key .ssh/id_rsa.pub ${LOGNAME}-key
 
+---
 ## Instantiate a VM
 
 In order to instantiate a VM, the following information is needed:
@@ -94,6 +112,7 @@ network:
 
     | addresses  | tutorial_net=192.168.1.157 
 
+---
 ## Associate a floating public IP with the VM
 
 In the previous section you have listed the available networks, it includes
@@ -126,19 +145,9 @@ You can now access the VM with ssh:
 
     ssh centos@194.210.120.240
 
+---
 ## Cleanup
 
 To delete the server:
 
     openstack server delete u60-server
-
-
-
-## Authors
-
-* Mario David
-* Jorge Gomes
-* Alvaro Lopez Garcia
-* (Add more contributers here)
-
-
