@@ -1,6 +1,6 @@
 # HOWTO lxd
 
-## Pre deplyoment steps
+## Pre deployment steps
 
 We will use a VM with Ubuntu 20.04 instantiated in an Openstack cloud. Enter in the VM and become root,
 these steps will update the operating system and boot with the latest kernel:
