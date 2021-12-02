@@ -1,5 +1,7 @@
 ---
 marp: true
+theme: default
+paginate: true
 ---
 # Openstack CLI tutorial
 
@@ -9,7 +11,6 @@ Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
 
 ---
-
 ## Pre-requisites
 
 * Install Openstack command line clients in your laptop or desktop, either
@@ -21,7 +22,6 @@ Jorge Gomes <jorge@lip.pt>
   to access Openstack through the CLI.
 
 ---
-
 ## Access to Openstack through the CLI
 
 The openstack credentials for your user, so you can set the
@@ -40,12 +40,14 @@ This will set the following environment variables:
     OS_IDENTITY_API_VERSION=3
     OS_IMAGE_API_VERSION=2
 
+---
+## Testing the access to openstack
+
 From here on you should be able to do the rest of the tutorial. Test with:
 
     openstack project list
 
 ---
-
 ## Create an ssh keypair
 
 The access to VM instances is done through an ssh key pair, where your public
@@ -60,6 +62,9 @@ directory, you should set a strong `passphrase`
 
 `.ssh/id_rsa` is your ssh private key, and `.ssh/id_rsa.pub` is your ssh public
 key.
+
+---
+## List keypairs
 
 You can list all keypairs already in openstack:
 
@@ -93,12 +98,18 @@ List all networks:
 
     openstack network list
 
+---
+## Create a virtual machine
+
 Now you can create a server, note the name of the server should not exist, the
 list of servers can be checked with:
 
     openstack server list
 
     openstack server create --flavor svc1.s --key-name ${LOGNAME}-key --network tutorial_net --image centos7-x86_64-raw ${LOGNAME}-server
+
+---
+## Check the status of VM
 
 The status of the newly created server:
 
@@ -115,10 +126,9 @@ network:
     | addresses  | tutorial_net=192.168.1.157 
 
 ---
-
 ## Associate a floating public IP with the VM
 
-In the previous section you have listed the available networks, it includes
+In the previous slide you have listed the available networks, it includes
 the public network called `public_net`, you can create a public IP with:
 
     openstack floating ip create public_net
@@ -131,6 +141,9 @@ Get the server ID with:
 
     openstack server show ${LOGNAME}-server -f value -c id
 
+---
+## Associate floating IP to VM
+
 Now you can associate the floating public IP with the server:
 
     openstack server add floating ip <SERVER_ID> 194.210.120.240
@@ -141,6 +154,9 @@ Now you can confirm that this floating public IP has been associated to your VM:
     
     | addresses  | tutorial_net=192.168.1.157, 194.210.120.240
 
+---
+## Accessing the VM
+
 Since the base image of the VM is Centos7, the default user is `centos`,
 for ubuntu base images the default user is `ubuntu`.
 
@@ -149,7 +165,6 @@ You can now access the VM with ssh:
     ssh centos@194.210.120.240
 
 ---
-
 ## Cleanup
 
 To delete the server:
