@@ -152,14 +152,12 @@ list of servers can be checked with:
 openstack server list
 ```
 
-This command will create a VM with root filesystem in the Openstack compute node:
+This command will create a VM:
 
 ```bash
 openstack server create --flavor svc1.s --key-name ${LOGNAME}-key \
     --network tutorial_net --image centos7-x86_64-raw ${LOGNAME}-server
 ```
-
-(Check later how to create a VM with a root filesystem as cinder volume)
 
 ---
 
@@ -262,6 +260,79 @@ openstack volume show ${LOGNAME}-vol
 
 ## Attach the volume to the VM
 
+You should get the server ID and the volume ID first:
+
+```bash
+openstack server show ${LOGNAME}-server
+| id | b0121b07-4795-4dd8-94aa-35ba3bbfe3bf |
+
+openstack volume show ${LOGNAME}-vol
+| id | 2cba33d3-ed61-483a-8ef8-a1024ef84b2c |
+```
+
+Now you can issue the following command to attach the volume to the VM through the device `/dev/vdb`
+
+```bash
+openstack server add volume \
+  b0121b07-4795-4dd8-94aa-35ba3bbfe3bf 2cba33d3-ed61-483a-8ef8-a1024ef84b2c
+```
+
+---
+
+## Using the new volume - I
+
+Enter the VM through ssh, and list the devices:
+
+```bash
+ssh centos@194.210.120.123
+sudo -s
+cat /proc/partitions 
+major minor  #blocks  name
+
+   8        0   41943040 sda
+   8        1   41941999 sda1
+   8       16  209715200 sdb
+```
+
+The newly attached volume is attached through the `/dev/sdb` device:
+
+---
+
+## Using the new volume - II
+
+You can now format the device and mount it in some directory (`/data`):
+
+```bash
+mkfs.xfs /dev/sdb  # Format device in XFS
+
+blkid              # Get device IDs
+/dev/sda1: UUID="60d67439-baf0-4c8b-94a3-3f10a362e8fe" TYPE="xfs" 
+/dev/sdb: UUID="1f039523-4c3c-4759-8e93-27cb96685d54" TYPE="xfs" 
+```
+
+---
+
+## Using the new volume - III
+
+Add device to fstab for on boot mount the filesystem
+
+```bash
+echo "UUID=1f039523-4c3c-4759-8e93-27cb96685d54  /data  xfs  defaults  0 0" \
+  >> /etc/fstab
+
+mkdir /data
+mount /data
+
+df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        40G  900M   40G   3% /
+...
+/dev/sdb        200G   33M  200G   1% /data
+```
+
+---
+
+## Adding/using security groups
 
 ---
 
@@ -276,5 +347,3 @@ openstack server delete ${LOGNAME}-server
 ---
 
 ## Instantiating a VM with multiple ssh keys
-
-
