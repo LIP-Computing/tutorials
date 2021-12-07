@@ -451,6 +451,22 @@ PORT   STATE SERVICE
 
 ---
 
+## Creating a snapshot of the VM
+
+You can create a snapshot of the VM, producing an image that can be used to instantiate other VMs:
+
+```bash
+openstack server image create mdavid-server
+```
+
+Check image snapshot with:
+
+```bash
+openstack image show mdavid-server
+```
+
+---
+
 ## Cleanup
 
 To delete the server:
@@ -459,6 +475,43 @@ To delete the server:
 openstack server delete ${LOGNAME}-server
 ```
 
+To delete the volume:
+
+```bash
+openstack volume delete ${LOGNAME}-vol
+```
+
+Free the floating IP (public IP):
+
+```bash
+openstack floating ip delete 194.210.120.123
+```
+
 ---
 
-## Instantiating a VM with multiple ssh keys
+## Object store - SWIFT
+
+In SWIFT object store terminology, a container is a directory and a file is an object.
+To list containers:
+
+```bash
+openstack container list
+```
+
+To create a container:
+
+```bash
+openstack container create mdavid-cont
+```
+
+To create/upload an file into a given container:
+
+```bash
+openstack object create mdavid-cont maxscale-6.1.4-1.ubuntu.bionic.aarch64.deb
+```
+
+To list object in a given container:
+
+```bash
+openstack object list mdavid-cont
+```
