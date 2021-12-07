@@ -332,7 +332,122 @@ Filesystem      Size  Used Avail Use% Mounted on
 
 ---
 
-## Adding/using security groups
+## Adding/using security groups - I
+
+Security Groups are the Openstack firewall for a given project. You can get the list of Security
+Groups with the command:
+
+```bash
+openstack security group list
+```
+
+The rules of a given security group are obtained with:
+
+```bash
+openstack security group show default
+```
+
+---
+
+## Adding/using security groups - II
+
+To create a new Security Group:
+
+```bash
+openstack security group create "http/https"
+```
+
+Now add some rules to this SG:
+
+```bash
+openstack security group rule create --remote-ip "0.0.0.0/0" \
+  --protocol tcp --ingress --dst-port 80 --description "http" \
+  --ethertype "IPv4"  "http/https"
+
+openstack security group rule create --remote-ip "0.0.0.0/0" \
+  --protocol tcp --ingress --dst-port 443 --description "https" \
+  --ethertype "IPv4"  "http/https"
+
+```
+
+---
+
+## An nginx web server
+
+Enter the VM, install and activate an `nginx` web server
+
+```bash
+ssh centos@194.210.120.123
+sudo -s
+yum -y install epel-release
+yum -y install nginx
+systemctl start nginx
+systemctl status nginx
+```
+
+---
+
+## Check the Web server
+
+In your Web browser you can try the Web server: `http://194.210.120.123/`, it will not respond.
+Also you can check if the port is open or not, in your laptop/desktop:
+
+```bash
+nmap 194.210.120.123 -p 80 -Pn
+Starting Nmap 7.80 ( https://nmap.org ) at 2021-12-07 10:52 WET
+Nmap scan report for 194.210.120.123
+Host is up.
+
+PORT   STATE    SERVICE
+80/tcp filtered http
+```
+
+The port is being filtered because the SG was not yet added to the VM
+
+---
+
+## Adding Security Groups to the VM
+
+Check the rules in SG:
+
+```bash
+openstack security group rule list "http/https"
+```
+
+Now you can add the newly created SG to the VM, issue the command:
+
+```bash
+openstack server add security group mdavid-server "http/https"
+```
+
+Check server's SG with:
+
+```bash
+openstack server show mdavid-server
+
+...
+| security_groups | name='http/https' |
+|                 | name='default'    |
+
+```
+
+---
+
+## Re-Check the Web server
+
+In your Web browser you can reload the Web server: `http://194.210.120.123/`, and it will respond
+
+Also check with nmap
+
+```bash
+nmap 194.210.120.123 -p 80 -Pn
+Starting Nmap 7.80 ( https://nmap.org ) at 2021-12-07 10:58 WET
+Nmap scan report for 194.210.120.123
+Host is up (0.0098s latency).
+
+PORT   STATE SERVICE
+80/tcp open  http
+```
 
 ---
 
