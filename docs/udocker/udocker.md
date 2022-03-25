@@ -1,8 +1,16 @@
 ---
 marp: true
-theme: default
+theme: gaia
 paginate: true
+author: Mario David
+size: 4:3
+header: "![width:50px](imgs/LIP.png) ![width:90px](imgs/BigHPC.png)"
+footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
 ---
+
+<!-- <style>
+
+</style> -->
 
 # udocker tutorial
 
@@ -13,9 +21,10 @@ paginate: true
 Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
 
+
 ---
 
-## What udocker is not
+## What udocker is not I
 
 * Not appropriate to run services:
   * In most cases you need root privileges for this.
@@ -24,6 +33,10 @@ Jorge Gomes <jorge@lip.pt>
 * Build docker images:
   * You have Docker for this.
   * Use you (Lap/Des)top with Docker, for this.
+
+---
+
+## What udocker is not II
 
 * docker-compose like functionality:
   * This is usually to compose micro-services to deploy a platform/service.
