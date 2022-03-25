@@ -8,6 +8,8 @@ paginate: true
 
 ## Tutorial 02 - Hands on, the CLI
 
+<https://github.com/indigo-dc/udocker>
+
 Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
 
@@ -38,4 +40,45 @@ Jorge Gomes <jorge@lip.pt>
 
 ---
 
+## Installation - tarball
 
+* The end user can download and execute udocker without system administrator intervention.
+* Install from a released version:
+  * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
+
+```bash
+wget https://github.com/indigo-dc/udocker/releases/download/v1.3.1/udocker-1.3.1.tar.gz
+tar zxvf udocker-1.3.1.tar.gz
+export PATH=`pwd`/udocker:$PATH
+```
+
+---
+
+## Installation - PyPI
+
+* Install from PyPI using pip:
+  * For installation with pip it is advisable to setup a Python3 virtual environment
+
+```bash
+python3 -m venv udockervenv
+source udockervenv/bin/activate
+pip install udocker
+```
+
+The udocker command will be `udockervenv/bin/udocker`.
+
+(More details: <https://indigo-dc.github.io/udocker/installation_manual.html>)
+
+---
+
+## Installation - tools and libraries
+
+* udocker executes containers using external tools and libraries that are enhanced and packaged for
+  use with udocker.
+
+* To complete the installation invoke `udocker install` to download and install the required tools
+  and libraries.
+
+```bash
+udocker install
+```
