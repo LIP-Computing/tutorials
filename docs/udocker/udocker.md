@@ -3,7 +3,7 @@ marp: true
 theme: gaia
 paginate: true
 author: Mario David
-size: 4:3
+size: 16:9
 header: "![width:50px](imgs/LIP.png) ![width:90px](imgs/BigHPC.png)"
 footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
 ---
@@ -24,7 +24,7 @@ Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## What udocker is not I
+## What udocker is not - I
 
 * Not appropriate to run services:
   * In most cases you need root privileges for this.
@@ -36,7 +36,7 @@ Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## What udocker is not II
+## What udocker is not - II
 
 * docker-compose like functionality:
   * This is usually to compose micro-services to deploy a platform/service.
@@ -53,7 +53,7 @@ Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## Installation - tarball
+## Installation: tarball
 
 * The end user can download and execute udocker without system administrator intervention.
 * Install from a released version:
@@ -67,7 +67,7 @@ export PATH=`pwd`/udocker:$PATH
 
 ---
 
-## Installation - PyPI
+## Installation: PyPI - I
 
 * Install from PyPI using pip:
   * For installation with pip it is advisable to setup a Python3 virtual environment
@@ -78,20 +78,40 @@ source udockervenv/bin/activate
 pip install udocker
 ```
 
+---
+
+## Installation: PyPI - II
+
+
 The udocker command will be `udockervenv/bin/udocker`.
 
 (More details: <https://indigo-dc.github.io/udocker/installation_manual.html>)
 
 ---
 
-## Installation - tools and libraries
+## Installation: tools and libraries - I
 
-* udocker executes containers using external tools and libraries that are enhanced and packaged for
-  use with udocker.
+* udocker executes containers using external tools and libraries that are enhanced
+  and packaged for use with udocker.
 
-* To complete the installation invoke `udocker install` to download and install the required tools
-  and libraries.
+* To complete the installation, download and install the required tools and libraries.
 
 ```bash
 udocker install
 ```
+
+* Installs in `$HOME/.udocker`
+
+---
+
+## Installation: tools and libraries - II
+
+* Optionally if you want to install the tools, libraries and later the images and c
+  containers:
+
+```bash
+export UDOCKER_DIR=/my/other/nice/udocker/dir/.udocker
+udocker install
+```
+
+* Explore the directory structure under `/my/other/nice/udocker/dir/.udocker`
