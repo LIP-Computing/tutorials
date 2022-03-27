@@ -5,4 +5,6 @@
 * [Infrastructure as Code (IaC)](iac/iac.md)
 * [LXD containers](lxd/lxd.md)
 * udocker:
-  * [Hands on part I](udocker/udocker-02.md)
+  * [Introduction to udocker](udocker/udocker-01.md)
+  * [Hands on part I: basic CLI usage](udocker/udocker-02.md)
+  * [Hands on part II: udocker and SLURM](udocker/udocker-03.md)

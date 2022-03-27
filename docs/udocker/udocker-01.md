@@ -371,3 +371,89 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 
 * udocker can produce an OCI spec and run the containers with runC transparently.
 
+---
+
+# udocker: Running applications ...
+
+---
+
+## udocker & Lattice QCD
+
+OpenQCD is a very advanced code to run lattice simulations
+
+Scaling performance as a function of the cores for the computation of application
+of the Dirac operator to a spinor field.
+
+udocker & Lattice QCD
+
+OpenQCD is a very advanced code to run lattice simulations
+
+Scaling performance as a function of the cores for the computation of application of the Dirac operator to a spinor field.
+
+Using OpenMPI
+
+udocker in P1 mode
+
+![width:600px](imgs/scaling.png)
+
+---
+
+## udocker & udocker & Molecular dynamics
+
+Gromacs is widely used both in biochemical and non-biochemical systems. 
+
+udocker P mode have lower performance, udocker F mode same as Docker.
+
+Using CUDA and OpenMP
+
+![width:600px](imgs/ratio-gromacs.png)
+
+---
+
+## udocker & Phenomenology
+
+MasterCode connects several complex codes. Hard to deploy. 
+
+Scanning through large parameter spaces. High Throughput Computing.
+
+C++, Fortran, many authors, legacy code.
+
+Performance Degradation (*udocker in P1 mode*)
+  
+| Environment | Compiling | Running |
+| :---------: | :-------: | :-----: |
+| HOST        |  0% |   0% |
+| DOCKER      | 10% | 1.0% |
+| udocker     |  7% | 1.3% |
+| VirtualBox  | 15% | 1.6% |
+| KVM         |  5% | 2.6% |
+
+---
+
+# udocker: Next ...
+
+---
+
+## udocker: What’s next
+
+* Increase automation for MPI/infiniband applications:
+  * OpenMPI and MPICH.
+
+* Better translation of “volume” directories.
+
+* Command line interface enhancements.
+
+* Improve root emulation.
+
+---
+
+## Other container technologies
+
+* Singularity (LBL) - udocker currently supports it as execution mode
+
+* Charliecloud (LANL) - devels contacted Jorge: can udocker have a mode for it?
+  "Merge" the udocker, CLI functionality with underlying charlicloud engine?
+
+* Shifter (NERSC) - at the moment no plans on any type of usage/integration in udocker. 
+
+* Podman (RedHat)
