@@ -4,4 +4,5 @@
 * [BIG Data](big-data/bigdata.md)
 * [Infrastructure as Code (IaC)](iac/iac.md)
 * [LXD containers](lxd/lxd.md)
-* [udocker](udocker/udocker.md)
+* udocker:
+  * [Hands on part I](udocker/udocker-02.md)
