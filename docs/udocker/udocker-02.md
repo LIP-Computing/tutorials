@@ -12,6 +12,8 @@ footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
 
 </style> -->
 
+<!-- _class: lead -->
+
 # udocker tutorial
 
 ## Tutorial 02 - Hands on, the CLI
@@ -53,6 +55,14 @@ Jorge Gomes <jorge@lip.pt>
 
 ---
 
+<!-- _class: lead -->
+
+# udocker: Installation
+
+<https://indigo-dc.github.io/udocker/installation_manual.html>
+
+---
+
 ## Installation: tarball
 
 * The end user can download and execute udocker without system administrator intervention.
@@ -82,7 +92,6 @@ pip install udocker
 
 ## Installation: PyPI - II
 
-
 The udocker command will be `udockervenv/bin/udocker`.
 
 (More details: <https://indigo-dc.github.io/udocker/installation_manual.html>)
@@ -100,7 +109,7 @@ The udocker command will be `udockervenv/bin/udocker`.
 udocker install
 ```
 
-* Installs in `$HOME/.udocker`
+* Installs by default in `$HOME/.udocker`
 
 ---
 
@@ -115,3 +124,28 @@ udocker install
 ```
 
 * Explore the directory structure under `/my/other/nice/udocker/dir/.udocker`
+
+---
+
+<!-- _class: lead -->
+
+# udocker: CLI
+
+<https://indigo-dc.github.io/udocker/user_manual.html>
+
+---
+
+## help and version
+
+Global help and version
+
+```bash
+udocker --help
+udocker --version
+```
+
+You can get help on a given command
+
+```bash
+udocker run --help
+```
