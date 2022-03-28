@@ -45,6 +45,8 @@ Running applications across infrastructures may require considerable effort
 
 **Need a consistent portable way of running applications**
 
+![width:450px](imgs/linux-penguins.png)
+
 ---
 
 ## Scientific computing and containers
@@ -65,9 +67,11 @@ Running applications across infrastructures may require considerable effort
 
 * Applications
   * Multiple applications often combined
- * Portability, Maintainability, Reproducibility
+  * Portability, Maintainability, Reproducibility
 
 **Need a consistent portable way of running applications**
+
+![width:450px](imgs/linux-penguins.png)
 
 ---
 
@@ -207,7 +211,7 @@ Execution: chroot-like.
 
 udocker supports several techniques to achieve the equivalent to a chroot without using privileges:
 
-  * They are selected per container id via execution modes
+* They are selected per container id via execution modes
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
