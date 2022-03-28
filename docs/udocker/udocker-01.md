@@ -4,13 +4,16 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:50px](imgs/LIP.png) ![width:90px](imgs/BigHPC.png)![width:60px](imgs/logo-udocker.png)"
-footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
+header: "![w:50px](imgs/LIP.png) ![w:90px](imgs/BigHPC.png) ![right w:60px](imgs/logo-udocker.png)"
+
+footer: "![w:450px](imgs/funding.png) ![w:100px](imgs/by.png)"
 ---
 
 <!-- <style>
 
 </style> -->
+
+<!-- _class: lead -->
 
 # udocker
 
@@ -45,33 +48,7 @@ Running applications across infrastructures may require considerable effort
 
 **Need a consistent portable way of running applications**
 
-![width:450px](imgs/linux-penguins.png)
-
----
-
-## Scientific computing and containers
-
-Running applications across infrastructures may require considerable effort
-
-* Computers
-  * Several computing systems
-  * Laptops, Desktops, Farms, Cloud, HPC
-
-* OSes
-  * Several operating systems
-  * Linux flavors, Distribution versions
-
-* Environments
-  * Specific computing environments
-  * Compilers, Libraries, Customizations
-
-* Applications
-  * Multiple applications often combined
-  * Portability, Maintainability, Reproducibility
-
-**Need a consistent portable way of running applications**
-
-![width:450px](imgs/linux-penguins.png)
+![bg right:40% w:400px](imgs/linux-penguins.png)
 
 ---
 
@@ -149,6 +126,8 @@ mkrepo
 
 ---
 
+<!-- _class: lead -->
+
 # udocker: How does it work ...
 
 ---
@@ -180,7 +159,7 @@ mkrepo
 * Layers are stored in the use home directory under `${UDOCKER_DIR}/.udocker/layers` 
   so that can be share by multiple images.
 
-![width:600px](imgs/udocker-pull.png)
+![bg right:40% w:500px](imgs/udocker-pull.png)
 
 ---
 
@@ -195,7 +174,7 @@ mkrepo
 * The obtained directory trees are stored under `${UDOCKER_DIR}/.udocker/containers`
   in the user home directory.
 
-![width:600px](imgs/udocker-create.png)
+![w:600px](imgs/udocker-create.png)
 
 ---
 
@@ -203,7 +182,7 @@ mkrepo
 
 Execution: chroot-like.
 
-![width:1000px](imgs/udocker-container.png)
+![w:1000px](imgs/udocker-container.png)
 
 ---
 
@@ -383,6 +362,8 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 
 ---
 
+<!-- _class: lead -->
+
 # udocker: Running applications ...
 
 ---
@@ -439,6 +420,8 @@ Performance Degradation (*udocker in P1 mode*)
 | KVM         |  5% | 2.6% |
 
 ---
+
+<!-- _class: lead -->
 
 # udocker: Next ...
 
