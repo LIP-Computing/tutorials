@@ -41,7 +41,7 @@ Running applications across infrastructures may require considerable effort
 
 * Applications
   * Multiple applications often combined
- * Portability, Maintainability, Reproducibility
+  * Portability, Maintainability, Reproducibility
 
 **Need a consistent portable way of running applications**
 
@@ -176,6 +176,8 @@ mkrepo
 * Layers are stored in the use home directory under `${UDOCKER_DIR}/.udocker/layers` 
   so that can be share by multiple images.
 
+![width:600px](imgs/udocker-pull.png)
+
 ---
 
 ## udocker: Create containers
@@ -189,11 +191,15 @@ mkrepo
 * The obtained directory trees are stored under `${UDOCKER_DIR}/.udocker/containers`
   in the user home directory.
 
+![width:600px](imgs/udocker-create.png)
+
 ---
 
 ## udocker: Run container
 
 Execution: chroot-like.
+
+![width:1000px](imgs/udocker-container.png)
 
 ---
 
