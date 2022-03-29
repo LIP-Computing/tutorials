@@ -6,5 +6,6 @@
 * [LXD containers](lxd/lxd.md)
 * udocker:
   * [Introduction to udocker](udocker/udocker-01.md)
-  * [Hands on part I: basic CLI usage](udocker/udocker-02.md)
-  * [Hands on part II: udocker and SLURM](udocker/udocker-03.md)
+  * [Hands on part I: Introduction, installation, CLI basic stuff](udocker/udocker-02.md)
+  * [Hands on part II: CLI intermediate stuff](udocker/udocker-03.md)
+  * [Hands on part II: udocker submission to SLURM clusters](udocker/udocker-04.md)

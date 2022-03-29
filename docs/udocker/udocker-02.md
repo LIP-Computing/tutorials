@@ -80,7 +80,8 @@ export PATH=`pwd`/udocker:$PATH
 ## Installation: PyPI - I
 
 * Install from PyPI using pip:
-  * For installation with pip it is advisable to setup a Python3 virtual environment
+  * For installation with pip it is advisable to setup a Python3 virtual
+    environment
 
 ```bash
 python3 -m venv udockervenv
@@ -94,14 +95,21 @@ pip install udocker
 
 The udocker command will be `udockervenv/bin/udocker`.
 
+* Optionally, we can set `UDOCKER_DIR` environment variable where the binaries, libraries images and containers will be saved. The default directory is `$HOME/.udocker`.
+
+```bash
+mkdir udocker-tutorial
+cd udocker-tutorial/
+export UDOCKER_DIR=$HOME/udocker-tutorial/.udocker
+```
+
 (More details: <https://indigo-dc.github.io/udocker/installation_manual.html>)
 
 ---
 
 ## Installation: tools and libraries - I
 
-* udocker executes containers using external tools and libraries that are enhanced
-  and packaged for use with udocker.
+* udocker executes containers using external tools and libraries that are enhanced and packaged for use with udocker.
 
 * To complete the installation, download and install the required tools and libraries.
 
@@ -109,33 +117,26 @@ The udocker command will be `udockervenv/bin/udocker`.
 udocker install
 ```
 
-* Installs by default in `$HOME/.udocker`
-
 ---
 
 ## Installation: tools and libraries - II
 
-* Optionally if you want to install the tools, libraries and later the images and c
-  containers:
+* Installs by default in `$HOME/.udocker`, or
+  in `UDOCKER_DIR=$HOME/udocker-tutorial/.udocker`.
 
-```bash
-export UDOCKER_DIR=/my/other/nice/udocker/dir/.udocker
-udocker install
-```
-
-* Explore the directory structure under `/my/other/nice/udocker/dir/.udocker`
+* Explore the directory structure under `$HOME/udocker-tutorial/.udocker`
 
 ---
 
 <!-- _class: lead -->
 
-# udocker: CLI
+# udocker: CLI - the basic (introductory) stuff
 
 <https://indigo-dc.github.io/udocker/user_manual.html>
 
 ---
 
-## help and version
+## 0. help and version
 
 Global help and version
 
@@ -149,3 +150,67 @@ You can get help on a given command
 ```bash
 udocker run --help
 ```
+
+---
+
+## 1. pull
+
+Pull an image from Dockerhub (for example, an officially supported tensorflow):
+
+```bash
+udocker pull tensorflow/tensorflow
+```
+
+---
+
+## 2. images
+
+List the images in your local repository (`-l` option shows long format):
+
+```bash
+udocker images
+udocker images -l
+```
+
+---
+
+## 3. create
+
+To create a container named `mytensor`, the default execution engine is P1 (PTRACE + SECCOMP filtering):
+
+```bash
+udocker create --name=mytensor tensorflow/tensorflow
+```
+
+---
+
+## 4. ps
+
+List extracted containers. These are not processes but containers extracted and available for
+execution:
+
+```bash
+udocker ps
+```
+
+---
+
+## 5. run
+
+Executes a container. Several execution engines are provided. The container can be specified using the container id or its associated name. Additionally it is possible to invoke run with an image name:
+
+```bash
+udocker run mytensor bash
+```
+
+---
+
+## 6. setup
+
+---
+
+## 7. rm
+
+---
+
+## 8. rmi
