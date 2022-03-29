@@ -8,9 +8,22 @@ header: "![width:100px](imgs/lip-udocker-logos.png)"
 footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
-<!-- <style>
-
-</style> -->
+<style>
+    section{
+        background: #29303B;
+        color: white;
+    }
+    a:link {
+        color: #CCE5FF;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+    a:visited {
+        color: #CCE5FF;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
 
 <!-- _class: lead -->
 
