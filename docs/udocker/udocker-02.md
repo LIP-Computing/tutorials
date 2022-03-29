@@ -4,7 +4,7 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:50px](imgs/LIP.png) ![width:90px](imgs/BigHPC.png)"
+header: "![width:50px](imgs/LIP.png) ![width:60px](imgs/logo-udocker.png)"
 footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
 ---
 
@@ -210,16 +210,28 @@ Now you are inside the container (apparently as `root`), you might as well try o
 
 ```bash
 root@pcdavid:~# python
-
 Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
 [GCC 9.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import tensorflow as tf
 ```
 
+Or:
+
+```bash
+udocker run mytensor cat /etc/lsb-release 
+```
+
 ---
 
 ## 6. setup
+
+With `--execmode` chooses an execution mode to define how a given container will be executed. The option `--nvidia` enables access to NVIDIA GPUs (only possible if they are available).
+
+```bash
+udocker setup --execmode=F1 mytensor
+udocker ps -m  # confirm change of execution engine
+```
 
 ---
 
