@@ -4,8 +4,8 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:50px](imgs/LIP.png) ![width:60px](imgs/logo-udocker.png)"
-footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
+header: "![width:100px](imgs/lip-udocker-logos.png)"
+footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <!-- <style>

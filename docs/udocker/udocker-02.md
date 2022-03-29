@@ -4,8 +4,8 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:50px](imgs/LIP.png) ![width:60px](imgs/logo-udocker.png)"
-footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
+header: "![width:100px](imgs/lip-udocker-logos.png)"
+footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <!-- <style>
@@ -237,6 +237,24 @@ udocker ps -m  # confirm change of execution engine
 
 ## 7. rm
 
+Delete a previously created container. Removes the entire directory tree extracted from the container image and associated metadata:
+
+```bash
+udocker rm mytensor
+```
+
 ---
 
 ## 8. rmi
+
+Delete a local container image previously pulled/loaded/imported:
+
+```bash
+udocker rmi tensorflow/tensorflow
+```
+
+---
+
+<!-- _class: lead -->
+
+# End of Hands on part I
