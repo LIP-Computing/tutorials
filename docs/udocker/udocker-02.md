@@ -23,7 +23,6 @@ footer: "![width:450px](imgs/funding.png)   ![width:100px](imgs/by.png)"
 Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
 
-
 ---
 
 ## What udocker is not - I
@@ -195,12 +194,27 @@ udocker ps
 
 ---
 
-## 5. run
+## 5. run: I
 
 Executes a container. Several execution engines are provided. The container can be specified using the container id or its associated name. Additionally it is possible to invoke run with an image name:
 
 ```bash
 udocker run mytensor bash
+```
+
+---
+
+## 5. run: II
+
+Now you are inside the container (apparently as `root`), you might as well try out:
+
+```bash
+root@pcdavid:~# python
+
+Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import tensorflow as tf
 ```
 
 ---
