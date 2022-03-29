@@ -23,6 +23,12 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
         background-color: transparent;
         text-decoration: underline;
     }
+    ul {
+        font-size: 28px;
+    }
+    p {
+        font-size: 28px;
+    }
 </style>
 
 <!-- _class: lead -->
