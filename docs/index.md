@@ -9,3 +9,4 @@
   * [Hands on part I: Introduction, installation, CLI basic stuff](udocker/udocker-02.md)
   * [Hands on part II: CLI intermediate stuff](udocker/udocker-03.md)
   * [Hands on part III: udocker submission to SLURM clusters](udocker/udocker-04.md)
+  * [udocker: technical details](udocker/udocker-05.md)
