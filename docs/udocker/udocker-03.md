@@ -29,7 +29,7 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 # udocker tutorial
 
-### Tutorial 03 - Hands On part II: intermediate stuff
+## Tutorial 03 - Hands On part II: intermediate stuff
 
 <https://github.com/indigo-dc/udocker>
 
@@ -43,6 +43,10 @@ Jorge Gomes <jorge@lip.pt>
 # Importing and exporting, loading and saving: images and containers
 
 ---
+
+## I have a dockerfile!
+
+* But udocker does not support `build` the dockerfile
 
 ---
 

@@ -35,7 +35,7 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 # udocker tutorial
 
-### Tutorial 02 - Hands On part I: basic stuff
+## Tutorial 02 - Hands On part I: basic stuff
 
 <https://github.com/indigo-dc/udocker>
 
