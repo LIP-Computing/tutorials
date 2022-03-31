@@ -294,20 +294,60 @@ Run time to execute docker containers:
 
 ---
 
-## udocker: Execution engines
+## udocker: Execution engines I
 
 udocker supports several techniques to achieve the equivalent to a chroot without using privileges, they are selected per container id via execution modes
+
+---
+
+## udocker: Execution engines II
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
 | P1    | PRoot       | PTRACE accelerated (with SECCOMP filtering): *DEFAULT* |
 | P2    | PRoot       | PTRACE non-accelerated (without SECCOMP filtering) |
 | R1    | runC        | rootless unprivileged using user namespaces |
+| R2    | runC        | rootless unprivileged using user namespaces + P1 |
+| R3    | runC        | rootless unprivileged using user namespaces + P2 |
 | F1    | Fakechroot  | with loader as argument and LD_LIBRARY_PATH |
 | F2    | Fakechroot  | with modified loader, loader as argument and LD_LIBRARY_PATH |
 | F3    | Fakechroot  | modified loader and ELF headers of binaries + libs changed |
 | F4    | Fakechroot  | modified loader and ELF headers dynamically changed |
 | S1    | Singularity | where locally installed using chroot or user namespaces |
+
+---
+
+## Selection in terms of performance
+
+| Mode  | Base        | Description |
+| :---: | :---------: | :---------: |
+| P1    | PRoot       | Multithreaded applications can suffer degradation |
+| P2    | PRoot       | Same limitations as P1 apply. All system calls are traced causing higher overheads than P1 |
+| R1    | runC        | Same performance as namespace based applications |
+| R2    | runC        | Only for software installation and similar. Same performance as P1 |
+| R3    | runC        | Only for software installation and similar. Same performance as P2 |
+| F1    | Fakechroot  | All Fn modes have similar performance during execution. Frequently the Fn modes are the fastest |
+| F2    | Fakechroot  | Same as F1 |
+| F3    | Fakechroot  | Same as F1. Setup can be very slow |
+| F4    | Fakechroot  | Same as F1. Setup can be very slow |
+| S1    | Singularity | Similar to Rn |
+
+---
+
+## Selection in terms of interoperability
+
+| Mode  | Base        | Description |
+| :---: | :---------: | :---------: |
+| P1    | PRoot       | PTRACE + SECCOMP requires kernel >= 3.5. Can fall back to P2 if SECCOMP is unavailable |
+| P2    | PRoot       | Runs across a wide range of kernels even old ones. Can run with kernels and libraries that would fail with kernel too old |
+| R1    | runC        | User namespace limitations apply |
+| R2    | runC        | User namespace limitations apply. Same limitations as P1 also apply, this is a nested mode P1 over R |
+| R3    | runC        | User namespace limitations apply. Same limitations as P2 also apply, this is a nested mode P2 over R |
+| F1    | Fakechroot  | May load host libraries. Requires shared library compiled against same libc as in container |
+| F2    | Fakechroot  | Same as F1 |
+| F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
+| F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically |
+| S1    | Singularity | Must be available on the system might use user namespaces or chroot |
 
 ---
 
@@ -384,13 +424,58 @@ Performance Degradation (*udocker in P1 mode*)
 
 ---
 
+<!-- _class: lead -->
+
+# Thank you!
+
+## Questions ?
+
+<udocker@lip.pt>
+
+---
+
+<!-- _class: lead -->
+
+# Backup slides
+
+---
+
 ## Other container technologies
 
 * Singularity (LBL) - udocker currently supports it as execution mode
 
 * Charliecloud (LANL) - devels contacted Jorge: can udocker have a mode for it?
-  "Merge" the udocker, CLI functionality with underlying charlicloud engine?
+  "Merge" the udocker, CLI functionality with underlying Charliecloud engine?
 
 * Shifter (NERSC) - at the moment no plans on any type of usage/integration in udocker.
 
 * Podman (RedHat)
+
+---
+
+## Why using containers for applications I
+
+Encapsulation:
+
+* Applications, dependencies, configurations everything packed together.
+* Portability across heterogeneous Linux systems.
+* Makes easier the distribution and sharing of ready to use software.
+
+Reproducibility:
+
+* The whole application and run-time environment is in the container.
+* Can be easily stored for later replay, reuse and preservation.
+
+---
+
+## Why using containers for applications II
+
+Efficiency:
+
+* One single kernel shared by many applications.
+* Performance and resource consumption similar to host execution.
+* Take advantage of newer more optimized libraries and compilers.
+
+Maintainability:
+
+* Easier application maintenance, distribution and deployment.
