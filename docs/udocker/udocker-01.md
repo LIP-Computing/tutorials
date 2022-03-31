@@ -4,7 +4,7 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:100px](imgs/lip-udocker-logos.png)"
+header: "![width:130px](imgs/lip-udocker-logos.png)"
 footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
@@ -32,6 +32,7 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
     table {
         font-size: 22px;
     }
+
 </style>
 
 <!-- _class: lead -->
@@ -74,6 +75,37 @@ Running applications across infrastructures may require considerable effort
   * Portability, Maintainability, Reproducibility
 
 ![bg right:40% w:500px](imgs/linux-penguins.png)
+
+---
+
+## Why using containers for applications I
+
+Encapsulation:
+
+* Applications, dependencies, configurations everything packed together.
+* Portability across heterogeneous Linux systems.
+* Makes easier the distribution and sharing of ready to use software.
+
+Efficiency:
+
+* One single kernel shared by many applications.
+* Performance and resource consumption similar to host execution.
+* Take advantage of newer more optimized libraries and compilers.
+
+---
+
+## Why using containers for applications II
+
+Reproducibility:
+
+* The whole application and run-time environment is in the container.
+* Can be easily stored for later replay, reuse and preservation.
+
+Maintainability:
+
+* Easier application maintenance, distribution and deployment.
+
+![bg right:40% w:500px](imgs/containers-arch.png)
 
 ---
 
@@ -334,7 +366,7 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 
 ---
 
-## Selection in terms of interoperability
+## Selection in terms of interoperability I
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
@@ -343,6 +375,14 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 | R1    | runC        | User namespace limitations apply |
 | R2    | runC        | User namespace limitations apply. Same limitations as P1 also apply, this is a nested mode P1 over R |
 | R3    | runC        | User namespace limitations apply. Same limitations as P2 also apply, this is a nested mode P2 over R |
+
+
+---
+
+## Selection in terms of interoperability II
+
+| Mode  | Base        | Description |
+| :---: | :---------: | :---------: |
 | F1    | Fakechroot  | May load host libraries. Requires shared library compiled against same libc as in container |
 | F2    | Fakechroot  | Same as F1 |
 | F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
@@ -385,13 +425,9 @@ Using CUDA and OpenMP
 
 ## udocker & Phenomenology
 
-MasterCode connects several complex codes. Hard to deploy.
+MasterCode connects several complex codes. Hard to deploy. Scanning through large parameter spaces. High Throughput Computing.
 
-Scanning through large parameter spaces. High Throughput Computing.
-
-C++, Fortran, many authors, legacy code.
-
-Performance Degradation (*udocker in P1 mode*)
+C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1 mode*)
   
 | Environment | Compiling | Running |
 | :---------: | :-------: | :-----: |
@@ -418,7 +454,7 @@ Performance Degradation (*udocker in P1 mode*)
 
 * Command line interface enhancements.
 
-* Improve which binaries and libraries are installed, dependent on host OS and architecture.
+* Improve selection of binaries and libraries to be installed; dependent on host OS and architecture.
 
 * Improve root emulation.
 
@@ -450,32 +486,3 @@ Performance Degradation (*udocker in P1 mode*)
 * Shifter (NERSC) - at the moment no plans on any type of usage/integration in udocker.
 
 * Podman (RedHat)
-
----
-
-## Why using containers for applications I
-
-Encapsulation:
-
-* Applications, dependencies, configurations everything packed together.
-* Portability across heterogeneous Linux systems.
-* Makes easier the distribution and sharing of ready to use software.
-
-Reproducibility:
-
-* The whole application and run-time environment is in the container.
-* Can be easily stored for later replay, reuse and preservation.
-
----
-
-## Why using containers for applications II
-
-Efficiency:
-
-* One single kernel shared by many applications.
-* Performance and resource consumption similar to host execution.
-* Take advantage of newer more optimized libraries and compilers.
-
-Maintainability:
-
-* Easier application maintenance, distribution and deployment.

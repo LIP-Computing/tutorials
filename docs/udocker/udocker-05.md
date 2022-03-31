@@ -59,11 +59,14 @@ Jorge Gomes <jorge@lip.pt>
   * Ubuntu >= 16.04
   * Any distro that supports python 2.6, 2.7 and >= 3.6
 
-* Components:
-  * Command line interface docker like
-  * Pull of containers from Docker Hub
-  * Local repository of images and containers
-  * Execution of containers with modular engines
+---
+
+## Components
+
+* Command line interface docker like
+* Pull of containers from Docker Hub
+* Local repository of images and containers
+* Execution of containers with modular engines
 
 ---
 
@@ -117,13 +120,17 @@ They are selected per container id via execution modes.
 
 ---
 
-## udocker: runC/crun engine (R1)
+## udocker: runC/crun engine (R1) - I
 
 * runC is a tool to spawn containers according to the Open Containers Initiative (OCI) specification:
   * runC supports unprivileged namespaces using the user namespace.
   * Unprivileged namespaces have many limitations but allow execution in a container Docker like environment.
   * Only run as root is supported.
   * Available devices are limited.
+
+---
+
+## udocker: runC/crun engine (R1) - II
 
 * We added conversion of Docker metadata to OCI.
 
@@ -158,14 +165,20 @@ udocker --allow-root run  -v /tmp myContainerId
 
 * It was conceived to support debootstrap in debian
 
+---
+
+## udocker: Fakechroot engine - II
+
 * The OS in the host and in the chroot must be the same;
   * as the loader inside the chroot will by default load libraries from the host
     system directories,
   * the loaders are statically linked and the pathnames inside are absolute and non changeable.
 
+* The location of the loader itself is encoded in the executables ELF header
+
 ---
 
-## udocker: Fakechroot engine - II
+## udocker: Fakechroot engine - III
 
 * The loaders search for libraries:
   * If the pathname has a `/` they are directly loaded.
@@ -176,8 +189,6 @@ udocker --allow-root run  -v /tmp myContainerId
     3. DT RUNPATH dynamic section attribute of the ELF executable.
     4. cache file /etc/ld.so.cache.
     5. default paths such as /lib64, /usr/lib64, /lib, /usr/lib.
-
-* The location of the loader itself is encoded in the executables ELF header
 
 ---
 
@@ -253,26 +264,9 @@ udocker --allow-root run  -v /tmp myContainerId
 
 ---
 
-## udocker: Fakechroot engine (F3 and F4)
+## udocker: Fakechroot engine (F3 and F4) - III
 
 * Containers in modes F3 and F4 cannot be transparently moved across different systems:
   * The absolute pathnames to the container locations will likely differ.
   * In this case convert first to another mode before transfer.
   * Or at arrival use: `setup --execmode=Fn --force`.
-
-<!-- _class: lead -->
-
-# udocker: Next
-
----
-
-## udocker: What’s next
-
-* Increase automation for MPI/infiniband applications:
-  * OpenMPI and MPICH.
-
-* Better translation of “volume” directories.
-
-* Command line interface enhancements.
-
-* Improve root emulation.
