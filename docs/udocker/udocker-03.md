@@ -182,12 +182,32 @@ And after that install and/or compile whatever you want
 
 Now you are inside the container:
 
-```bash
+```prompt
 # dnf -y install python39 gcc-c++
 # pip-3 install numpy matplotlib scypy
+# exit
 ```
 
 You are satisfied so you exit the container, but... I want to preserve what I did.
+
+---
+
+## udocker export and import
+
+You can export a container into a tarball, for safekeeping:
+
+```bash
+$ udocker export -o mypython.tar mypython
+```
+
+Now you can import this container into an image with a given tag (empty tag defaults to `latest`):
+
+```bash
+$ udocker import mypython.tar mypython:v1.0
+$ udocker images
+REPOSITORY
+mypython:v1.0                                                .
+```
 
 ---
 
