@@ -46,7 +46,22 @@ Jorge Gomes <jorge@lip.pt>
 
 ## I have a dockerfile!
 
-* But udocker does not support `build` the dockerfile
+* *But udocker does not support `build` the dockerfile...*
+  * Use `docker` itself in you <lap|desk>top
+  * Example: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
+  * `docker build --build-arg gromacs_ver=2022 -t gromacs -f Dockerfile-cpu .`
+  * (Will take quite awhile)
+
+---
+
+## I have a docker image!
+
+```bash
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+gromacs      latest    8473080f1963   3 minutes ago   376MB
+ubuntu       20.04     ff0fea8310f3   2 weeks ago     72.8MB
+```
 
 ---
 
