@@ -27,6 +27,8 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 <!-- _class: lead -->
 
+![width:1000px](imgs/udocker-project-logos.png)
+
 # udocker tutorial
 
 ## Tutorial 03 - Hands On part II: intermediate stuff

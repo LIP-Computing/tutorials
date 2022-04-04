@@ -25,6 +25,8 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
     }
 </style>
 
+![width:1000px](imgs/udocker-project-logos.png)
+
 # udocker tutorial
 
 ### Tutorial 04 - Hands On, part III: submission to SLURM clusters

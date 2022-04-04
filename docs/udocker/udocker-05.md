@@ -36,11 +36,11 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 <!-- _class: lead -->
 
-# udocker
+![width:1000px](imgs/udocker-project-logos.png)
 
-## *be anywhere*
+# udocker - *be anywhere*
 
-### udocker technical details
+## udocker technical details
 
 <https://github.com/indigo-dc/udocker>
 
