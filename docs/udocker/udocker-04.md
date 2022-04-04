@@ -4,8 +4,6 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:100px](imgs/lip-udocker-logos.png)"
-footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <style>
@@ -23,18 +21,32 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
         background-color: transparent;
         text-decoration: underline;
     }
+    ul {
+        font-size: 28px;
+    }
+    p {
+        font-size: 28px;
+    }
+    table {
+        font-size: 22px;
+    }
+
 </style>
+
+<!-- _class: lead -->
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker tutorial
+# udocker - *be anywhere*
 
-### Tutorial 04 - Hands On, part III: submission to SLURM clusters
+## Part 4 - Hands On: submission to SLURM clusters
 
 <https://github.com/indigo-dc/udocker>
 
-Mario David <david@lip.pt>
-Jorge Gomes <jorge@lip.pt>
+Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
+
+![width:150px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
 
 ---
 

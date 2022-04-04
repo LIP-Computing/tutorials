@@ -4,8 +4,6 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:130px](imgs/lip-udocker-logos.png)"
-footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <style>
@@ -39,14 +37,16 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker
+# udocker - *be anywhere*
 
-## *be anywhere*
+## Part 1 - Introduction
 
 <https://github.com/indigo-dc/udocker>
 
-Mario David <david@lip.pt>
-Jorge Gomes <jorge@lip.pt>
+Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
+
+![width:150px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
 
 ---
 
@@ -470,7 +470,7 @@ C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1
 
 <udocker@lip.pt>
 
-![width:200px](imgs/lip-udocker-logos.png)
+![width:150px](imgs/lip-udocker-logos.png)
 ![width:1200px](imgs/funding-by-log.png)
 
 ---

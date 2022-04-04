@@ -4,8 +4,6 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:100px](imgs/lip-udocker-logos.png)"
-footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <style>
@@ -29,20 +27,26 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
     p {
         font-size: 28px;
     }
+    table {
+        font-size: 22px;
+    }
+
 </style>
 
 <!-- _class: lead -->
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker tutorial
+# udocker - *be anywhere*
 
-## Tutorial 02 - Hands On part I: basic stuff
+## Part 2 - Hands On: basic stuff
 
 <https://github.com/indigo-dc/udocker>
 
-Mario David <david@lip.pt>
-Jorge Gomes <jorge@lip.pt>
+Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
+
+![width:150px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
 
 ---
 

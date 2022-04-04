@@ -4,8 +4,6 @@ theme: gaia
 paginate: true
 author: Mario David
 size: 16:9
-header: "![width:100px](imgs/lip-udocker-logos.png)"
-footer: "![width:1200px](imgs/funding-by-log.png)"
 ---
 
 <style>
@@ -32,7 +30,9 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
     table {
         font-size: 22px;
     }
+
 </style>
+
 
 <!-- _class: lead -->
 
@@ -46,6 +46,9 @@ footer: "![width:1200px](imgs/funding-by-log.png)"
 
 Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
+
+![width:150px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
 
 ---
 
