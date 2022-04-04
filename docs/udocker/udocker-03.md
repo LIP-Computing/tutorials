@@ -59,7 +59,7 @@ Jorge Gomes <jorge@lip.pt>
 After you build the image with docker:
 
 ```bash
-$ docker images
+docker images
 REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
 gromacs      latest    8473080f1963   3 minutes ago   376MB
 ubuntu       20.04     ff0fea8310f3   2 weeks ago     72.8MB
@@ -68,7 +68,7 @@ ubuntu       20.04     ff0fea8310f3   2 weeks ago     72.8MB
 Save the image with `docker` to a tarball:
 
 ```bash
-$ docker save -o gromacs.tar gromacs
+docker save -o gromacs.tar gromacs
 ```
 
 ---
@@ -78,13 +78,13 @@ $ docker save -o gromacs.tar gromacs
 You can load a tarball with udocker that is a docker image, and that you saved previously with docker:
 
 ```bash
-$ udocker load -i gromacs.tar gromacs
+udocker load -i gromacs.tar gromacs
 ```
 
 And now you can check several things:
 
 ```bash
-$ udocker images
+udocker images
 REPOSITORY
 gromacs:latest                                               .
 
@@ -95,13 +95,13 @@ gromacs:latest                                               .
 ## Create a container and run it
 
 ```bash
-$ udocker create --name=grom gromacs
+udocker create --name=grom gromacs
 
-$ udocker ps
+udocker ps
 CONTAINER ID                         P M NAMES              IMAGE               
 e2e014d9-9770-3fb5-a4a9-098a95371adf . W ['grom']           gromacs:latest      
 
-$ udocker run grom env
+udocker run grom env
  ****************************************************************************** 
  *                                                                            * 
  *               STARTING e2e014d9-9770-3fb5-a4a9-098a95371adf                * 
@@ -117,7 +117,7 @@ LD_LIBRARY_PATH=:/usr/local/gromacs/lib
 ## Running gromacs with udocker
 
 ```bash
-$ udocker run grom gmx mdrun -h
+udocker run grom gmx mdrun -h
  ****************************************************************************** 
  executing: gmx
                        :-) GROMACS - gmx mdrun, 2022 (-:
@@ -152,12 +152,12 @@ WORKDIR /home
 Just check the `ENV` and `WORKDIR`:
 
 ```bash
-$ udocker run grom env
+udocker run grom env
 ...
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/gromacs/bin
 LD_LIBRARY_PATH=:/usr/local/gromacs/lib
 
-$ udocker run grom pwd
+udocker run grom pwd
 ...
 /home
 ```
@@ -169,9 +169,9 @@ $ udocker run grom pwd
 Pull some base image, create a container and run:
 
 ```bash
-$ udocker pull rockylinux
-$ udocker create --name=mypython rockylinux
-$ udocker run mypython bash
+udocker pull rockylinux
+udocker create --name=mypython rockylinux
+udocker run mypython bash
 ```
 
 And after that install and/or compile whatever you want
@@ -180,15 +180,15 @@ And after that install and/or compile whatever you want
 
 ## I want to install/compile in a container! - II
 
-Now you are inside the container:
+Now you are inside the container and seems you are `root`:
 
 ```prompt
-# dnf -y install python39 gcc-c++
-# pip-3 install numpy matplotlib scypy
-# exit
+dnf -y install python39 gcc-c++
+pip-3 install numpy matplotlib scypy
+exit
 ```
 
-You are satisfied so you exit the container, but... I want to preserve what I did.
+You are satisfied so you exit the container, but... I want to preserve what I installed.
 
 ---
 
@@ -197,14 +197,14 @@ You are satisfied so you exit the container, but... I want to preserve what I di
 You can export a container into a tarball, for safekeeping:
 
 ```bash
-$ udocker export -o mypython.tar mypython
+udocker export -o mypython.tar mypython
 ```
 
 Now you can import this container into an image with a given tag (empty tag defaults to `latest`):
 
 ```bash
-$ udocker import mypython.tar mypython:v1.0
-$ udocker images
+udocker import mypython.tar mypython:v1.0
+udocker images
 REPOSITORY
 mypython:v1.0                                                .
 ```
@@ -219,13 +219,13 @@ mypython:v1.0                                                .
 
 ## Mounting a directory in the container - I
 
-Assume you have a directory you want to use inside the container:
+Assume you have a directory you want to use inside the container, and grab yourself a tpr file:
 
 ```bash
-$ ls $HOME/udocker-tutorial/gromacs/
+ls $HOME/udocker-tutorial/gromacs/
 input
-$ ls $HOME/udocker-tutorial/gromacs/input/
-md.tpr
+ls $HOME/udocker-tutorial/gromacs/input/
+wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/md.tpr
 ```
 
 ---
@@ -238,8 +238,14 @@ We will bind mount the directory in the `/home/user` inside the container (if th
 udocker run -v=$HOME/udocker-tutorial/gromacs:/home/user -w=/home/user grom /bin/bash
 ```
 
+---
+
+## Mounting a directory in the container - III
+
+Now, inside the container:
+
 ```bash
-root@mylaptop:/home/user# ls -al
+ls -al
 total 12
 drwxrwxr-x 3 root root 4096 Apr  4 08:31 .
 drwxr-xr-x 3 root root 4096 Apr  4 08:42 ..
@@ -248,10 +254,34 @@ drwxrwxr-x 2 root root 4096 Apr  4 08:31 input
 
 ---
 
-## Mounting a directory in the container - III
+## Mounting a directory in the container - IV
 
-Inside the container - make a directory for your output:
+Inside the container - make a directory for your output, and run your favorite molecular dynamics simulation (if you want wait a few minutes to finish, will not take long):
 
 ```bash
-root@mylaptop:/home/user# mkdir output
+mkdir output
+cd output
+gmx mdrun -s /home/user/input/md.tpr -deffnm ud-tutorial \
+    -maxh 0.50 -resethway -noconfout -nsteps 10000 -g logile
+
+exit
 ```
+
+---
+
+## Mounting a directory in the container - V
+
+And back to your laptop:
+
+```bash
+ls $HOME/udocker-tutorial/gromacs/output
+logile.log  ud-tutorial.edr  ud-tutorial.trr  ud-tutorial.xtc
+```
+
+All nice output files right there in you home directory.
+
+---
+
+<!-- _class: lead -->
+
+# End of Hands On part II
