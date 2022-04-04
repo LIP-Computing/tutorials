@@ -216,3 +216,42 @@ mypython:v1.0                                                .
 # About mounting volumes and directories
 
 ---
+
+## Mounting a directory in the container - I
+
+Assume you have a directory you want to use inside the container:
+
+```bash
+$ ls $HOME/udocker-tutorial/gromacs/
+input
+$ ls $HOME/udocker-tutorial/gromacs/input/
+md.tpr
+```
+
+---
+
+## Mounting a directory in the container - II
+
+We will bind mount the directory in the `/home/user` inside the container (if this directory does not exist inside the container, then it will be created):
+
+```bash
+udocker run -v=$HOME/udocker-tutorial/gromacs:/home/user -w=/home/user grom /bin/bash
+```
+
+```bash
+root@mylaptop:/home/user# ls -al
+total 12
+drwxrwxr-x 3 root root 4096 Apr  4 08:31 .
+drwxr-xr-x 3 root root 4096 Apr  4 08:42 ..
+drwxrwxr-x 2 root root 4096 Apr  4 08:31 input
+```
+
+---
+
+## Mounting a directory in the container - III
+
+Inside the container - make a directory for your output:
+
+```bash
+root@mylaptop:/home/user# mkdir output
+```
