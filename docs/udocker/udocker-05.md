@@ -270,3 +270,16 @@ udocker --allow-root run  -v /tmp myContainerId
   * The absolute pathnames to the container locations will likely differ.
   * In this case convert first to another mode before transfer.
   * Or at arrival use: `setup --execmode=Fn --force`.
+
+---
+
+<!-- _class: lead -->
+
+# Thank you!
+
+## Questions ?
+
+<udocker@lip.pt>
+
+![width:200px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)

@@ -470,6 +470,9 @@ C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1
 
 <udocker@lip.pt>
 
+![width:200px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
+
 ---
 
 <!-- _class: lead -->

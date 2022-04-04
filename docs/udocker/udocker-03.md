@@ -287,3 +287,6 @@ All nice output files right there in you home directory.
 <!-- _class: lead -->
 
 # End of Hands On part II
+
+![width:200px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)

@@ -37,3 +37,12 @@ Mario David <david@lip.pt>
 Jorge Gomes <jorge@lip.pt>
 
 ---
+
+---
+
+<!-- _class: lead -->
+
+# End of Hands On part III
+
+![width:200px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)

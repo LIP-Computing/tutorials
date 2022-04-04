@@ -279,3 +279,6 @@ udocker rmi tensorflow/tensorflow
 <!-- _class: lead -->
 
 # End of Hands On part I
+
+![width:200px](imgs/lip-udocker-logos.png)
+![width:1200px](imgs/funding-by-log.png)
