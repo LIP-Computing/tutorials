@@ -50,6 +50,26 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
+## In the beginning
+
+ssh into your favorite HPC system's head node (user interface host), install udocker and make a directory for the tutorial:
+
+```bash
+mkdir udocker-tutorial
+cd udocker-tutorial
+export UDOCKER_DIR=$HOME/udocker-tutorial/.udocker
+```
+
+I assume that the compute/worker nodes mount your $HOME directory or, you can do this in some directory mounted in the compute/worker nodes.
+
+---
+
+## Pull a nice image
+
+```bash
+udocker pull tensorflow/tensorflow:2.8.0-gpu
+```
+
 ---
 
 <!-- _class: lead -->
