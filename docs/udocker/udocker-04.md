@@ -72,6 +72,19 @@ udocker pull tensorflow/tensorflow:2.8.0-gpu
 
 First we prepare the container and later we run the actual job, the creation of the container may take some time, thus we do it once initially.
 
+Modify the script to suit your slurm user and partition settings:
+
+<https://github.com/LIP-Computing/tutorials/blob/main/udocker-files/prep-cont.sh>
+
+---
+
+In general just submit this script to slurm:
+
+```bash
+chmod 755 prep-cont.sh # if needed
+sbatch prep-cont.sh
+```
+
 ---
 
 <!-- _class: lead -->
