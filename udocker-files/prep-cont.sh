@@ -12,6 +12,8 @@ source udockervenv/bin/activate
 export UDOCKER_DIR=$TUT_DIR/.udocker
 
 echo "###############################"
+hostname
+uname -a
 echo ">> udocker command"
 which udocker
 echo

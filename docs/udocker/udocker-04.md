@@ -70,6 +70,8 @@ I assume that the compute/worker nodes mount your $HOME directory or, you can do
 udocker pull tensorflow/tensorflow:2.8.0-gpu
 ```
 
+First we prepare the container and later we run the actual job, the creation of the container may take some time, thus we do it once initially.
+
 ---
 
 <!-- _class: lead -->
