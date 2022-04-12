@@ -40,7 +40,7 @@ size: 16:9
 
 # udocker - *be anywhere*
 
-## udocker technical details
+## Advanced technical details
 
 <https://github.com/indigo-dc/udocker>
 
