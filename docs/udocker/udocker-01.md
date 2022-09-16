@@ -37,7 +37,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker - *be anywhere*
+# udocker 
 
 ## Part 1 - Introduction
 
