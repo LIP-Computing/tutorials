@@ -200,8 +200,8 @@ And after that install and/or compile whatever you want
 Now you are inside the container and seems you are `root`:
 
 ```prompt
-dnf -y install python3 gcc-c++
-pip-3 install numpy matplotlib scypy
+dnf -y install python3 gcc-c++ python3-pip
+pip-3 install numpy matplotlib scipy
 exit
 ```
 
@@ -223,6 +223,7 @@ Now you can import this container into an image with a given tag (empty tag defa
 udocker import mypython.tar mypython:v1.0
 udocker images
 REPOSITORY
+...
 mypython:v1.0                                                .
 ```
 
@@ -239,9 +240,8 @@ mypython:v1.0                                                .
 Assume you have a directory you want to use inside the container, and grab yourself a tpr file:
 
 ```bash
-ls $HOME/udocker-tutorial/gromacs/
-input
-ls $HOME/udocker-tutorial/gromacs/input/
+mkdir -p $HOME/udocker-tutorial/gromacs/input
+cd $HOME/udocker-tutorial/gromacs/input/
 wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/md.tpr
 ```
 
@@ -288,7 +288,7 @@ exit
 
 ## Mounting a directory in the container - V
 
-And back to your laptop:
+And back to your preferred machine:
 
 ```bash
 ls $HOME/udocker-tutorial/gromacs/output
