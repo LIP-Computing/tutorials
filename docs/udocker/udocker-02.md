@@ -101,9 +101,9 @@ module load python/3.10.8
   * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
 
 ```bash
-wget https://github.com/indigo-dc/udocker/releases/download/1.3.12/udocker-1.3.12.tar.gz
-tar zxvf udocker-1.3.12.tar.gz
-export PATH=`pwd`/udocker-1.3.12/udocker:$PATH
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.10/udocker-1.3.10.tar.gz
+tar zxvf udocker-1.3.10.tar.gz
+export PATH=`pwd`/udocker-1.3.10/udocker:$PATH
 ```
 
 ---
@@ -117,7 +117,7 @@ export PATH=`pwd`/udocker-1.3.12/udocker:$PATH
 ```bash
 python3 -m venv udockervenv
 source udockervenv/bin/activate
-pip install udocker
+pip install udocker==1.3.10
 ```
 
 ---

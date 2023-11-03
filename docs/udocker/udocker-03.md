@@ -61,8 +61,14 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 * *But udocker does not support `build` the dockerfile...*
   * Use `docker` itself in you <lap|desk>top
   * Example: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
-  * `docker build --build-arg gromacs_ver=2022 -t gromacs -f Dockerfile-cpu .`
-  * (Will take quite awhile)
+
+```bash
+git clone https://github.com/mariojmdavid/docker-gromacs-cuda.git
+cd docker-gromacs-cuda/gromacs-cpu/
+docker build --build-arg gromacs_ver=2023 -t gromacs -f Dockerfile-cpu .
+```
+
+* (Will take quite awhile)
 
 ---
 
@@ -74,7 +80,6 @@ After you build the image with docker:
 docker images
 REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
 gromacs      latest    8473080f1963   3 minutes ago   376MB
-ubuntu       20.04     ff0fea8310f3   2 weeks ago     72.8MB
 ```
 
 Save the image with `docker` to a tarball:
@@ -149,7 +154,7 @@ gmx mdrun [-s [<.tpr>]] [-cpi [<.cpt>]] [-table [<.xvg>]] [-tablep [<.xvg>]]
 You can check the dockerfile: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
 
 ```dockerfile
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Mario David <mariojmdavid@gmail.com>"
 ...
 ENV PATH=$PATH:/usr/local/gromacs/bin
@@ -181,8 +186,8 @@ udocker run grom pwd
 Pull some base image, create a container and run:
 
 ```bash
-udocker pull rockylinux
-udocker create --name=mypython rockylinux
+udocker pull almalinux:9
+udocker create --name=mypython almalinux:9
 udocker run mypython bash
 ```
 
@@ -195,7 +200,7 @@ And after that install and/or compile whatever you want
 Now you are inside the container and seems you are `root`:
 
 ```prompt
-dnf -y install python39 gcc-c++
+dnf -y install python3 gcc-c++
 pip-3 install numpy matplotlib scypy
 exit
 ```
