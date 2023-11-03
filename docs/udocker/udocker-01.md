@@ -241,9 +241,9 @@ Run time to execute docker containers:
   * python, C, C++, go
 
 * Can run:
-  * CentOS 6, CentOS 7, RHEL8 (compatible distros)
+  * CentOS 7, RHEL8 and RHEL9 (compatible distros)
   * Ubuntu >= 16.04
-  * Any distro that supports python 2.6, 2.7 and >= 3.6
+  * Any distro that supports python 2.7 and >= 3.6
 
 ---
 
