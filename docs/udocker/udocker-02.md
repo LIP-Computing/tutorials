@@ -54,7 +54,7 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 * Not appropriate to run services:
   * In most cases you need root privileges for this.
-  * You have Docker (or other container techs) for this.
+  * You have Docker (or other container tools) for this.
 
 * Build docker images:
   * You have Docker for this.
@@ -89,14 +89,21 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ## Installation: tarball
 
+Access the INCD advanced computing facility at Lisbon with a ssh session:
+
+```bash
+ssh -l <username> cirrus8.a.incd.pt
+module load python/3.10.8
+```
+
 * The end user can download and execute udocker without system administrator intervention.
 * Install from a released version:
   * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
 
 ```bash
-wget https://github.com/indigo-dc/udocker/releases/download/v1.3.1/udocker-1.3.1.tar.gz
-tar zxvf udocker-1.3.1.tar.gz
-export PATH=`pwd`/udocker:$PATH
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.12/udocker-1.3.12.tar.gz
+tar zxvf udocker-1.3.12.tar.gz
+export PATH=`pwd`/udocker-1.3.12/udocker:$PATH
 ```
 
 ---
