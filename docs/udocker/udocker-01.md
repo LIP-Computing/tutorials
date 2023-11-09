@@ -324,10 +324,10 @@ Step 4 - Execute containers:
 
 ---
 
-## udocker: pull - Images
+## udocker: pull - Images I
 
 * Docker images are composed of
-  * metadata that describes the images content and how to execute it
+  * metadata describing the images content and how to run
   * multiple file-system layers stored as tarballs
 
 * udocker pulls the metadata and layers 
@@ -336,6 +336,10 @@ Step 4 - Execute containers:
   * Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`
   * Image information with links to the layers is under `${UDOCKER_DIR}/.udocker/repos`
 
+---
+
+## udocker: pull - Images II
+
 ![bg right:50% w:650px](imgs/udocker-pull.png)
 
 ---
@@ -343,15 +347,15 @@ Step 4 - Execute containers:
 ## udocker: Create containers - I
 
 * Containers are produced from the images in a process called flattening.
-  * Each layer in the image is extracted on top of the previous.
-  * Whiteouts from UnionFS are applied before each layer is extracted.
-  * File protection changes are applied to make files accessible to the user.
+  * Each image layer is extracted on top of the previous.
+  * UnionFS Whiteouts are applied before each layer extraction.
+  * Protection changes are applied to make files accessible.
   * The resulting directory tree is stored under `${UDOCKER_DIR}/.udocker/containers`
 
 * Accessing files is easy 
   * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`
 * The create operation can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
-  * Sometimes is better to use the /tmp or some other local partition
+  * Alternative use the /tmp or other local partition
 
 ---
 
