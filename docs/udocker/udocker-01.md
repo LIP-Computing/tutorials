@@ -134,20 +134,23 @@ Focused on running scientific applications in Linux systems.
 ## Containers for batch processing - I
 
 * Challenges of running containers on batch systems?
-  * Integration with the batch system (how to start/stop etc) ?
-  * Respect batch system policies (such as quotas/limits) ?
-  * Respect batch system actions (job delete/kill) ?
-  * Collect accounting ?
+  * Integration with the batch system (how to start/stop containers, etc) ?
+  * Respect batch system policies (such as quotas, time and resource limits) ?
+  * Respect batch system actions (job management integration delete/kill) ?
+  * Collect accounting (tight integration) ?
 
 ---
 
 ## Containers for batch processing - II
 
-* Can we execute in a more basic way?
+* Can we execute in a more simple way?
   * Can we download container images?
   * Can we run without a layered filesystem?
-  * Can we run without namespaces and other kernel functionalties ?
-  * Can we run as regular user without privileges?
+  * Can we run without namespaces?
+  * can we run without other complex kernel functionalties ?
+  * Can we run as a regular user without privileges?
+
+* When udocker started to be developed these were major questions.
 
 ---
 
@@ -183,11 +186,12 @@ Focused on running scientific applications in Linux systems.
 
 ## udocker advantages: deployment I
 
-* udocker can be deployed and used by the end-user:
+* udocker is meant to be deployed and used by the end-user:
   * Does not require privileges.
   * Does not require system administrator intervention.
   * All operations performed in user space.
-  * Deployed by default in the user HOME directory
+  * Deployed by default in the user HOME directory.
+  * Containers are stored and created in the user HOME directory.
 
 ---
 
