@@ -50,7 +50,7 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## Containers in Scientific Computing I
+## Scientific Computing Challenges I
 
 Running applications across infrastructures often requires considerable effort
 
@@ -66,7 +66,7 @@ Running applications across infrastructures often requires considerable effort
 
 ---
 
-## Containers in Scientific Computing II
+## Scientific Computing Challenges II
 
 * **Software Environments**:
   * Specific computing environments.
@@ -153,17 +153,17 @@ Focused on running scientific applications in Linux systems.
 
 ## udocker: Introduction - I
 
-* Can run applications encapsulated in docker containers:
+* udocker can run applications encapsulated in docker containers:
   * without using docker
-  * without using (root) privileges
+  * without requiring (root) privileges
   * without system administrators intervention
   * without additional system software
   * without requiring Linux namespaces
 
-* Run:
-  * as a regular user
-  * with the normal process controls and accounting
-  * in interactive or batch systems
+* Everything runs in user space:
+  * as a regular user without privileges
+  * subjected to the normal process controls and accounting
+  * both in interactive or batch systems
 
 ---
 
@@ -187,6 +187,7 @@ Focused on running scientific applications in Linux systems.
   * Does not require privileges.
   * Does not require system administrator intervention.
   * All operations performed in user space.
+  * Deployed by default in the user HOME directory
 
 ---
 
@@ -206,10 +207,12 @@ Focused on running scientific applications in Linux systems.
 ## udocker advantages: execution I
 
 * udocker integrates several execution engines:
-  * Allows execution with several approaches/engines.
+  * Allows execution using several different approaches.
   * Allows execution with and without Linux namespaces.
+  * Integrates several tools suitable to run containers
+  * Makes these tools easier to use across systems.
 
-* udocker can be submitted together with the batch job:
+* udocker can be submitted together with a batch job:
   * Just fetch or ship the udocker tarball with the job.
 
 ---
@@ -217,7 +220,7 @@ Focused on running scientific applications in Linux systems.
 ## udocker advantages: execution II
 
 * udocker user interface:
-  * Commands and logic similar to docker.
+  * Commands, syntax and logic are similar to docker.
 
 * udocker empowers users to use containers:
   * Ideal for heterogeneous computing environments.
@@ -250,8 +253,11 @@ Containers can be created with other tools.
 
 ## Programing languages and OS
 
-* Implemented
-  * python, C, C++, go
+* udocker is implemented:
+  * Python
+
+* the engines and other tools shipped with udocker are binaries:
+  * C , C++, go
 
 * Can run:
   * CentOS 7, RHEL8, RHEL9 (compatible distros)
@@ -262,7 +268,7 @@ Containers can be created with other tools.
 
 ## Components
 
-* Phyton code (this is what you need to fetch)
+* The udocker Python code (this is what you need to fetch)
   * Command line interface
   * Dockerhub API
   * Container and image handling: import, load, save and export
@@ -280,28 +286,35 @@ Containers can be created with other tools.
 
 ## udocker in 4 steps - I
 
-1 - Installation:
+Step 1 - Installation:
 
 * Get the udocker tarball and untar.
 * No need to compile software.
 
-2 - Get container images:
+Step 2 - Get container images:
 
 * Pull containers from docker compatible repositories.
+  * udocker pull
 * Load and save in docker and OCI formats.
+  * udocker load
+  * udocker save
 * Import and export tarballs.
+  * udocker import
+  * udocker export
 
 ---
 
 ## udocker in 4 steps - II
 
-3 - Create from images:
+Step 3 - Create from images:
 
 * Create the container directory tree from the image.
+  * udocker create
 
-4 - Execute containers:
+Step 4 - Execute containers:
 
 * Run using several execution methods.
+  * udocker run
 
 ---
 
@@ -313,11 +326,15 @@ Containers can be created with other tools.
 
 ## udocker: pull - Images
 
-* Layers and metadata are pulled with DockerHub REST API.
+* Docker images are composed of
+  * metadata that describes the images content and how to execute it
+  * multiple file-system layers stored as tarballs
 
-* Image metadata is interpreted to identify the layers.
-
-* Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`.
+* udocker pulls the metadata and layers 
+  * using the DockerHub REST API.
+  * Image metadata is parsed to identify the layers.
+  * Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`
+  * Image information with links to the layers is under `${UDOCKER_DIR}/.udocker/repos`
 
 ![bg right:50% w:650px](imgs/udocker-pull.png)
 
@@ -325,14 +342,16 @@ Containers can be created with other tools.
 
 ## udocker: Create containers - I
 
-* Containers are produced from the layers by flattening them.
+* Containers are produced from the images in a process called flattening.
+  * Each layer in the image is extracted on top of the previous.
+  * Whiteouts from UnionFS are applied before each layer is extracted.
+  * File protection changes are applied to make files accessible to the user.
+  * The resulting directory tree is stored under `${UDOCKER_DIR}/.udocker/containers`
 
-* Each layer is extracted on top of the previous.
-
-* Whiteouts are respected, protections are changed.
-
-* The directory trees are stored under `${UDOCKER_DIR}/.udocker/containers`
-  in the user home directory.
+* Accessing files is easy 
+  * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`
+* The create operation can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
+  * Sometimes is better to use the /tmp or some other local partition
 
 ---
 
@@ -413,7 +432,7 @@ These techniques can be selected per container via execution modes implemented b
 | F2    | Fakechroot  | Same as F1 |
 | F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
 | F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically |
-| S1    | Singularity | Must be available on the system might use user namespaces or chroot |
+| S1    | Singularity | Not part of udocker must already exist on the system, may use user namespaces or chroot |
 
 ---
 
@@ -439,9 +458,10 @@ Using OpenMPI, udocker in P1 mode
 
 Gromacs is widely used both in biochemical and non-biochemical systems. 
 
-udocker P mode have lower performance, udocker F mode same as Docker.
+In this comparison Gromacs was run using CUDA and OpenMP
 
-Using CUDA and OpenMP
+* udocker using P mode has lower performance with Gromacs
+* udocker using F mode has same or better performance as Docker.
 
 ![bg right:50% w:700px](imgs/ratio-gromacs.png)
 
