@@ -180,15 +180,18 @@ udocker run  -v /tmp myContainerId
 
 ## udocker: Fakechroot engine - II
 
-* Why had to modify fakechroot heavily to execute containers ?
+* Why we had to modify fakechroot heavily to execute containers ?
   * With the original fakechroot executables must match the host loader and libc.
   * Shared libraries are loaded from the host not the container.
-  * Causing symbol mismatches and application crash.
+  * Causing symbol mismatches and application crashes.
 
 * Why is this ?
-  * The absolute path to the loader `ld.so` is encoded in the ELF header of all executables.
-  * Loaders are statically linked and the pathnames inside are absolute and non changeable.
-  * Absolute paths to libraries may also exist in the ELF headers of executables and libraries.
+  * The path to the loader `ld.so` is inside the ELF header of all executables.
+    * is an absolute path therefore pointing to the host
+    * since loading starts before execution we cannot intercept and translate
+  * Pathnames to library locations and ld.so.cache inside `ld.so` are absolute.
+    * loaders are statically linked so we cannot intercept and translate
+  * Absolute paths also may exist in the ELF headers of executables and libraries.
 
 ---
 
@@ -207,13 +210,13 @@ udocker run  -v /tmp myContainerId
 
 ## udocker: Fakechroot engine (F1) - I
 
-* The loader `ld.so` is encoded in the ELF header of executables;
+* The path to the loader `ld.so` is inside the ELF header of all executables;
   * the loader is the executable that loads libraries and calls the actual executable,
   * also acts as a library providing functions to dynamically load other libraries.
   * the loader is provided and tightly coupled with the libc.
 
 * Is essential that executables in the container are run with the loader from the container 
-  * as symbols and functions will not match 
+  * as symbols and functions will not match causing crashes
   * binaries, libc, other libs and ld.so must match
 
 ---
@@ -223,11 +226,12 @@ udocker run  -v /tmp myContainerId
 * The mode F1 enforces the use of the loader provided by the container:
   * Passes it as 1st argument in *exec* and similar system calls shifting argv.
   * Like this executables are always started by the loader of the container
-  * The loader starts first gets the executable pathname and its arguments from argv and launches it.
+  * `/pathname/ld-linux-x86-64.so /pathname/bin/ls`
 
 * Enforcement of library locations:
   * Is performed by filling in LD_LIBRARY_PATH with the container paths.
-  * Uses library paths extracted from the container `ld.so.cache`.
+  * Uses library paths extracted from the container `ld.so.cache`
+  * `export LD_LIBRARY_PATH=/home/u/containers/ID/ROOT/lib64: ...`
 
 * If the ELF headers of binaries contain absolute paths then host libraries may endup being loaded.
 
@@ -239,7 +243,7 @@ udocker run  -v /tmp myContainerId
   * A copy of the container loader is made.
   * The loader binary is then edited by udocker.
   * The loading from host locations `/lib`, `/lib64` etc is disabled.
-  * The loading using the host ld.so.cache is disabled.
+  * The loading using the host `ld.so.cache` is disabled.
   * `LD_LIBRARY_PATH` is renamed to `LD_LIBRARY_REAL`.
 
 ---
@@ -251,6 +255,8 @@ udocker run  -v /tmp myContainerId
   * The `LD_LIBRARY_REAL` is filled with library paths from the container and its `ld.so.cache`.
   * Changes made by the user to `LD_LIBRARY_PATH` are intercepted 
     * the pathnames are adjusted to container locations and inserted in `LD_LIBRARY_REAL`.
+    * like this LD_LIBRARY_PATH remains untouched for the executables
+    * but in practice is the LD_LIBRARY_REAL with the containers paths that is used
 
 ---
 
@@ -261,7 +267,7 @@ udocker run  -v /tmp myContainerId
     * Loader location in ELF headers of executables.
     * Library path locations inside executables and libraries.
 
-* With F3 or F4 the container executables and libraries are edited with PatchELF:
+* With F3 or F4 the ELF headers of container executables and libraries are edited with PatchELF:
   * The loader location is changed to point to the container.
   * The libraries location if absolute are changed to point to the container.
   * The libraries search paths inside the binaries are changed to point to container locations.
@@ -277,7 +283,7 @@ udocker run  -v /tmp myContainerId
 * The LD_LIBRARY_REAL continues to be used in F3 and F4.
 
 * The mode F4 adds dynamic editing of executables and libraries.
-  * This is useful with libraries or executables are added to the container or created as result of a compilation.
+  * This is useful if libraries or executables are added to a container or created as result of a compilation.
 
 ---
 
