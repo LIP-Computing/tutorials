@@ -2,7 +2,7 @@
 marp: true
 theme: gaia
 paginate: true
-author: Mario David
+author: Mario David, Jorge Gomes
 size: 16:9
 ---
 
