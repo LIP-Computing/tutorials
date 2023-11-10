@@ -110,19 +110,36 @@ They are selected per container id via execution modes.
   * To shrink host pathnames to container pathnames
   * `/home/user/.udocker/containers/CONTAINER-NAME/ROOT/bin/ls` to `/bin/ls`
 
+* P1 and P2 are very generic modes adequate for most applications
+  * They also offer root emulation
+* As new system calls are added they must be also be added to PRoot
+  * Often compatibility also needs to be added for older kernels.
+
 ---
 
-## udocker: PRoot engine (P1 and P2)
+## udocker: PRoot engine (P1)
 
-* The P1 mode uses PTRACE + SECCOMP filtering, to limit the system call interception to the set of calls that manipulate pathnames:
-  * We fixed it to work on recent kernels, contributed upstream
+* The P1 mode uses PTRACE + SECCOMP filtering
   * P1 is the udocker default mode
-
-* The P2 mode uses PTRACE without SECCOMP
-  * Therefore traces all system calls and can be slower
+  * System call interception is limited to the set of calls that manipulate pathnames
+  * We fixed PRoot for SECCOMP on recent kernels, most changes incorporated upstream
 
 * The impact of tracing depends on the system call frequency
-  * Applications that are heavily threaded or pathname intensive can be impacted
+  * In most cases the performance is good
+  * Applications that are heavily threaded or pathname intensive might be impacted
+
+---
+
+## udocker: PRoot engine (P2)
+
+* The P2 mode uses PTRACE without SECCOMP
+  * Therefore intercepts all system calls even the if they don't make use pathnames
+  * P1 falls back to P2 on old Linux kernels without SECCOMP (e.g. CentOS 6)
+
+* The impact of tracing depends on the system call frequency
+  * Since all system calls are intercepted can be slow
+  * Applications that are heavily threaded or pathname intensive can be very impacted
+  * In such cases using Fn modes is recommended
 
 ---
 
@@ -167,27 +184,28 @@ udocker run  -v /tmp myContainerId
 
 * Fakechroot is a library to provide chroot-like behaviour.
   * It was conceived to support debootstrap in debian
-  * It has been heavily modified to support Linux containers with udocker
 
+* For udocker 
+  * It has been heavily modified to support Linux containers with udocker
+  * Supports both `glibc` and `musl libc` (ported by the udocker developers)
 
 * Uses the Linux loader LD_PRELOAD mechanism to;
   * Intercept calls to the `libc.so` functions that manipulate pathnames.
   * Translates the pathnames before and after the call similarly to PRoot.
   * Does not work with statically compiled executables.
 
-
 ---
 
 ## udocker: Fakechroot engine - II
 
-* Why we had to modify fakechroot heavily to execute containers ?
-  * With the original fakechroot executables must match the host loader and libc.
+* In the original fakechroot the executables must match the host loader and libc.
   * Shared libraries are loaded from the host not the container.
   * Causing symbol mismatches and application crashes.
 
 * Why is this ?
   * The path to the loader `ld.so` is inside the ELF header of all executables.
-    * is an absolute path therefore pointing to the host
+    * is an absolute path pointing to the host 
+    * `readelf --program-headers /bin/ls | grep interpreter`
     * since loading starts before execution we cannot intercept and translate
   * Pathnames to library locations and ld.so.cache inside `ld.so` are absolute.
     * loaders are statically linked so we cannot intercept and translate
