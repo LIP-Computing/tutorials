@@ -117,26 +117,30 @@ Maintainability:
 
 ## udocker - origin
 
-Need for a consistent portable way of running applications.
+* Need for a consistent portable way of running applications.
 
-* Running aplications across different distributions and run-time environments.
+  * Running aplications across different distributions and run-time environments.
 
-udocker began to be developed in 2015 in the Indigo-DataCloud project.
+* udocker began to be developed in 2015 in the Indigo-DataCloud project.
 
-* Proof of concept for running docker containers as a regular user.
+  * Proof of concept for running docker containers as a regular user.
 
-Focused on running scientific applications in Linux systems.
+* Focused on running scientific applications in Linux systems.
 
-* Batch or Interative, HTC or HTP, across locations in grid infrastrutures.
+  * Batch or Interative, HTC or HPC, across sites in grid infrastrutures.
 
 ---
 
 ## Containers for batch processing - I
 
-* Challenges of running containers on batch systems?
+* Challenges of running containers (docker) on batch systems?
+
   * Integration with the batch system (how to start/stop containers, etc) ?
+
   * Respect batch system policies (such as quotas, time and resource limits) ?
+
   * Respect batch system actions (job management integration delete/kill) ?
+
   * Collect accounting (tight integration) ?
 
 ---
@@ -150,7 +154,11 @@ Focused on running scientific applications in Linux systems.
   * can we run without other complex kernel functionalties ?
   * Can we run as a regular user without privileges?
 
-* When udocker started to be developed these were major questions.
+* When udocker started to be developed these were major limitations
+  * Now other tools can also address at least partially these issues
+    * singularity/apptainer, podman etc
+  * Yet they depend on kernel functionalities 
+    * that may not be available everywhere
 
 ---
 
@@ -187,24 +195,31 @@ Focused on running scientific applications in Linux systems.
 ## udocker advantages: deployment I
 
 * udocker is meant to be deployed and used by the end-user:
+
   * Does not require privileges.
+
   * Does not require system administrator intervention.
+
   * All operations performed in user space.
+
   * Deployed by default in the user HOME directory.
-  * Containers are stored and created in the user HOME directory.
+
+  * Containers are in the user HOME directory or other user chosen location.
 
 ---
 
 ## udocker advantages: deployment II
 
-* udocker does not require compilation:
+* udocker does not require compilation by the user:
   * Uses Python plus some binaries.
   * Has a minimal dependencies.
-  * Required executables are provided statically compiled.
+  * Required binaries are provided statically compiled.
+
 
 * udocker deployment:
   * Just copy and untar into the user home directory.
   * Ideal to execute containers across different sites.
+  * You can deploy udocker across the system where you run.
 
 ---
 
@@ -212,8 +227,8 @@ Focused on running scientific applications in Linux systems.
 
 * udocker integrates several execution engines:
   * Allows execution using several different approaches.
-  * Allows execution with and without Linux namespaces.
-  * Integrates several tools suitable to run containers
+  * Allows execution with and without using Linux namespaces.
+  * Integrates several tools suitable to execute containers
   * Makes these tools easier to use across systems.
 
 * udocker can be submitted together with a batch job:
@@ -292,8 +307,17 @@ Containers can be created with other tools.
 
 Step 1 - Installation:
 
-* Get the udocker tarball and untar.
+* Get the udocker tarball using curl, wget or a browser.
+
+* Extract the content of the tarball.
+
 * No need to compile software.
+
+* The first time udocker is run it will fetch the required binaries.
+
+---
+
+## udocker in 4 steps - II
 
 Step 2 - Get container images:
 
@@ -308,7 +332,7 @@ Step 2 - Get container images:
 
 ---
 
-## udocker in 4 steps - II
+## udocker in 4 steps - III
 
 Step 3 - Create from images:
 
@@ -322,6 +346,22 @@ Step 4 - Execute containers:
 
 ---
 
+## udocker in 4 steps - IV
+
+The steps to fetch and execute containers are important.
+
+* udocker pull IMAGE
+* udocker create IMAGE
+* udocker run CONTAINER-ID-OR-NAME
+* udocker run CONTAINER-ID-OR-NAME
+* udocker run CONTAINER-ID-OR-NAME
+
+The created container can be run as many times as you wish.
+* You may call `udocker run` directly but this will create a new CONTAINER everytime 
+* Will be slow and occupy much more space
+
+---
+
 ## udocker is an integration tool
 
 ![w:1100px](imgs/udocker-integration.png)
@@ -330,11 +370,11 @@ Step 4 - Execute containers:
 
 ## udocker: pull - Images I
 
-* Docker images are composed of
+* Docker images are composed of:
   * metadata describing the images content and how to run
   * multiple file-system layers stored as tarballs
 
-* udocker pulls the metadata and layers 
+* udocker pulls the metadata and layers:
   * using the DockerHub REST API.
   * Image metadata is parsed to identify the layers.
   * Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`
@@ -358,8 +398,8 @@ Step 4 - Execute containers:
 
 * Accessing files is easy 
   * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`
-* The create operation can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
-  * Alternative use the /tmp or other local partition
+* The create can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
+  * Alternative use the /tmp or some partition local to the host
 
 ---
 
@@ -377,11 +417,11 @@ Step 4 - Execute containers:
 
 ## udocker: Execution engines I
 
-Like in other container tools execution is achieved by providing `chroot` like functionality.
+* Like in other container tools execution is achieved by providing `chroot` like functionality.
 
-udocker supports several techniques to achieve the equivalent to a chroot without using privileges.
+* udocker supports several techniques to achieve the equivalent to a chroot without using privileges.
 
-These techniques can be selected per container via execution modes implemented by execution engines.
+* These techniques can be selected per container via execution modes implemented by execution engines.
 
 ---
 
