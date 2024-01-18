@@ -58,13 +58,21 @@ ssh into your favorite HPC system's head node (user interface host), install udo
 mkdir udocker-tutorial
 cd udocker-tutorial
 export UDOCKER_DIR=$HOME/udocker-tutorial/.udocker
+udocker version
 ```
 
-I assume that the compute/worker nodes mount your $HOME directory or, you can do this in some directory mounted in the compute/worker nodes.
+Check that the `UDOCKER_DIR=$HOME/udocker-tutorial/.udocker` was created
+
+```bash
+echo $UDOCKER_DIR
+ls -al $UDOCKER_DIR
+```
 
 ---
 
 ## In the beginning - II
+
+I assume that the compute/worker nodes mount your $HOME directory or, you can do this in some directory mounted in the compute/worker nodes.
 
 Git pull the repository to get needed input files, in particular for the tensorflow/keras application:
 
