@@ -80,17 +80,17 @@ Git pull the repository to get needed input files, in particular for the tensorf
 git clone https://github.com/LIP-Computing/tutorials.git
 ```
 
-In particular you will need the files and scripts in `tutorials/udocker-files/`
+In particular, you will need the files and scripts in `tutorials/udocker-files/`
 
 ---
 
 ## Pull a nice image
 
 ```bash
-udocker pull tensorflow/tensorflow:2.8.0-gpu
+udocker pull tensorflow/tensorflow:latest-gpu
 ```
 
-First we create and prepare the container and later we run the actual job, the creation of the container may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
+First we create and prepare the container, later we run the actual job, the creation of the container may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
 
 Modify the script to suit your slurm user and partition settings:
 

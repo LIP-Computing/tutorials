@@ -1,16 +1,14 @@
 #!/bin/bash
 
 #SBATCH --job-name=prep_container
-#SBATCH --time=0:20:0
 #SBATCH --ntasks=1
 #SBATCH -N 1
-#SBATCH --mem=2GB
-#SBATCH --partition=XXX-GPU
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu
 
 export TUT_DIR=$HOME/udocker-tutorial
-
+export PATH=$HOME/udocker-1.3.11/udocker:$PATH
 cd $TUT_DIR
-source udockervenv/bin/activate
 export UDOCKER_DIR=$TUT_DIR/.udocker
 
 echo "###############################"
@@ -22,8 +20,11 @@ echo ">> List images"
 udocker images
 echo
 echo ">> Create container"
-udocker create --name=tf_gpu tensorflow/tensorflow:2.8.0-gpu
+udocker create --name=tf_gpu tensorflow/tensorflow:latest-gpu
 echo
 echo ">> Set nvidia mode"
 udocker setup --execmode=F3 --force tf_gpu
 udocker setup --nvidia --force tf_gpu
+echo
+echo ">> List containers"
+udocker ps -m -s -p
