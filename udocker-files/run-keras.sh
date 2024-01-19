@@ -8,7 +8,7 @@
 #SBATCH --error=keras-%j.err
 
 export TUT_DIR=$HOME/udocker-tutorial
-export PATH=$HOME/udocker-1.3.11/udocker:$PATH
+export PATH=$HOME/udocker-1.3.10/udocker:$PATH
 export UDOCKER_DIR=$TUT_DIR/.udocker
 module load python/3.10.8
 cd $TUT_DIR
