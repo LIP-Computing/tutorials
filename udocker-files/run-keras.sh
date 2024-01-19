@@ -1,17 +1,17 @@
 #!/bin/bash
-
 #SBATCH --job-name=run_keras
-#SBATCH --time=0:30:0
 #SBATCH --ntasks=1
 #SBATCH -N 1
-#SBATCH --mem=4GB
-#SBATCH --partition=XXX_GPU
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu
+#SBATCH --output=keras-%j.out
+#SBATCH --error=keras-%j.err
 
-export TUT_DIR=$SCRATCH/udocker-tutorial
-
-cd $TUT_DIR
-source udockervenv/bin/activate
+export TUT_DIR=$HOME/udocker-tutorial
+export PATH=$HOME/udocker-1.3.11/udocker:$PATH
 export UDOCKER_DIR=$TUT_DIR/.udocker
+module load python/3.10.8
+cd $TUT_DIR
 
 echo "###############################"
-udocker run -v $TUT_DIR/tensorflow:/home/user -w /home/user tf_gpu python3 keras_2_small.py
+udocker run -v $TUT_DIR/udocker-files/tensorflow:/home/user -w /home/user tf_gpu python3 keras_2_small.py

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #SBATCH --job-name=prep_container
 #SBATCH --ntasks=1
 #SBATCH -N 1
@@ -10,6 +9,7 @@ export TUT_DIR=$HOME/udocker-tutorial
 export PATH=$HOME/udocker-1.3.11/udocker:$PATH
 cd $TUT_DIR
 export UDOCKER_DIR=$TUT_DIR/.udocker
+module load python/3.10.8
 
 echo "###############################"
 hostname
