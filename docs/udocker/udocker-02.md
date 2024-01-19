@@ -53,11 +53,11 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 ## What udocker is not - I
 
 * Not appropriate to run services:
-  * In most cases you need root privileges for this.
+  * In most cases you need root privileges to run services.
   * You have Docker (or other container tools) for this.
 
-* Build docker images:
-  * You have Docker for this.
+* udocker is a run-time and is not meant to build docker images:
+  * Docker images should be built with Docker.
   * Use you (Lap/Des)top with Docker, for this.
 
 ---
@@ -66,16 +66,19 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 * docker-compose like functionality:
   * This is usually to compose micro-services to deploy a platform/service.
+  * Again udocker is not appropriate to run services.
   * Use docker-compose itself for this.
 
 ---
 
 ## udocker aims/objectives
 
-* Execute applications as non privilege user.
-* Execute containers from docker images (includes officially supported images in Dockerhub).
-* Execute applications with very specific, customized libraries and environments, that are difficult
-  to have in very controlled systems such as the HPC machines.
+* Execute applications encapsulated with dependencies in containers
+  * as non privilege user.
+* Execute containers from docker images 
+  * including officially supported images in Dockerhub.
+* Execute applications with very specific, customized libraries and environments
+  * difficult to support in very controlled systems such as HPC machines.
 
 ---
 
@@ -89,7 +92,7 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ## Installation: tarball
 
-Access the INCD advanced computing facility at Lisbon with a ssh session:
+Access the INCD advanced computing facility at Lisbon using ssh:
 
 ```bash
 ssh -l <username> cirrus8.a.incd.pt

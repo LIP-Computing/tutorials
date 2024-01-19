@@ -14,4 +14,4 @@ source udockervenv/bin/activate
 export UDOCKER_DIR=$TUT_DIR/.udocker
 
 echo "###############################"
-udocker run -v $TUT_DIR/tensorflow:/home/user -w /home/user tf_gpu python3 keras_example_small.py
+udocker run -v $TUT_DIR/tensorflow:/home/user -w /home/user tf_gpu python3 keras_2_small.py

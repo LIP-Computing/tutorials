@@ -2,22 +2,22 @@
 marp: true
 theme: gaia
 paginate: true
-author: Mario David
+author: Mario David, Jorge Gomes
 size: 16:9
 ---
 
 <style>
     section{
-        background: #29303B;
-        color: white;
+        background: white;
+        color: #29303B;
     }
     a:link {
-        color: #CCE5FF;
+        color: #133694;
         background-color: transparent;
         text-decoration: underline;
     }
     a:visited {
-        color: #CCE5FF;
+        color: #133694;
         background-color: transparent;
         text-decoration: underline;
     }
@@ -50,15 +50,15 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## Containers in Scientific Computing I
+## Scientific Computing Challenges I
 
-Running applications across infrastructures may require considerable effort
+Running applications across infrastructures often requires considerable effort
 
-* **Computers**:
+* **Heterogeneous Hardware**:
   * Several computing systems
   * Laptops, Desktops, Farms, Cloud, HPC
 
-* **OSes**:
+* **Multiple OSes and distributions**:
   * Several operating systems
   * Linux flavors, Distribution versions
 
@@ -66,15 +66,17 @@ Running applications across infrastructures may require considerable effort
 
 ---
 
-## Containers in Scientific Computing II
+## Scientific Computing Challenges II
 
-* **Environments**:
-  * Specific computing environments
-  * Compilers, Libraries, Customizations
+* **Software Environments**:
+  * Specific computing environments.
+  * Compilers, Libraries, Customizations, Drivers etc.
 
 * **Applications**:
-  * Multiple applications often combined
-  * Portability, Maintainability, Reproducibility
+  * Multiple software codes often combined.
+
+* **Issues**:
+  * Portability, Maintainability, Reproducibility.
 
 ![bg right:40% w:500px](imgs/linux-penguins.png)
 
@@ -85,12 +87,12 @@ Running applications across infrastructures may require considerable effort
 Encapsulation:
 
 * Applications, dependencies, configurations everything packed together.
-* Portability across heterogeneous Linux systems.
-* Makes easier the distribution and sharing of ready to use software.
+* Enables portability across heterogeneous Linux systems.
+* Easier distribution and sharing of ready to use software.
 
 Efficiency:
 
-* One single kernel shared by many applications.
+* One single kernel, buffers etc shared by many applications.
 * Performance and resource consumption similar to host execution.
 * Take advantage of newer more optimized libraries and compilers.
 
@@ -106,54 +108,73 @@ Reproducibility:
 Maintainability:
 
 * Easier application maintenance, distribution and deployment.
+* No need to support applications across multiple OS distributions.
+* Independance from software changes at the host level.
 
 ![bg right:40% w:500px](imgs/containers-arch.png)
 
 ---
 
-## udocker - beginnings
+## udocker - origin
 
-Need a consistent portable way of running applications.
+* Need for a consistent portable way of running applications.
 
-udocker began to be developed in 2015 Indigo-DataCloud project.
+  * Running aplications across different distributions and run-time environments.
 
-Focused on running scientific applications in Linux clusters.
+* udocker began to be developed in 2015 in the Indigo-DataCloud project.
+
+  * Proof of concept for running docker containers as a regular user.
+
+* Focused on running scientific applications in Linux systems.
+
+  * Batch or Interative, HTC or HPC, across sites in grid infrastrutures.
 
 ---
 
 ## Containers for batch processing - I
 
-* Challenges of batch systems?
-  * Integrate it with the batch system (how to start/stop etc) ?
-  * Respect batch system policies (such as quotas/limits) ?
-  * Respect batch system actions (job delete/kill) ?
-  * Collect accounting ?
+* Challenges of running containers (docker) on batch systems?
+
+  * Integration with the batch system (how to start/stop containers, etc) ?
+
+  * Respect batch system policies (such as quotas, time and resource limits) ?
+
+  * Respect batch system actions (job management integration delete/kill) ?
+
+  * Collect accounting (tight integration) ?
 
 ---
 
 ## Containers for batch processing - II
 
-* Can we execute in a more basic way?
+* Can we execute in a more simple way?
   * Can we download container images?
   * Can we run without a layered filesystem?
-  * Can we run them as normal user?
-  * Can we still enforce container metadata?
+  * Can we run without namespaces?
+  * can we run without other complex kernel functionalties ?
+  * Can we run as a regular user without privileges?
+
+* When udocker started to be developed these were major limitations
+  * Now other tools can also address at least partially these issues
+    * singularity/apptainer, podman etc
+  * Yet they depend on kernel functionalities 
+    * that may not be available everywhere
 
 ---
 
 ## udocker: Introduction - I
 
-* Run applications encapsulated in docker containers:
+* udocker can run applications encapsulated in docker containers:
   * without using docker
-  * without using (root) privileges
+  * without requiring (root) privileges
   * without system administrators intervention
   * without additional system software
-  * does not require Linux namespaces
+  * without requiring Linux namespaces
 
-* Run:
-  * as a normal user
-  * with the normal process controls and accounting
-  * in interactive or batch systems
+* Everything runs in user space:
+  * as a regular user without privileges
+  * subjected to the normal process controls and accounting
+  * both in interactive or batch systems
 
 ---
 
@@ -173,33 +194,44 @@ Focused on running scientific applications in Linux clusters.
 
 ## udocker advantages: deployment I
 
-* udocker can be deployed and used by the end-user:
+* udocker is meant to be deployed and used by the end-user:
+
   * Does not require privileges.
+
   * Does not require system administrator intervention.
+
   * All operations performed in user space.
+
+  * Deployed by default in the user HOME directory.
+
+  * Containers are in the user HOME directory or other user chosen location.
 
 ---
 
 ## udocker advantages: deployment II
 
-* udocker does not require compilation:
+* udocker does not require compilation by the user:
   * Uses Python plus some binaries.
   * Has a minimal dependencies.
-  * Required executables are provided statically compiled.
+  * Required binaries are provided statically compiled.
+
 
 * udocker deployment:
   * Just copy and untar into the user home directory.
   * Ideal to execute containers across different sites.
+  * You can deploy udocker across the system where you run.
 
 ---
 
 ## udocker advantages: execution I
 
 * udocker integrates several execution engines:
-  * Allows execution with several approaches/engines.
-  * Allows execution with and without Linux namespaces.
+  * Allows execution using several different approaches.
+  * Allows execution with and without using Linux namespaces.
+  * Integrates several tools suitable to execute containers
+  * Makes these tools easier to use across systems.
 
-* udocker can be submitted with the batch job:
+* udocker can be submitted together with a batch job:
   * Just fetch or ship the udocker tarball with the job.
 
 ---
@@ -207,16 +239,16 @@ Focused on running scientific applications in Linux clusters.
 ## udocker advantages: execution II
 
 * udocker user interface:
-  * Commands and logic similar to docker.
+  * Commands, syntax and logic are similar to docker.
 
 * udocker empowers users to use containers:
   * Ideal for heterogeneous computing environments.
 
 ---
 
-## udocker: CLI
+## udocker: Command Line Interface
 
-Run time to execute docker containers:
+udocker is mainly a run-time to execute docker containers:
 
 |          |           |         |         |        |
 | -------- | --------- | ------- | ------- | ------ |
@@ -226,6 +258,9 @@ Run time to execute docker containers:
 | rm       | rmi       | rmname  | search  | setup  |
 | showconf | unprotect | verify  | version | create |
 | run      | save      |         |         |        |
+
+By design udocker does not have container creation functionality.
+Containers can be created with other tools.
 
 ---
 
@@ -237,50 +272,93 @@ Run time to execute docker containers:
 
 ## Programing languages and OS
 
-* Implemented
-  * python, C, C++, go
+* udocker is implemented:
+  * Python
+
+* the engines and other tools shipped with udocker are binaries:
+  * C , C++, go
 
 * Can run:
-  * CentOS 7, RHEL8 and RHEL9 (compatible distros)
+  * CentOS 7, RHEL8, RHEL9 (compatible distros)
   * Ubuntu >= 16.04
   * Any distro that supports python 2.7 and >= 3.6
 
 ---
 
-## Features
+## Components
 
-* Components:
-  * Command line interface docker like
-  * Pull of containers from Docker Hub
-  * Local repository of images and containers
-  * Execution of containers with modular engines
+* The udocker Python code (this is what you need to fetch)
+  * Command line interface
+  * Dockerhub API
+  * Container and image handling: import, load, save and export
+  * Local images repository
+  * Interface with the execution engines
+
+* udocker tools
+  * Pulled and installed upon first invocation of udocker
+  * Set of binary executables and libraries that implement the engines
+  * Supporting different OSes and hardware architectures
+  * Executables: proot (Pn), runc (Rn), crun (Rn) and patchelf (Fn)
+  * Libraries: fakechroot (Fn)
 
 ---
 
 ## udocker in 4 steps - I
 
-1 - Installation:
+Step 1 - Installation:
 
-* Get the udocker tarball and untar.
+* Get the udocker tarball using curl, wget or a browser.
+
+* Extract the content of the tarball.
+
 * No need to compile software.
 
-2 - Get container images:
-
-* Pull containers from docker compatible repositories.
-* Load and save docker and OCI formats.
-* Import and export tarballs.
+* The first time udocker is run it will fetch the required binaries.
 
 ---
 
 ## udocker in 4 steps - II
 
-3 - Create from images:
+Step 2 - Get container images:
+
+* Pull containers from docker compatible repositories.
+  * udocker pull
+* Load and save in docker and OCI formats.
+  * udocker load
+  * udocker save
+* Import and export tarballs.
+  * udocker import
+  * udocker export
+
+---
+
+## udocker in 4 steps - III
+
+Step 3 - Create from images:
 
 * Create the container directory tree from the image.
+  * udocker create
 
-4 - Execute containers:
+Step 4 - Execute containers:
 
 * Run using several execution methods.
+  * udocker run
+
+---
+
+## udocker in 4 steps - IV
+
+The steps to fetch and execute containers are important.
+
+* udocker pull IMAGE
+* udocker create IMAGE
+* udocker run CONTAINER-ID-OR-NAME
+* udocker run CONTAINER-ID-OR-NAME
+* udocker run CONTAINER-ID-OR-NAME
+
+The created container can be run as many times as you wish.
+* You may call `udocker run` directly but this will create a new CONTAINER everytime 
+* Will be slow and occupy much more space
 
 ---
 
@@ -290,14 +368,21 @@ Run time to execute docker containers:
 
 ---
 
-## udocker: pull - Images
+## udocker: pull - Images I
 
-* Layers and metadata are pulled with DockerHub REST API.
+* Docker images are composed of:
+  * metadata describing the images content and how to run
+  * multiple file-system layers stored as tarballs
 
-* Image metadata is interpreted to identify the layers.
+* udocker pulls the metadata and layers:
+  * using the DockerHub REST API.
+  * Image metadata is parsed to identify the layers.
+  * Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`
+  * Image information with links to the layers is under `${UDOCKER_DIR}/.udocker/repos`
 
-* Layers are stored in the use home directory under `${UDOCKER_DIR}/.udocker/layers`.
-  so that can be share by multiple images.
+---
+
+## udocker: pull - Images II
 
 ![bg right:50% w:650px](imgs/udocker-pull.png)
 
@@ -305,14 +390,16 @@ Run time to execute docker containers:
 
 ## udocker: Create containers - I
 
-* Are produced from the layers by flattening them.
+* Containers are produced from the images in a process called flattening.
+  * Each image layer is extracted on top of the previous.
+  * UnionFS Whiteouts are applied before each layer extraction.
+  * Protection changes are applied to make files accessible.
+  * The resulting directory tree is stored under `${UDOCKER_DIR}/.udocker/containers`
 
-* Each layer is extracted on top of the previous.
-
-* Whiteouts are respected, protections are changed.
-
-* The obtained directory trees are stored under `${UDOCKER_DIR}/.udocker/containers`
-  in the user home directory.
+* Accessing files is easy 
+  * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`
+* The create can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
+  * Alternative use the /tmp or some partition local to the host
 
 ---
 
@@ -330,7 +417,11 @@ Run time to execute docker containers:
 
 ## udocker: Execution engines I
 
-udocker supports several techniques to achieve the equivalent to a chroot without using privileges, they are selected per container id via execution modes
+* Like in other container tools execution is achieved by providing `chroot` like functionality.
+
+* udocker supports several techniques to achieve the equivalent to a chroot without using privileges.
+
+* These techniques can be selected per container via execution modes implemented by execution engines.
 
 ---
 
@@ -355,7 +446,7 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
-| P1    | PRoot       | Multithreaded applications can suffer degradation |
+| P1    | PRoot       | System call intensive applications may suffer degradation |
 | P2    | PRoot       | Same limitations as P1 apply. All system calls are traced causing higher overheads than P1 |
 | R1    | runC        | Same performance as namespace based applications |
 | R2    | runC        | Only for software installation and similar. Same performance as P1 |
@@ -385,11 +476,11 @@ udocker supports several techniques to achieve the equivalent to a chroot withou
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
-| F1    | Fakechroot  | May load host libraries. Requires shared library compiled against same libc as in container |
+| F1    | Fakechroot  | May escape and load host libraries. Requires shared library compiled against same libc as in container |
 | F2    | Fakechroot  | Same as F1 |
 | F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
 | F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically |
-| S1    | Singularity | Must be available on the system might use user namespaces or chroot |
+| S1    | Singularity | Not part of udocker must already exist on the system, may use user namespaces or chroot |
 
 ---
 
@@ -405,8 +496,6 @@ OpenQCD is a very advanced code to run lattice simulations
 
 Scaling performance as a function of the cores for the computation of application of the Dirac operator to a spinor field.
 
-Scaling performance as a function of the cores for the computation of application of the Dirac operator to a spinor field.
-
 Using OpenMPI, udocker in P1 mode
 
 ![bg right:40% w:550px](imgs/scaling.png)
@@ -417,9 +506,10 @@ Using OpenMPI, udocker in P1 mode
 
 Gromacs is widely used both in biochemical and non-biochemical systems. 
 
-udocker P mode have lower performance, udocker F mode same as Docker.
+In this comparison Gromacs was run using CUDA and OpenMP
 
-Using CUDA and OpenMP
+* udocker using P mode has lower performance with Gromacs
+* udocker using F mode has same or better performance as Docker.
 
 ![bg right:50% w:700px](imgs/ratio-gromacs.png)
 
@@ -438,27 +528,6 @@ C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1
 | udocker     |  7% | 1.3% |
 | VirtualBox  | 15% | 1.6% |
 | KVM         |  5% | 2.6% |
-
----
-
-<!-- _class: lead -->
-
-# udocker: Next
-
----
-
-## udocker: What’s next
-
-* Increase automation for MPI/infiniband applications:
-  * OpenMPI and MPICH.
-
-* Better translation of “volume” directories.
-
-* Command line interface enhancements.
-
-* Improve selection of binaries and libraries to be installed; dependent on host OS and architecture.
-
-* Improve root emulation.
 
 ---
 
