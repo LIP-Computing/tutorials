@@ -137,10 +137,10 @@ Check job status with `squeue`
 It creates a container:
 
 ```bash
-udocker create --name=tf_gpu tensorflow/tensorflow:latest-gpu
+udocker create --name=tf_gpu tensorflow/tensorflow:2.11.0-gpu
 ```
 
-And sets the appropriate execution mode (F3) for tensorflow and the nvidia mode:
+And sets the nvidia mode:
 
 ```bash
 udocker setup --nvidia --force tf_gpu
@@ -171,6 +171,20 @@ udocker run -v $TUT_DIR/udocker-files/tensorflow:/home/user -w /home/user tf_gpu
 And, if all goes well you should see in the keras-xxx.out something like this:
 
 ```text
+###############################
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+11490434/11490434 [==============================] - 1s 0us/step
+Epoch 1/5
+1875/1875 [==============================] - 6s 2ms/step - loss: 0.2912 - accuracy: 0.9153 
+Epoch 2/5
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.1427 - accuracy: 0.9574
+Epoch 3/5
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.1063 - accuracy: 0.9678
+Epoch 4/5
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0890 - accuracy: 0.9721
+Epoch 5/5
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0762 - accuracy: 0.9765
+313/313 - 1s - loss: 0.0769 - accuracy: 0.9771 - 594ms/epoch - 2ms/step
 
 ```
 
