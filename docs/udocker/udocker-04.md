@@ -115,7 +115,7 @@ udocker pull tensorflow/tensorflow:2.11.0-gpu
 
 First we create and prepare the container, later we run the actual job, the creation of the container may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
 
-Modify the script `udocker-files/prep-cont.sh` to suit your slurm options and partition settings:
+Modify the script `udocker-files/prep-keras.sh` to suit your slurm options and partition settings:
 
 ---
 
@@ -124,8 +124,8 @@ Modify the script `udocker-files/prep-cont.sh` to suit your slurm options and pa
 In general just submit this script to slurm, we assume using GPU partition:
 
 ```bash
-cd udocker-files; chmod 755 prep-cont.sh # if needed
-sbatch prep-cont.sh
+cd udocker-files; chmod 755 prep-keras.sh # if needed
+sbatch prep-keras.sh
 ```
 
 Check job status with `squeue`
@@ -187,6 +187,43 @@ Epoch 5/5
 313/313 - 1s - loss: 0.0769 - accuracy: 0.9771 - 594ms/epoch - 2ms/step
 
 ```
+
+---
+
+## And now Gromacs
+
+* I have a tarball that I built with docker from a Dockerfile in part 3 of this tutorial: `gromacs.tar`.
+* It was saved with:
+    * `docker save -o gromacs.tar gromacs`
+* Now we will load the tarball with udocker:
+    * `udocker load -i gromacs.tar gromacs`
+
+---
+
+## Gromacs image in udocker
+
+```bash
+udocker images
+
+REPOSITORY
+gromacs:latest    .
+tensorflow/tensorflow:2.11.0-gpu    .
+```
+
+Check in the filesystem:
+
+```bash
+ls -al $HOME/udocker-tutorial/.udocker/repos
+total 16
+drwxr-x---+ 4 david csys 4096 jan 20 17:38 .
+drwxr-x---+ 8 david csys 4096 jan 20 16:54 ..
+drwxr-x---+ 3 david csys 4096 jan 20 17:38 gromacs
+drwxr-x---+ 3 david csys 4096 jan 20 17:04 tensorflow
+```
+
+---
+
+
 
 ---
 
