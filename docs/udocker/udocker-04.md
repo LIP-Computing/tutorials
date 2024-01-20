@@ -50,9 +50,28 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
+## Before the beginning (slide deck 2)
+
+Access the INCD advanced computing facility at Lisbon using ssh:
+
+```bash
+ssh -l <username> cirrus8.a.incd.pt
+module load python/3.10.13
+```
+
+* The end user can download and execute udocker without system administrator intervention.
+* Install from a released version: <https://github.com/indigo-dc/udocker/releases>:
+
+```bash
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.10/udocker-1.3.10.tar.gz
+tar zxvf udocker-1.3.10.tar.gz
+export PATH=$HOME/udocker-1.3.10/udocker:$PATH
+```
+
+---
 ## In the beginning - I
 
-ssh into your favorite HPC system's head node (user interface host), install udocker and make a directory for the tutorial:
+Make a directory for the tutorial and set en variable of udocker to that dir:
 
 ```bash
 mkdir udocker-tutorial
@@ -91,7 +110,7 @@ cp -r tutorials/udocker-files .
 ## Pull a nice image
 
 ```bash
-udocker pull tensorflow/tensorflow:latest-gpu
+udocker pull tensorflow/tensorflow:2.11.0-gpu
 ```
 
 First we create and prepare the container, later we run the actual job, the creation of the container may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
@@ -124,7 +143,6 @@ udocker create --name=tf_gpu tensorflow/tensorflow:latest-gpu
 And sets the appropriate execution mode (F3) for tensorflow and the nvidia mode:
 
 ```bash
-udocker setup --execmode=F3 --force tf_gpu
 udocker setup --nvidia --force tf_gpu
 ```
 
@@ -153,11 +171,7 @@ udocker run -v $TUT_DIR/udocker-files/tensorflow:/home/user -w /home/user tf_gpu
 And, if all goes well you should see in the keras-xxx.out something like this:
 
 ```text
-2022-04-07 08:33:13.195400: I tensorflow/stream_executor/cuda/cuda_dnn.cc:368] Loaded cuDNN version 8100
-600/600 [==============================] - 34s 3ms/step - loss: 1.4332 - accuracy: 0.5095
-Epoch 2/5
-600/600 [==============================] - 2s 3ms/step - loss: 1.0013 - accuracy: 0.6673
-...
+
 ```
 
 ---

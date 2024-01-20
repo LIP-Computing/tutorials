@@ -96,7 +96,7 @@ Access the INCD advanced computing facility at Lisbon using ssh:
 
 ```bash
 ssh -l <username> cirrus8.a.incd.pt
-module load python/3.10.8
+module load python/3.10.13
 ```
 
 * The end user can download and execute udocker without system administrator intervention.
