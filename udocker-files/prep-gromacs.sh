@@ -2,6 +2,8 @@
 #SBATCH --job-name=prep_gromacs
 #SBATCH --ntasks=1
 #SBATCH --partition=hpc
+#SBATCH --output=gromacs-prep-%j.out
+#SBATCH --error=gromacs-prep-%j.err
 
 export TUT_DIR=$HOME/udocker-tutorial
 export PATH=$HOME/udocker-1.3.10/udocker:$PATH
