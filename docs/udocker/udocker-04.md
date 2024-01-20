@@ -248,6 +248,12 @@ sbatch run-gromacs.sh
 
 ---
 
+## Job output
+
+The Gromacs output files can be found in `$HOME/udocker-tutorial/gromacs/output`, and the slurm job output in `$HOME/udocker-tutorial/udocker-files/gromacs-*.out/err`
+
+---
+
 <!-- _class: lead -->
 
 # End of Hands On part III
