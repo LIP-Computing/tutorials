@@ -223,7 +223,28 @@ drwxr-x---+ 3 david csys 4096 jan 20 17:04 tensorflow
 
 ---
 
+## Submit job to create container
 
+```bash
+cd udocker-files; chmod 755 prep-gromacs.sh # if needed
+sbatch prep-gromacs.sh
+```
+
+---
+
+## Submit Gromacs job
+
+Prepare input dir and file
+
+```bash
+mkdir -p $HOME/udocker-tutorial/gromacs/input $HOME/udocker-tutorial/gromacs/output
+cd $HOME/udocker-tutorial/gromacs/input/
+wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/md.tpr
+```
+
+```bash
+sbatch run-gromacs.sh
+```
 
 ---
 
