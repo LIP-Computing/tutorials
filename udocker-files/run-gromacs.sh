@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=run_gromacs
-#SBATCH --ntasks=8
+#SBATCH --ntasks=64
 #SBATCH --partition=hpc
 #SBATCH --output=gromacs-%j.out
 #SBATCH --error=gromacs-%j.err
