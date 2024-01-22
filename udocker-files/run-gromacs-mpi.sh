@@ -23,5 +23,5 @@ module list
 
 echo "###############################"
 srun --mpi=pmi2 udocker run -v=$TUT_DIR/gromacs:/home/user -w=/home/user grom_mpi \
-    gmx mdrun -s /home/user/input/md.tpr -e $EDR -x $XTC -o $TRR -g $LOG \
+    gmx_mpi mdrun -s /home/user/input/md.tpr -e $EDR -x $XTC -o $TRR -g $LOG \
     -maxh 0.50 -resethway -noconfout -nsteps 10000
