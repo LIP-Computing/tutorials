@@ -9,7 +9,7 @@ export TUT_DIR=$HOME/udocker-tutorial
 export PATH=$HOME/udocker-1.3.10/udocker:$PATH
 cd $TUT_DIR
 export UDOCKER_DIR=$TUT_DIR/.udocker
-module load python/3.10.13
+module load python
 
 echo "###############################"
 hostname

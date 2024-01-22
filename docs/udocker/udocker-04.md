@@ -56,7 +56,7 @@ Access the INCD advanced computing facility at Lisbon using ssh:
 
 ```bash
 ssh -l <username> cirrus8.a.incd.pt
-module load python/3.10.13
+module load python
 ```
 
 * The end user can download and execute udocker without system administrator intervention.
@@ -69,6 +69,7 @@ export PATH=$HOME/udocker-1.3.10/udocker:$PATH
 ```
 
 ---
+
 ## In the beginning - I
 
 Make a directory for the tutorial and set en variable of udocker to that dir:
@@ -166,7 +167,7 @@ udocker run -v $TUT_DIR/udocker-files/tensorflow:/home/user -w /home/user tf_gpu
 
 ---
 
-## Job output
+## Job output of tensoflow run
 
 And, if all goes well you should see in the keras-xxx.out something like this:
 
@@ -194,9 +195,9 @@ Epoch 5/5
 
 * I have a tarball that I built with docker from a Dockerfile in part 3 of this tutorial: `gromacs.tar`.
 * It was saved with:
-    * `docker save -o gromacs.tar gromacs`
+  * `docker save -o gromacs.tar gromacs`
 * Now we will load the tarball with udocker:
-    * `udocker load -i gromacs.tar gromacs`
+  * `udocker load -i gromacs.tar gromacs`
 
 ---
 
@@ -248,7 +249,7 @@ sbatch run-gromacs.sh
 
 ---
 
-## Job output
+## Job output of Gromacs run
 
 The Gromacs output files can be found in `$HOME/udocker-tutorial/gromacs/output`, and the slurm job output in `$HOME/udocker-tutorial/udocker-files/gromacs-*.out/err`
 

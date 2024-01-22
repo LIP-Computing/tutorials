@@ -20,7 +20,10 @@ echo ">> List images"
 udocker images
 echo
 echo ">> Create container"
-udocker create --name=grom gromacs
+udocker create --name=grom_mpi gromacs-mpi
+echo
+echo ">> Set execmode to F3"
+udocker setup --execmode=F3 grom_mpi
 echo
 echo ">> List containers"
 udocker ps -m -p
