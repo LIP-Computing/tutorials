@@ -245,10 +245,10 @@ Now you are inside the container (apparently as `root`), you might as well try o
 
 ```bash
 root@pcdavid:~# python
-Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
-[GCC 9.3.0] on linux
+Python 3.11.0rc1 (main, Aug 12 2022, 10:02:14) [GCC 11.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import tensorflow as tf
+>>> quit()
 ```
 
 Or:
