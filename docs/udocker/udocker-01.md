@@ -285,7 +285,7 @@ Containers can be created with other tools.
 
 ---
 
-## Components
+## Components - I
 
 * The udocker Python code (this is what you need to fetch)
   * Command line interface
@@ -293,6 +293,10 @@ Containers can be created with other tools.
   * Container and image handling: import, load, save and export
   * Local images repository
   * Interface with the execution engines
+
+---
+
+## Components - II
 
 * udocker tools
   * Pulled and installed upon first invocation of udocker
@@ -384,7 +388,7 @@ The created container can be run as many times as you wish.
 
 ## udocker: pull - Images II
 
-![bg right:50% w:650px](imgs/udocker-pull.png)
+![bg right:50% w:600px](imgs/udocker-pull.png)
 
 ---
 

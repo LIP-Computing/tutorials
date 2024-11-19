@@ -95,8 +95,8 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 Access the INCD advanced computing facility at Lisbon using ssh:
 
 ```bash
-ssh -l <username> cirrus8.a.incd.pt
-module load python/3.10.13
+ssh -l <username> cirrus.a.incd.pt
+module load python/3.10
 ```
 
 * The end user can download and execute udocker without system administrator intervention.
@@ -104,9 +104,9 @@ module load python/3.10.13
   * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
 
 ```bash
-wget https://github.com/indigo-dc/udocker/releases/download/1.3.10/udocker-1.3.10.tar.gz
-tar zxvf udocker-1.3.10.tar.gz
-export PATH=`pwd`/udocker-1.3.10/udocker:$PATH
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.17/udocker-1.3.17.tar.gz
+tar zxvf udocker-1.3.17.tar.gz
+export PATH=`pwd`/udocker-1.3.17/udocker:$PATH
 ```
 
 ---
@@ -120,7 +120,7 @@ export PATH=`pwd`/udocker-1.3.10/udocker:$PATH
 ```bash
 python3 -m venv udockervenv
 source udockervenv/bin/activate
-pip install udocker==1.3.10
+pip install udocker
 ```
 
 ---
