@@ -38,7 +38,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker - *be anywhere*
+# `udocker` - *be anywhere*
 
 ## Advanced technical details
 
@@ -54,11 +54,11 @@ Jorge Gomes <jorge@lip.pt>
 
 ## Programing languages and OS
 
-* Implemented
+* Implemented in:
   * python, C, C++, go
 
 * Can run:
-  * CentOS 6, CentOS 7, RHEL 8 or RHEL 9 (compatible distros)
+  * CentOS 7, RHEL 8 or RHEL 9 (compatible distros)
   * Ubuntu >= 16.04
   * Any distro that supports python 2.7 and >= 3.6
 
@@ -66,84 +66,84 @@ Jorge Gomes <jorge@lip.pt>
 
 ## Components
 
-* Command line interface docker like
-* Pull of containers from Docker Hub
-* Local repository of images and containers
-* Execution of containers with modular engines
+* Command line interface similar or the same as docker.
+* Pull of containers from DockerHub and other docker registries.
+* Local repository of images and containers.
+* Execution of containers with modular engines.
 
 ---
 
-## udocker: Execution engines - I
+## `udocker`: Execution engines - I
 
-udocker supports several techniques to achieve the equivalent to a chroot without using privileges, to execute containers.
+`udocker` supports several techniques to achieve the equivalent to a chroot without using privileges, to execute containers.
 
 They are selected per container id via execution modes.
 
 ---
 
-## udocker: Execution engines - II
+## `udocker`: Execution engines - II
 
-| Mode  | Base        | Description |
-| :---: | :---------: | :---------: |
-| *P1*    | PRoot       | PTRACE accelerated (with SECCOMP filtering): *DEFAULT* |
-| P2    | PRoot       | PTRACE non-accelerated (without SECCOMP filtering) |
-| R1    | runC/Crun   | rootless unprivileged using user namespaces |
-| R2    | runC/Crun   | rootless unprivileged using user namespaces + P1 |
-| R3    | runC/Crun   | rootless unprivileged using user namespaces + P2 |
-| F1    | Fakechroot  | with loader as argument and LD_LIBRARY_PATH |
+| Mode  | Base        | Description                                                  |
+| :---: | :---------: | :----------------------------------------------------------: |
+| P1    | PRoot       | PTRACE accelerated (with SECCOMP filtering): *DEFAULT*       |
+| P2    | PRoot       | PTRACE non-accelerated (without SECCOMP filtering)           |
+| R1    | runC/Crun   | rootless unprivileged using user namespaces                  |
+| R2    | runC/Crun   | rootless unprivileged using user namespaces + P1             |
+| R3    | runC/Crun   | rootless unprivileged using user namespaces + P2             |
+| F1    | Fakechroot  | with loader as argument and LD_LIBRARY_PATH                  |
 | F2    | Fakechroot  | with modified loader, loader as argument and LD_LIBRARY_PATH |
-| F3    | Fakechroot  | modified loader and ELF headers of binaries + libs changed |
-| F4    | Fakechroot  | modified loader and ELF headers dynamically changed |
-| S1    | Singularity | where locally installed using chroot or user namespaces |
+| F3    | Fakechroot  | modified loader and ELF headers of binaries + libs changed   |
+| F4    | Fakechroot  | modified loader and ELF headers dynamically changed          |
+| S1    | Singularity | where locally installed using chroot or user namespaces      |
 
 ---
 
-## udocker: PRoot engine (P1 and P2)
+## `udocker`: PRoot engine (P1 and P2)
 
-* PRoot uses PTRACE to intercept system calls
+* PRoot uses PTRACE to intercept system calls.
 
-* Pathnames are modified before the call
-  * To expand container pathnames into host pathnames
-  * `/bin/ls` to `/home/user/.udocker/containers/CONTAINER-NAME/ROOT/bin/ls`
+* Pathnames are modified before the call:
+  * To expand container pathnames into host pathnames.
+  * `/bin/ls` becomes `/home/user/.udocker/containers/CONTAINER-NAME/ROOT/bin/ls`.
 
-* If pathnames are returned they are modified after the call
-  * To shrink host pathnames to container pathnames
-  * `/home/user/.udocker/containers/CONTAINER-NAME/ROOT/bin/ls` to `/bin/ls`
+* If pathnames are returned they are modified after the call:
+  * To shrink host pathnames to container pathnames.
+  * `/home/user/.udocker/containers/CONTAINER-NAME/ROOT/bin/ls` becomes `/bin/ls`.
 
-* P1 and P2 are very generic modes adequate for most applications
-  * They also offer root emulation
-* As new system calls are added they must be also be added to PRoot
+* P1 and P2 are very generic modes adequate for most applications:
+  * They also offer root emulation.
+* As new system calls are added they must be also be added to PRoot:
   * Often compatibility also needs to be added for older kernels.
 
 ---
 
-## udocker: PRoot engine (P1)
+## `udocker`: PRoot engine (P1)
 
-* The P1 mode uses PTRACE + SECCOMP filtering
-  * P1 is the udocker default mode
-  * System call interception is limited to the set of calls that manipulate pathnames
-  * We fixed PRoot for SECCOMP on recent kernels, most changes incorporated upstream
+* The P1 mode uses PTRACE + SECCOMP filtering:
+  * P1 is the `udocker` default mode.
+  * System call interception is limited to the set of calls that manipulate pathnames.
+  * We fixed PRoot for SECCOMP on recent kernels, most changes incorporated upstream.
 
-* The impact of tracing depends on the system call frequency
-  * In most cases the performance is good
-  * Applications that are heavily threaded or pathname intensive might be impacted
-
----
-
-## udocker: PRoot engine (P2)
-
-* The P2 mode uses PTRACE without SECCOMP
-  * Therefore intercepts all system calls even the if they don't make use pathnames
-  * P1 falls back to P2 on old Linux kernels without SECCOMP (e.g. CentOS 6)
-
-* The impact of tracing depends on the system call frequency
-  * Since all system calls are intercepted can be slow
-  * Applications that are heavily threaded or pathname intensive can be very impacted
-  * In such cases using Fn modes is recommended
+* The impact of tracing depends on the system call frequency:
+  * In most cases the performance is good.
+  * Applications that are heavily threaded or pathname intensive might be impacted.
 
 ---
 
-## udocker: runC/crun engine (R1) - I
+## `udocker`: PRoot engine (P2)
+
+* The P2 mode uses PTRACE without SECCOMP:
+  * Therefore intercepts all system calls even if they don't make use pathnames.
+  * P1 falls back to P2 on old Linux kernels without SECCOMP (e.g. CentOS 6).
+
+* The impact of tracing depends on the system call frequency:
+  * Since all system calls are intercepted it can be slow.
+  * Applications that are heavily threaded or pathname intensive highly impacted.
+  * In such cases using Fn modes is recommended.
+
+---
+
+## `udocker`: runC/crun engine (R1) - I
 
 * runC and crun are tools to spawn containers according to the Open Containers Initiative (OCI) specification:
   * They support unprivileged namespaces using the *user namespace*.
@@ -153,22 +153,22 @@ They are selected per container id via execution modes.
 
 ---
 
-## udocker: runC/crun engine (R1) - II
+## `udocker`: runC/crun engine (R1) - II
 
-* To support runC/crun in udocker:
+* To support runC/crun in `udocker`:
   * We added conversion of Docker metadata to the OCI spec format.
-  * udocker can produce an OCI spec and run the containers with runC/crun transparently.
+  * `udocker` can produce an OCI spec and run the containers with runC/crun transparently.
   * While runC is written in go, crun is written in C and is generally faster.
-  * Depending on the host system udocker selects crun or runC.
-  * crun provides support for the kernel cgroups version 2 which became required in some distributions.
+  * Depending on the host system `udocker` selects crun or runC.
+  * crun provides support for the kernel cgroups version 2 which became a requirement in some distributions.
 
 ---
 
-## udocker: runC/crun engine (R2 and R3)
+## `udocker`: runC/crun engine (R2 and R3)
 
 * The R2 and R3 execution modes are nested:
   * These modes make use of P1 or P2 from inside the R engine.
-  * It is used to overcome some of the *user namespace* limitations.
+  * It is used to overcome some *user namespace* limitations.
   * They are not generally necessary.
   * All limitations of the P1 and P2 modes also apply to R2 and R3.
 
@@ -180,40 +180,43 @@ udocker run  -v /tmp myContainerId
 
 ---
 
-## udocker: Fakechroot engine - I
+## `udocker`: Fakechroot engine - I
 
-* Fakechroot is a library to provide chroot-like behaviour.
-  * It was conceived to support debootstrap in debian
+* Fakechroot is a library that provides chroot-like behaviour:
+  * It was conceived to support debootstrap in debian.
 
-* For udocker 
-  * It has been heavily modified to support Linux containers with udocker
-  * Supports both `glibc` and `musl libc` (ported by the udocker developers)
+* Regarding `udocker`:
+  * It has been heavily modified to support Linux containers with `udocker`.
+  * Supports both `glibc` and `musl libc` (ported by the `udocker` developers).
 
-* Uses the Linux loader LD_PRELOAD mechanism to;
+* Uses the Linux loader LD_PRELOAD mechanism to:
   * Intercept calls to the `libc.so` functions that manipulate pathnames.
   * Translates the pathnames before and after the call similarly to PRoot.
   * Does not work with statically compiled executables.
 
 ---
 
-## udocker: Fakechroot engine - II
+## `udocker`: Fakechroot engine - II
 
 * In the original fakechroot the executables must match the host loader and libc.
   * Shared libraries are loaded from the host not the container.
   * Causing symbol mismatches and application crashes.
 
-* Why is this ?
+* Why is this?
+
   * The path to the loader `ld.so` is inside the ELF header of all executables.
-    * is an absolute path pointing to the host 
-    * `readelf --program-headers /bin/ls | grep interpreter`
-    * since loading starts before execution we cannot intercept and translate
-  * Pathnames to library locations and ld.so.cache inside `ld.so` are absolute.
-    * loaders are statically linked so we cannot intercept and translate
+    * It's an absolute path pointing to the host:
+    * `readelf --program-headers /bin/ls | grep interpreter`.
+    * since loading starts before execution we cannot intercept and translate.
+
+  * Pathnames to library locations and ld.so.cache inside `ld.so` are absolute:
+    * loaders are statically linked so we cannot intercept and translate.
+
   * Absolute paths also may exist in the ELF headers of executables and libraries.
 
 ---
 
-## udocker: Fakechroot engine - III
+## `udocker`: Fakechroot engine - III
 
 * The shared library loader `ld.so` searches for libraries:
   * If the pathname has a `/` they are directly loaded (*PROBLEM*).
@@ -221,64 +224,64 @@ udocker run  -v /tmp myContainerId
     1. DT_RPATH dynamic section attribute of the ELF executable (*PROBLEM*).
     2. LD_LIBRARY_PATH environment variable (this can be easily set).
     3. DT_RUNPATH dynamic section attribute of the ELF executable (*PROBLEM*).
-    4. cache file /etc/ld.so.cache (*PROBLEM*).
-    5. default paths such as /lib64, /usr/lib64, /lib, /usr/lib (*PROBLEM*).
+    4. Cache file /etc/ld.so.cache (*PROBLEM*).
+    5. Default paths such as /lib64, /usr/lib64, /lib, /usr/lib (*PROBLEM*).
 
 ---
 
-## udocker: Fakechroot engine (F1) - I
+## `udocker`: Fakechroot engine (F1) - I
 
 * The path to the loader `ld.so` is inside the ELF header of all executables;
   * the loader is the executable that loads libraries and calls the actual executable,
   * also acts as a library providing functions to dynamically load other libraries.
   * the loader is provided and tightly coupled with the libc.
 
-* Is essential that executables in the container are run with the loader from the container 
-  * as symbols and functions will not match causing crashes
-  * binaries, libc, other libs and ld.so must match
+* Is essential that executables in the container are run with the loader from the container;
+  * as symbols and functions will not match causing crashes,
+  * binaries, libc, other libs and ld.so must match.
 
 ---
 
-## udocker: Fakechroot engine (F1) - II
+## `udocker`: Fakechroot engine (F1) - II
 
 * The mode F1 enforces the use of the loader provided by the container:
   * Passes it as 1st argument in *exec* and similar system calls shifting argv.
-  * Like this executables are always started by the loader of the container
-  * `/pathname/ld-linux-x86-64.so /pathname/bin/ls`
+  * Thus, executables are always started by the loader of the container.
+  * `/pathname/ld-linux-x86-64.so /pathname/bin/ls`.
 
 * Enforcement of library locations:
   * Is performed by filling in LD_LIBRARY_PATH with the container paths.
-  * Uses library paths extracted from the container `ld.so.cache`
-  * `export LD_LIBRARY_PATH=/home/u/containers/ID/ROOT/lib64: ...`
+  * Uses library paths extracted from the container `ld.so.cache`.
+  * `export LD_LIBRARY_PATH=/home/u/containers/ID/ROOT/lib64: ...`.
 
-* If the ELF headers of binaries contain absolute paths then host libraries may endup being loaded.
+* If the ELF headers of binaries contain absolute paths then host libraries may end up being loaded.
 
 ---
 
-## udocker: Fakechroot engine (F2) - I
+## `udocker`: Fakechroot engine (F2) - I
 
 * The mode F2 modifies the loader binary within the container:
   * A copy of the container loader is made.
-  * The loader binary is then edited by udocker.
-  * The loading from host locations `/lib`, `/lib64` etc is disabled.
+  * The loader binary is then edited by `udocker`.
+  * The loading from host locations `/lib`, `/lib64` etc. is disabled.
   * The loading using the host `ld.so.cache` is disabled.
   * `LD_LIBRARY_PATH` is renamed to `LD_LIBRARY_REAL`.
 
 ---
 
-## udocker: Fakechroot engine (F2) - II
+## `udocker`: Fakechroot engine (F2) - II
 
 * Upon execution:
   * Invocation is performed as in mode F1.
   * The `LD_LIBRARY_REAL` is filled with library paths from the container and its `ld.so.cache`.
-  * Changes made by the user to `LD_LIBRARY_PATH` are intercepted 
-    * the pathnames are adjusted to container locations and inserted in `LD_LIBRARY_REAL`.
-    * like this LD_LIBRARY_PATH remains untouched for the executables
-    * but in practice is the LD_LIBRARY_REAL with the containers paths that is used
+  * Changes made by the user to `LD_LIBRARY_PATH` are intercepted:
+    * The pathnames are adjusted to container locations and inserted in `LD_LIBRARY_REAL`.
+    * Like this LD_LIBRARY_PATH remains untouched for the executables,
+    * but in practice it's the LD_LIBRARY_REAL with the containers paths that is used.
 
 ---
 
-## udocker: Fakechroot engine (F3 and F4) - I
+## `udocker`: Fakechroot engine (F3 and F4) - I
 
 * The mode F3 modifies binaries both executables and libraries:
   * The PatchELF tool was heavily modified to enable easier change of:
@@ -287,25 +290,22 @@ udocker run  -v /tmp myContainerId
 
 * With F3 or F4 the ELF headers of container executables and libraries are edited with PatchELF:
   * The loader location is changed to point to the container.
-  * The libraries location if absolute are changed to point to the container.
+  * If the libraries location is absolute, then they are changed to point to the container.
   * The libraries search paths inside the binaries are changed to point to container locations.
 
 ---
 
-## udocker: Fakechroot engine (F3 and F4) - II
+## `udocker`: Fakechroot engine (F3 and F4) - II
 
 * The loader no longer needs to be passed as first argument.
-
 * The libraries are always fetched from container locations.
-
 * The LD_LIBRARY_REAL continues to be used in F3 and F4.
-
 * The mode F4 adds dynamic editing of executables and libraries.
   * This is useful if libraries or executables are added to a container or created as result of a compilation.
 
 ---
 
-## udocker: Fakechroot engine (F3 and F4) - III
+## `udocker`: Fakechroot engine (F3 and F4) - III
 
 * Containers in modes F3 and F4 cannot be transparently moved across different systems:
   * The absolute pathnames to the container locations will likely differ.
