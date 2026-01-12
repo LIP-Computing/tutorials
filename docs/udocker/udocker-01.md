@@ -419,67 +419,66 @@ The created container can be run as many times as you wish.
 ## `udocker`: Execution engines I
 
 * Like in other container tools execution is achieved by providing `chroot` like functionality.
-* `udocker` supports several techniques to achieve the equivalent to a chroot without using privileges.
+* `udocker` supports several techniques to achieve the equivalent to a `chroot` without using privileges.
 * These techniques can be selected per container via execution modes implemented by execution engines.
 
 ---
 
 ## `udocker`: Execution engines II
 
-| Mode  | Base        | Description |
-| :---: | :---------: | :---------: |
-| P1    | PRoot       | PTRACE accelerated (with SECCOMP filtering): *DEFAULT* |
-| P2    | PRoot       | PTRACE non-accelerated (without SECCOMP filtering) |
-| R1    | runC        | rootless unprivileged using user namespaces |
-| R2    | runC        | rootless unprivileged using user namespaces + P1 |
-| R3    | runC        | rootless unprivileged using user namespaces + P2 |
-| F1    | Fakechroot  | with loader as argument and LD_LIBRARY_PATH |
+| Mode  | Base        | Description                                                  |
+| :---: | :---------: | :----------------------------------------------------------: |
+| P1    | PRoot       | PTRACE accelerated (with SECCOMP filtering): *DEFAULT*       |
+| P2    | PRoot       | PTRACE non-accelerated (without SECCOMP filtering)           |
+| R1    | runC        | rootless unprivileged using user namespaces                  |
+| R2    | runC        | rootless unprivileged using user namespaces + P1             |
+| R3    | runC        | rootless unprivileged using user namespaces + P2             |
+| F1    | Fakechroot  | with loader as argument and LD_LIBRARY_PATH                  |
 | F2    | Fakechroot  | with modified loader, loader as argument and LD_LIBRARY_PATH |
-| F3    | Fakechroot  | modified loader and ELF headers of binaries + libs changed |
-| F4    | Fakechroot  | modified loader and ELF headers dynamically changed |
-| S1    | Singularity | where locally installed using chroot or user namespaces |
+| F3    | Fakechroot  | modified loader and ELF headers of binaries + libs changed   |
+| F4    | Fakechroot  | modified loader and ELF headers dynamically changed          |
+| S1    | Singularity | where locally installed using chroot or user namespaces      |
 
 ---
 
 ## Selection in terms of performance
 
-| Mode  | Base        | Description |
-| :---: | :---------: | :---------: |
-| P1    | PRoot       | System call intensive applications may suffer degradation |
-| P2    | PRoot       | Same limitations as P1 apply. All system calls are traced causing higher overheads than P1 |
-| R1    | runC        | Same performance as namespace based applications |
-| R2    | runC        | Only for software installation and similar. Same performance as P1 |
-| R3    | runC        | Only for software installation and similar. Same performance as P2 |
+| Mode  | Base        | Description                                                                                     |
+| :---: | :---------: | :---------------------------------------------------------------------------------------------: |
+| P1    | PRoot       | System call intensive applications may suffer degradation                                       |
+| P2    | PRoot       | Same limitations as P1 apply. All system calls are traced causing higher overheads than P1      |
+| R1    | runC        | Same performance as namespace based applications                                                |
+| R2    | runC        | Only for software installation and similar. Same performance as P1                              |
+| R3    | runC        | Only for software installation and similar. Same performance as P2                              |
 | F1    | Fakechroot  | All Fn modes have similar performance during execution. Frequently the Fn modes are the fastest |
-| F2    | Fakechroot  | Same as F1 |
-| F3    | Fakechroot  | Same as F1. Setup can be very slow |
-| F4    | Fakechroot  | Same as F1. Setup can be very slow |
-| S1    | Singularity | Similar to Rn |
+| F2    | Fakechroot  | Same as F1                                                                                      |
+| F3    | Fakechroot  | Same as F1. Setup can be very slow                                                              |
+| F4    | Fakechroot  | Same as F1. Setup can be very slow                                                              |
+| S1    | Singularity | Similar to Rn                                                                                   |
 
 ---
 
 ## Selection in terms of interoperability I
 
-| Mode  | Base        | Description |
-| :---: | :---------: | :---------: |
-| P1    | PRoot       | PTRACE + SECCOMP requires kernel >= 3.5. Can fall back to P2 if SECCOMP is unavailable |
+| Mode  | Base        | Description                                                                                                               |
+| :---: | :---------: | :-----------------------------------------------------------------------------------------------------------------------: |
+| P1    | PRoot       | PTRACE + SECCOMP requires kernel >= 3.5. Can fall back to P2 if SECCOMP is unavailable                                    |
 | P2    | PRoot       | Runs across a wide range of kernels even old ones. Can run with kernels and libraries that would fail with kernel too old |
-| R1    | runC        | User namespace limitations apply |
-| R2    | runC        | User namespace limitations apply. Same limitations as P1 also apply, this is a nested mode P1 over R |
-| R3    | runC        | User namespace limitations apply. Same limitations as P2 also apply, this is a nested mode P2 over R |
-
+| R1    | runC        | User namespace limitations apply                                                                                          |
+| R2    | runC        | User namespace limitations apply. Same limitations as P1 also apply, this is a nested mode P1 over R                      |
+| R3    | runC        | User namespace limitations apply. Same limitations as P2 also apply, this is a nested mode P2 over R                      |
 
 ---
 
 ## Selection in terms of interoperability II
 
-| Mode  | Base        | Description |
-| :---: | :---------: | :---------: |
+| Mode  | Base        | Description                                                                                            |
+| :---: | :---------: | :----------------------------------------------------------------------------------------------------: |
 | F1    | Fakechroot  | May escape and load host libraries. Requires shared library compiled against same libc as in container |
-| F2    | Fakechroot  | Same as F1 |
+| F2    | Fakechroot  | Same as F1                                                                                             |
 | F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
-| F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically |
-| S1    | Singularity | Not part of `udocker` must already exist on the system, may use user namespaces or chroot |
+| F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically                             |
+| S1    | Singularity | Not part of `udocker` must already exist on the system, may use user namespaces or chroot              |
 
 ---
 
@@ -491,23 +490,23 @@ The created container can be run as many times as you wish.
 
 ## `udocker` & Lattice QCD
 
-OpenQCD is a very advanced code to run lattice simulations
+OpenQCD is a very advanced code to run lattice simulations.
 
 Scaling performance as a function of the cores for the computation of application of the Dirac operator to a spinor field.
 
-Using OpenMPI, `udocker` in P1 mode
+Using OpenMPI, `udocker` in P1 mode.
 
 ![bg right:40% w:550px](imgs/scaling.png)
 
 ---
 
-## `udocker` & `udocker` & Molecular dynamics
+## `udocker` & Molecular dynamics
 
-Gromacs is widely used both in biochemical and non-biochemical systems. 
+Gromacs is widely used both in biochemical and non-biochemical systems.
 
-In this comparison Gromacs was run using CUDA and OpenMP
+In this comparison Gromacs was run using CUDA and OpenMP:
 
-* `udocker` using P mode has lower performance with Gromacs
+* `udocker` using P mode has lower performance with Gromacs.
 * `udocker` using F mode has same or better performance as Docker.
 
 ![bg right:50% w:700px](imgs/ratio-gromacs.png)
@@ -516,17 +515,22 @@ In this comparison Gromacs was run using CUDA and OpenMP
 
 ## `udocker` & Phenomenology
 
-MasterCode connects several complex codes. Hard to deploy. Scanning through large parameter spaces. High Throughput Computing.
+MasterCode connects several complex codes:
 
-C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1 mode*)
+* Hard to deploy.
+* Scanning through large parameter spaces.
+* High Throughput Computing.
+* C++, Fortran, many authors, legacy code.
+
+Performance Degradation (*udocker in P1 mode*)
   
 | Environment | Compiling | Running |
 | :---------: | :-------: | :-----: |
-| HOST        |  0% |   0% |
-| DOCKER      | 10% | 1.0% |
-| udocker     |  7% | 1.3% |
-| VirtualBox  | 15% | 1.6% |
-| KVM         |  5% | 2.6% |
+| HOST        |  0%       |   0%    |
+| DOCKER      | 10%       | 1.0%    |
+| udocker     |  7%       | 1.3%    |
+| VirtualBox  | 15%       | 1.6%    |
+| KVM         |  5%       | 2.6%    |
 
 ---
 
@@ -551,11 +555,7 @@ C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1
 
 ## Other container technologies
 
-* Singularity (LBL) - `udocker` currently supports it as execution mode
-
-* Charliecloud (LANL) - devels contacted Jorge: can `udocker` have a mode for it?
-  "Merge" the `udocker`, CLI functionality with underlying Charliecloud engine?
-
-* Shifter (NERSC) - at the moment no plans on any type of usage/integration in `udocker`.
-
-* Podman (RedHat)
+* Singularity/Apptainer (LBL) <https://apptainer.org/> - `udocker` currently supports it as execution mode.
+* Charliecloud (LANL) <https://charliecloud.io/>.
+* Shifter (NERSC) <https://docs.nersc.gov/development/containers/shifter/how-to-use/>.
+* Podman (RedHat) <https://www.redhat.com/en/topics/containers/what-is-podman>.
