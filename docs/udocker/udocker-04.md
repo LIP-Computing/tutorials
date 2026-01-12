@@ -37,7 +37,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker - *be anywhere*
+# `udocker` - *be anywhere*
 
 ## Part 4 - Hands On: submission to SLURM clusters
 
@@ -52,14 +52,14 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ## Before the beginning (slide deck 2)
 
-Access the INCD advanced computing facility at Lisbon using ssh:
+Access the ACNCA (former INCD) advanced computing facility at Lisbon using ssh:
 
 ```bash
-ssh -l <username> cirrus8.a.incd.pt
+ssh -l <username> cirrus.a.incd.pt
 module load python
 ```
 
-* The end user can download and execute udocker without system administrator intervention.
+* The end user can download and execute `udocker` without system administrator intervention.
 * Install from a released version: <https://github.com/indigo-dc/udocker/releases>:
 
 ```bash
@@ -72,7 +72,7 @@ export PATH=$HOME/udocker-1.3.10/udocker:$PATH
 
 ## In the beginning - I
 
-Make a directory for the tutorial and set en variable of udocker to that dir:
+Make a directory for the tutorial and set en variable of `udocker` to that dir:
 
 ```bash
 mkdir udocker-tutorial
@@ -94,7 +94,7 @@ ls -al $UDOCKER_DIR
 
 I assume that the compute/worker nodes mount your $HOME directory or, you can do this in some directory mounted in the compute/worker nodes.
 
-Git pull the repository to get needed input files, in particular for the tensorflow/keras application:
+Git pull the repository to get the necessary input files, for the tensorflow/keras application:
 
 ```bash
 git clone https://github.com/LIP-Computing/tutorials.git
@@ -114,7 +114,8 @@ cp -r tutorials/udocker-files .
 udocker pull tensorflow/tensorflow:2.11.0-gpu
 ```
 
-First we create and prepare the container, later we run the actual job, the creation of the container may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
+First we create and prepare the container, later we run the actual job, the creation of the container
+may take some time (a few minutes), thus we do it once initially. And we can use some fast/low resource queue.
 
 Modify the script `udocker-files/prep-keras.sh` to suit your slurm options and partition settings:
 
@@ -135,13 +136,13 @@ Check job status with `squeue`
 
 ## Creates the container and setup exec mode
 
-It creates a container:
+Creating a container:
 
 ```bash
 udocker create --name=tf_gpu tensorflow/tensorflow:2.11.0-gpu
 ```
 
-And sets the nvidia mode:
+Set the nvidia mode:
 
 ```bash
 udocker setup --nvidia --force tf_gpu
@@ -153,7 +154,7 @@ Check the output of the slurm job `cat slurm-NNNN.out`
 
 ## Run the container
 
-Check the script `udocker-files/run-keras.sh` and modify it the slurm options and partition:
+Check the script `udocker-files/run-keras.sh` and modify the slurm options and partition as you see fit:
 
 ```bash
 sbatch run-keras.sh
@@ -196,12 +197,12 @@ Epoch 5/5
 * I have a tarball that I built with docker from a Dockerfile in part 3 of this tutorial: `gromacs.tar`.
 * It was saved with:
   * `docker save -o gromacs.tar gromacs`
-* Now we will load the tarball with udocker:
+* Now we will load the tarball with `udocker`:
   * `udocker load -i gromacs.tar gromacs`
 
 ---
 
-## Gromacs image in udocker
+## Gromacs image in `udocker`
 
 ```bash
 udocker images
@@ -251,7 +252,8 @@ sbatch run-gromacs.sh
 
 ## Job output of Gromacs run
 
-The Gromacs output files can be found in `$HOME/udocker-tutorial/gromacs/output`, and the slurm job output in `$HOME/udocker-tutorial/udocker-files/gromacs-*.out/err`
+The Gromacs output files can be found in `$HOME/udocker-tutorial/gromacs/output`, and the slurm job
+output in `$HOME/udocker-tutorial/udocker-files/gromacs-*.out/err`
 
 ---
 
