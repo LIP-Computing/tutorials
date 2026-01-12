@@ -37,7 +37,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker - *be anywhere*
+# `udocker` - *be anywhere*
 
 ## Part 2 - Hands On: basic stuff
 
@@ -50,41 +50,41 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
-## What udocker is not - I
+## What `udocker` is not - I
 
 * Not appropriate to run services:
   * In most cases you need root privileges to run services.
   * You have Docker (or other container tools) for this.
 
-* udocker is a run-time and is not meant to build docker images:
+* `udocker` is a run-time and is not meant to build docker images:
   * Docker images should be built with Docker.
   * Use you (Lap/Des)top with Docker, for this.
 
 ---
 
-## What udocker is not - II
+## What `udocker` is not - II
 
 * docker-compose like functionality:
   * This is usually to compose micro-services to deploy a platform/service.
-  * Again udocker is not appropriate to run services.
+  * Again `udocker` is not appropriate to run services.
   * Use docker-compose itself for this.
 
 ---
 
-## udocker aims/objectives
+## `udocker` aims/objectives
 
-* Execute applications encapsulated with dependencies in containers
-  * as non privilege user.
-* Execute containers from docker images 
-  * including officially supported images in Dockerhub.
-* Execute applications with very specific, customized libraries and environments
-  * difficult to support in very controlled systems such as HPC machines.
+* Execute applications encapsulated with dependencies in containers:
+  * As non privilege user.
+* Execute containers from docker images:
+  * Including officially supported images in Dockerhub and other docker registries.
+* Execute applications with very specific, customized libraries and environments:
+  * Difficult to support in very controlled systems such as HPC machines.
 
 ---
 
 <!-- _class: lead -->
 
-# udocker: Installation
+# `udocker`: Installation
 
 <https://indigo-dc.github.io/udocker/installation_manual.html>
 
@@ -92,14 +92,14 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ## Installation: tarball
 
-Access the INCD advanced computing facility at Lisbon using ssh:
+Access the ACNCA (former INCD) advanced computing facility at Lisbon using ssh:
 
 ```bash
 ssh -l <username> cirrus.a.incd.pt
 module load python/3.10
 ```
 
-* The end user can download and execute udocker without system administrator intervention.
+* The end user can download and execute `udocker` without system administrator intervention.
 * Install from a released version:
   * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
 
@@ -114,8 +114,7 @@ export PATH=`pwd`/udocker-1.3.17/udocker:$PATH
 ## Installation: PyPI - I
 
 * Install from PyPI using pip:
-  * For installation with pip it is advisable to setup a Python3 virtual
-    environment
+  * For installation with pip it is advisable to setup a Python3 virtual environment.
 
 ```bash
 python3 -m venv udockervenv
@@ -127,9 +126,10 @@ pip install udocker
 
 ## Installation: PyPI - II
 
-The udocker command will be `udockervenv/bin/udocker`.
+The `udocker` command will be `udockervenv/bin/udocker`.
 
-* Optionally, we can set `UDOCKER_DIR` environment variable where the binaries, libraries images and containers will be saved. The default directory is `$HOME/.udocker`.
+* Optionally, we can set `UDOCKER_DIR` environment variable where the binaries, libraries images
+  and containers will be saved. The default directory is `$HOME/.udocker`.
 
 ```bash
 mkdir udocker-tutorial
@@ -143,8 +143,7 @@ export UDOCKER_DIR=$HOME/udocker-tutorial/.udocker
 
 ## Installation: tools and libraries - I
 
-* udocker executes containers using external tools and libraries that are enhanced and packaged for use with udocker.
-
+* `udocker` executes containers using external tools and libraries that are enhanced and packaged for use with `udocker`.
 * To complete the installation, download and install the required tools and libraries.
 
 ```bash
@@ -155,16 +154,14 @@ udocker install
 
 ## Installation: tools and libraries - II
 
-* Installs by default in `$HOME/.udocker`, or
-  in `UDOCKER_DIR=$HOME/udocker-tutorial/.udocker`.
-
-* Explore the directory structure under `$HOME/udocker-tutorial/.udocker`
+* Installs by default in `$HOME/.udocker`, or in `UDOCKER_DIR=$HOME/udocker-tutorial/.udocker`.
+* Explore the directory structure under `$HOME/udocker-tutorial/.udocker`.
 
 ---
 
 <!-- _class: lead -->
 
-# udocker: CLI - the basic (introductory) stuff
+# `udocker`: CLI - the basic (introductory) stuff
 
 <https://indigo-dc.github.io/udocker/user_manual.html>
 
@@ -172,14 +169,14 @@ udocker install
 
 ## 0. help and version
 
-Global help and version
+Global help and version:
 
 ```bash
 udocker --help
 udocker --version
 ```
 
-You can get help on a given command
+You can get help on a given command:
 
 ```bash
 udocker run --help
@@ -220,8 +217,7 @@ udocker create --name=mytensor tensorflow/tensorflow
 
 ## 4. ps
 
-List extracted containers. These are not processes but containers extracted and available for
-execution:
+List extracted containers. These are not processes, but containers extracted and available for execution:
 
 ```bash
 udocker ps
@@ -231,7 +227,8 @@ udocker ps
 
 ## 5. run: I
 
-Executes a container. Several execution engines are provided. The container can be specified using the container id or its associated name. Additionally it is possible to invoke run with an image name:
+Executes a container. Several execution engines are provided. The container can be specified using
+the container id or its associated name. Additionally, it is possible to invoke run with an image name:
 
 ```bash
 udocker run mytensor bash
@@ -261,7 +258,8 @@ udocker run mytensor cat /etc/lsb-release
 
 ## 6. setup
 
-With `--execmode` chooses an execution mode to define how a given container will be executed. The option `--nvidia` enables access to NVIDIA GPUs (only possible if they are available).
+With `--execmode` choose an execution mode to define how a given container will be executed.
+The option `--nvidia` enables access to NVIDIA GPUs (only possible if they are available on the host machine).
 
 ```bash
 udocker setup --execmode=F1 mytensor
