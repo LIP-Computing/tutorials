@@ -37,7 +37,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker - *be anywhere*
+# `udocker` - *be anywhere*
 
 ## Part 3 - Hands On: intermediate stuff
 
@@ -58,7 +58,7 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ## I have a dockerfile!
 
-* *But udocker does not support `build` the dockerfile...*
+* *But `udocker` does not support `build` the dockerfile...*
   * Use `docker` itself in you <lap|desk>top
   * Example: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
 
@@ -90,9 +90,9 @@ docker save -o gromacs.tar gromacs
 
 ---
 
-## udocker load
+## `udocker` load
 
-You can load a tarball with udocker that is a docker image, and that you saved previously with docker:
+You can load a tarball with `udocker` that is a docker image, and that you saved previously with docker:
 
 ```bash
 udocker load -i gromacs.tar gromacs
@@ -131,7 +131,7 @@ LD_LIBRARY_PATH=:/usr/local/gromacs/lib
 
 ---
 
-## Running gromacs with udocker
+## Running gromacs with `udocker`
 
 ```bash
 udocker run grom gmx mdrun -h
@@ -164,7 +164,7 @@ WORKDIR /home
 
 ---
 
-## Environment in dockerfile is preserved in udocker container - II
+## Environment in dockerfile is preserved in `udocker` container - II
 
 Just check the `ENV` and `WORKDIR`:
 
@@ -199,17 +199,17 @@ And after that install and/or compile whatever you want
 
 Now you are inside the container and seems you are `root`:
 
-```prompt
+```bash
 dnf -y install python3 gcc-c++ python3-pip
 pip-3 install numpy matplotlib scipy
 exit
 ```
 
-You are satisfied so you exit the container, but... I want to preserve what I installed.
+You are satisfied so, you exit the container, but... I want to preserve what I installed.
 
 ---
 
-## udocker export and import
+## `udocker` export and import
 
 You can export a container into a tarball, for safekeeping:
 
@@ -249,7 +249,8 @@ wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/
 
 ## Mounting a directory in the container - II
 
-We will bind mount the directory in the `/home/user` inside the container (if this directory does not exist inside the container, then it will be created):
+We will bind mount the directory in the `/home/user` inside the container
+(if this directory does not exist inside the container, then it will be created):
 
 ```bash
 udocker run -v=$HOME/udocker-tutorial/gromacs:/home/user -w=/home/user grom /bin/bash
@@ -273,7 +274,8 @@ drwxrwxr-x 2 root root 4096 Apr  4 08:31 input
 
 ## Mounting a directory in the container - IV
 
-Inside the container - make a directory for your output, and run your favorite molecular dynamics simulation (if you want wait a few minutes to finish, will not take long):
+Inside the container - make a directory for your output, and run your favourite molecular dynamics
+simulation software, (if you want wait a few minutes to finish, will not take long):
 
 ```bash
 mkdir output
