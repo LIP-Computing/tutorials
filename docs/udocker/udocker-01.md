@@ -37,7 +37,7 @@ size: 16:9
 
 ![width:1000px](imgs/udocker-project-logos.png)
 
-# udocker 
+# `udocker`
 
 ## Part 1 - Introduction
 
@@ -82,7 +82,7 @@ Running applications across infrastructures often requires considerable effort
 
 ---
 
-## Why using containers for applications I
+## Using containers for applications I
 
 Encapsulation:
 
@@ -98,7 +98,7 @@ Efficiency:
 
 ---
 
-## Why using containers for applications II
+## Using containers for applications II
 
 Reproducibility:
 
@@ -115,74 +115,74 @@ Maintainability:
 
 ---
 
-## udocker - origin
+## `udocker` - origin
 
 * Need for a consistent portable way of running applications.
 
-  * Running aplications across different distributions and run-time environments.
+  * Running applications across different distributions and run-time environments.
 
-* udocker began to be developed in 2015 in the Indigo-DataCloud project.
+* `udocker` began to be developed in 2015 in the Indigo-DataCloud project.
 
   * Proof of concept for running docker containers as a regular user.
 
 * Focused on running scientific applications in Linux systems.
 
-  * Batch or Interative, HTC or HPC, across sites in grid infrastrutures.
+  * Batch or Interactive, HTC or HPC, across sites in grid infrastructures.
 
 ---
 
 ## Containers for batch processing - I
 
-* Challenges of running containers (docker) on batch systems?
+* Challenges of running containers (docker) on batch systems:
 
-  * Integration with the batch system (how to start/stop containers, etc) ?
+  * Integration with the batch system (how to start/stop containers, etc.).
 
-  * Respect batch system policies (such as quotas, time and resource limits) ?
+  * Respect batch system policies (such as quotas, time and resource limits).
 
-  * Respect batch system actions (job management integration delete/kill) ?
+  * Respect batch system actions (job management integration delete/kill).
 
-  * Collect accounting (tight integration) ?
+  * Collect accounting (tight integration).
 
 ---
 
 ## Containers for batch processing - II
 
 * Can we execute in a more simple way?
-  * Can we download container images?
+  * Can we download container images (for instance, from Dockerhub or other registries)?
   * Can we run without a layered filesystem?
   * Can we run without namespaces?
-  * can we run without other complex kernel functionalties ?
+  * Can we run without other complex kernel functionalities ?
   * Can we run as a regular user without privileges?
 
-* When udocker started to be developed these were major limitations
-  * Now other tools can also address at least partially these issues
-    * singularity/apptainer, podman etc
-  * Yet they depend on kernel functionalities 
-    * that may not be available everywhere
+* When `udocker` started to be developed these were major limitations:
+  * Now other tools can also address, at least partially, some of these issues.
+    * singularity/apptainer, podman etc..
+  * Yet they depend on kernel functionalities, that may not be available everywhere.
 
 ---
 
-## udocker: Introduction - I
+## `udocker`: Introduction - I
 
-* udocker can run applications encapsulated in docker containers:
-  * without using docker
-  * without requiring (root) privileges
-  * without system administrators intervention
-  * without additional system software
-  * without requiring Linux namespaces
+* `udocker` can run applications encapsulated in docker containers **Without**:
+  * Using docker.
+  * Requiring (root) privileges.
+  * System administrators intervention.
+  * Additional system software.
+  * Requiring Linux namespaces.
 
 * Everything runs in user space:
-  * as a regular user without privileges
-  * subjected to the normal process controls and accounting
-  * both in interactive or batch systems
+  * As a regular user without privileges.
+  * Subjected to the normal process controls and accounting.
+  * Both in interactive or batch systems.
 
 ---
 
-## udocker: Introduction - II
+## `udocker`: Introduction - II
 
-* udocker is open source.
+* `udocker` is open source.
 
-* Developed under the Indigo-Datacloud, DEEP Hybrid-Datacloud, EOSC-Synergy and BigHPC projects.
+* Developed under the Indigo-Datacloud, DEEP Hybrid-Datacloud, EOSC-Synergy, BigHPC
+  and DT-Geo projects.
 
 * Github repository: <https://github.com/indigo-dc/udocker>.
 
@@ -192,63 +192,62 @@ Maintainability:
 
 ---
 
-## udocker advantages: deployment I
+## `udocker` advantages: Deployment I
 
-* udocker is meant to be deployed and used by the end-user:
+* `udocker` is meant to be deployed and used by the end-user:
 
-  * Does not require privileges.
+  * Does not require root privileges.
 
   * Does not require system administrator intervention.
 
-  * All operations performed in user space.
+  * All operations can be performed in user space and in user accessible directories.
 
-  * Deployed by default in the user HOME directory.
+  * Deployed by default in the user `$HOME` directory.
 
-  * Containers are in the user HOME directory or other user chosen location.
+  * Containers are in the user `$HOME` directory or other user chosen location.
 
 ---
 
-## udocker advantages: deployment II
+## `udocker` advantages: Deployment II
 
-* udocker does not require compilation by the user:
-  * Uses Python plus some binaries.
-  * Has a minimal dependencies.
+* `udocker` does not require compilation by the user:
+  * Written in Python plus some binaries.
+  * Has a minimal set of dependencies.
   * Required binaries are provided statically compiled.
 
-
-* udocker deployment:
-  * Just copy and untar into the user home directory.
-  * Ideal to execute containers across different sites.
-  * You can deploy udocker across the system where you run.
+* `udocker` deployment:
+  * Just copy and untar into the user `$HOME` directory.
+  * Ideal to execute containers across different sites and types of resources and infrastructures.
+  * You can deploy `udocker` on the system where you run.
 
 ---
 
-## udocker advantages: execution I
+## `udocker` advantages: Execution I
 
-* udocker integrates several execution engines:
-  * Allows execution using several different approaches.
+* `udocker` integrates several execution engines:
+  * Allows execution using multiple different approaches.
   * Allows execution with and without using Linux namespaces.
-  * Integrates several tools suitable to execute containers
+  * Integrates several tools suitable to execute containers.
   * Makes these tools easier to use across systems.
 
-* udocker can be submitted together with a batch job:
-  * Just fetch or ship the udocker tarball with the job.
+* `udocker` can be submitted together with a batch job:
+  * (Just fetch or ship the `udocker` tarball with the job.)
 
 ---
 
-## udocker advantages: execution II
+## `udocker` advantages: Execution II
 
-* udocker user interface:
-  * Commands, syntax and logic are similar to docker.
+* `udocker` user interface:
+  * Commands, syntax and logic are similar or even the same as docker CLI.
 
-* udocker empowers users to use containers:
+* `udocker` empowers users to use containers:
   * Ideal for heterogeneous computing environments.
 
 ---
 
-## udocker: Command Line Interface
+## `udocker`: Command Line Interface
 
-udocker is mainly a run-time to execute docker containers:
+`udocker` is mainly a run-time to execute docker containers:
 
 |          |           |         |         |        |
 | -------- | --------- | ------- | ------- | ------ |
@@ -259,23 +258,23 @@ udocker is mainly a run-time to execute docker containers:
 | showconf | unprotect | verify  | version | create |
 | run      | save      |         |         |        |
 
-By design udocker does not have container creation functionality.
+By design `udocker` does not have container creation functionality.
 Containers can be created with other tools.
 
 ---
 
 <!-- _class: lead -->
 
-# udocker: How does it work...
+# `udocker`: How does it work...
 
 ---
 
 ## Programing languages and OS
 
-* udocker is implemented:
+* `udocker` is implemented:
   * Python
 
-* the engines and other tools shipped with udocker are binaries:
+* the engines and other tools shipped with `udocker` are binaries:
   * C , C++, go
 
 * Can run:
@@ -287,112 +286,110 @@ Containers can be created with other tools.
 
 ## Components - I
 
-* The udocker Python code (this is what you need to fetch)
-  * Command line interface
-  * Dockerhub API
-  * Container and image handling: import, load, save and export
-  * Local images repository
-  * Interface with the execution engines
+* The `udocker` Python code (this is what you need to fetch)
+  * Command line interface.
+  * Dockerhub API.
+  * Container and image handling: import, load, save and export.
+  * Local images repository.
+  * Interface with the execution engines.
 
 ---
 
 ## Components - II
 
-* udocker tools
-  * Pulled and installed upon first invocation of udocker
-  * Set of binary executables and libraries that implement the engines
-  * Supporting different OSes and hardware architectures
-  * Executables: proot (Pn), runc (Rn), crun (Rn) and patchelf (Fn)
-  * Libraries: fakechroot (Fn)
+* `udocker` tools:
+  * Pulled and installed upon first invocation of `udocker`.
+  * Set of binary executables and libraries that implement the engines.
+  * Supporting different OSes and hardware architectures.
+  * Executables: proot (Pn), runc (Rn), crun (Rn) and patchelf (Fn).
+  * Libraries: fakechroot (Fn).
 
 ---
 
-## udocker in 4 steps - I
+## `udocker` in 4 steps - I
 
 Step 1 - Installation:
 
-* Get the udocker tarball using curl, wget or a browser.
-
+* Get the `udocker` tarball using `curl`, `wget` or a browser.
 * Extract the content of the tarball.
-
 * No need to compile software.
-
-* The first time udocker is run it will fetch the required binaries.
+* The first time `udocker` is run it will fetch the required binaries.
 
 ---
 
-## udocker in 4 steps - II
+## `udocker` in 4 steps - II
 
 Step 2 - Get container images:
 
-* Pull containers from docker compatible repositories.
-  * udocker pull
-* Load and save in docker and OCI formats.
-  * udocker load
-  * udocker save
-* Import and export tarballs.
-  * udocker import
-  * udocker export
+* Pull containers from docker compatible repositories.:
+  * `udocker pull`
+* Load and save in docker and OCI formats:
+  * `udocker load`
+  * `udocker save`
+* Import and export tarballs:
+  * `udocker import`
+  * `udocker export`
 
 ---
 
-## udocker in 4 steps - III
+## `udocker` in 4 steps - III
 
 Step 3 - Create from images:
 
-* Create the container directory tree from the image.
-  * udocker create
+* Create the container directory tree from the image:
+  * `udocker create`
 
 Step 4 - Execute containers:
 
-* Run using several execution methods.
-  * udocker run
+* Run using several execution methods:
+  * `udocker run`
 
 ---
 
-## udocker in 4 steps - IV
+## `udocker` in 4 steps - IV
 
-The steps to fetch and execute containers are important.
+The steps to fetch and execute containers are important:
 
-* udocker pull IMAGE
-* udocker create IMAGE
-* udocker run CONTAINER-ID-OR-NAME
-* udocker run CONTAINER-ID-OR-NAME
-* udocker run CONTAINER-ID-OR-NAME
+* `udocker pull <IMAGE>`
+* `udocker create <IMAGE>`
+* `udocker run <CONTAINER-ID-OR-NAME>`
+* `udocker run <CONTAINER-ID-OR-NAME>`
+* `udocker run <CONTAINER-ID-OR-NAME>`
 
 The created container can be run as many times as you wish.
-* You may call `udocker run` directly but this will create a new CONTAINER everytime 
-* Will be slow and occupy much more space
+
+* You may call `udocker run` directly but this will create a new CONTAINER every-time.
+* Will be slow and occupy much more space.
 
 ---
 
-## udocker is an integration tool
+## `udocker` is an integration tool
 
 ![w:1100px](imgs/udocker-integration.png)
 
 ---
 
-## udocker: pull - Images I
+## `udocker`: pull - Images I
 
 * Docker images are composed of:
-  * metadata describing the images content and how to run
-  * multiple file-system layers stored as tarballs
+  * Metadata describing the images content and how to run.
+  * Multiple file-system layers stored as tarballs.
 
-* udocker pulls the metadata and layers:
-  * using the DockerHub REST API.
+* `udocker` pulls the metadata and layers:
+  * Using the DockerHub REST API.
   * Image metadata is parsed to identify the layers.
   * Layers are stored in the user home directory under `${UDOCKER_DIR}/.udocker/layers`
   * Image information with links to the layers is under `${UDOCKER_DIR}/.udocker/repos`
 
 ---
 
-## udocker: pull - Images II
+## `udocker`: pull - Images II
 
 ![bg right:50% w:600px](imgs/udocker-pull.png)
 
 ---
 
-## udocker: Create containers - I
+## `udocker`: Create containers - I
 
 * Containers are produced from the images in a process called flattening.
   * Each image layer is extracted on top of the previous.
@@ -400,36 +397,34 @@ The created container can be run as many times as you wish.
   * Protection changes are applied to make files accessible.
   * The resulting directory tree is stored under `${UDOCKER_DIR}/.udocker/containers`
 
-* Accessing files is easy 
-  * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`
-* The create can be slow depending on underlying filesystem (e.g. Lustre, GPFS)
-  * Alternative use the /tmp or some partition local to the host
+* Accessing files is easy:
+  * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`.
+* The creation can be slow depending on underlying filesystem (e.g. Lustre, GPFS):
+  * Alternative use the /tmp or some partition local to the host.
 
 ---
 
-## udocker: Create containers - II
+## `udocker`: Create containers - II
 
 ![w:1100px](imgs/udocker-create.png)
 
 ---
 
-## udocker: Run container
+## `udocker`: Run container
 
 ![w:1100px](imgs/udocker-container.png)
 
 ---
 
-## udocker: Execution engines I
+## `udocker`: Execution engines I
 
 * Like in other container tools execution is achieved by providing `chroot` like functionality.
-
-* udocker supports several techniques to achieve the equivalent to a chroot without using privileges.
-
+* `udocker` supports several techniques to achieve the equivalent to a chroot without using privileges.
 * These techniques can be selected per container via execution modes implemented by execution engines.
 
 ---
 
-## udocker: Execution engines II
+## `udocker`: Execution engines II
 
 | Mode  | Base        | Description |
 | :---: | :---------: | :---------: |
@@ -484,42 +479,42 @@ The created container can be run as many times as you wish.
 | F2    | Fakechroot  | Same as F1 |
 | F3    | Fakechroot  | Requires shared library compiled against same libc as in container. Binary executables and libraries  get tied to the user HOME pathname |
 | F4    | Fakechroot  | Same as F3. Executables and libraries can be compiled or added dynamically |
-| S1    | Singularity | Not part of udocker must already exist on the system, may use user namespaces or chroot |
+| S1    | Singularity | Not part of `udocker` must already exist on the system, may use user namespaces or chroot |
 
 ---
 
 <!-- _class: lead -->
 
-# udocker: Running applications ...
+# `udocker`: Running applications ...
 
 ---
 
-## udocker & Lattice QCD
+## `udocker` & Lattice QCD
 
 OpenQCD is a very advanced code to run lattice simulations
 
 Scaling performance as a function of the cores for the computation of application of the Dirac operator to a spinor field.
 
-Using OpenMPI, udocker in P1 mode
+Using OpenMPI, `udocker` in P1 mode
 
 ![bg right:40% w:550px](imgs/scaling.png)
 
 ---
 
-## udocker & udocker & Molecular dynamics
+## `udocker` & `udocker` & Molecular dynamics
 
 Gromacs is widely used both in biochemical and non-biochemical systems. 
 
 In this comparison Gromacs was run using CUDA and OpenMP
 
-* udocker using P mode has lower performance with Gromacs
-* udocker using F mode has same or better performance as Docker.
+* `udocker` using P mode has lower performance with Gromacs
+* `udocker` using F mode has same or better performance as Docker.
 
 ![bg right:50% w:700px](imgs/ratio-gromacs.png)
 
 ---
 
-## udocker & Phenomenology
+## `udocker` & Phenomenology
 
 MasterCode connects several complex codes. Hard to deploy. Scanning through large parameter spaces. High Throughput Computing.
 
@@ -556,11 +551,11 @@ C++, Fortran, many authors, legacy code. Performance Degradation (*udocker in P1
 
 ## Other container technologies
 
-* Singularity (LBL) - udocker currently supports it as execution mode
+* Singularity (LBL) - `udocker` currently supports it as execution mode
 
-* Charliecloud (LANL) - devels contacted Jorge: can udocker have a mode for it?
-  "Merge" the udocker, CLI functionality with underlying Charliecloud engine?
+* Charliecloud (LANL) - devels contacted Jorge: can `udocker` have a mode for it?
+  "Merge" the `udocker`, CLI functionality with underlying Charliecloud engine?
 
-* Shifter (NERSC) - at the moment no plans on any type of usage/integration in udocker.
+* Shifter (NERSC) - at the moment no plans on any type of usage/integration in `udocker`.
 
 * Podman (RedHat)
