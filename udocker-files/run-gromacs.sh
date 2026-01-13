@@ -6,7 +6,7 @@
 #SBATCH --error=gromacs-%j.err
 
 export TUT_DIR=$HOME/udocker-tutorial
-export PATH=$HOME/udocker-1.3.10/udocker:$PATH
+export PATH=$HOME/udocker-1.3.17/udocker:$PATH
 export UDOCKER_DIR=$TUT_DIR/.udocker
 export OUT_NAME=output/ud-tutorial
 export TRR=${OUT_NAME}.trr

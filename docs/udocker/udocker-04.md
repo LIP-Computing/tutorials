@@ -209,7 +209,7 @@ udocker images
 
 REPOSITORY
 gromacs:latest    .
-tensorflow/tensorflow:2.11.0-gpu    .
+tensorflow/tensorflow:2.20.0-gpu    .
 ```
 
 Check in the filesystem:
@@ -241,7 +241,7 @@ Prepare input dir and file
 ```bash
 mkdir -p $HOME/udocker-tutorial/gromacs/input $HOME/udocker-tutorial/gromacs/output
 cd $HOME/udocker-tutorial/gromacs/input/
-wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/md.tpr
+wget --no-check-certificate https://download.a.acnca.pt/webdav/gromacs-input/md.tpr
 ```
 
 ```bash
