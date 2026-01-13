@@ -50,6 +50,21 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 
 ---
 
+## Recap from last slide deck: udocker Installation
+
+* The end user can download and execute `udocker` without system administrator intervention.
+* Install from a released version:
+  * Download a release tarball from <https://github.com/indigo-dc/udocker/releases>:
+
+```bash
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.17/udocker-1.3.17.tar.gz
+tar zxvf udocker-1.3.17.tar.gz
+export PATH=`pwd`/udocker-1.3.17/udocker:$PATH
+udocker install
+```
+
+---
+
 <!-- _class: lead -->
 
 # Importing and exporting, loading and saving: images and containers
@@ -65,10 +80,10 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 ```bash
 git clone https://github.com/mariojmdavid/docker-gromacs-cuda.git
 cd docker-gromacs-cuda/gromacs-cpu/
-docker build --build-arg gromacs_ver=2023 -t gromacs -f Dockerfile-cpu .
+docker build --build-arg gromacs_ver=2025.4 -t gromacs-openmp-2005.4 -f Dockerfile-cpu .
 ```
 
-* (Will take quite awhile)
+* (Will take quite awhile, 30 minutes on my desktop)
 
 ---
 
@@ -78,14 +93,14 @@ After you build the image with docker:
 
 ```bash
 docker images
-REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
-gromacs      latest    8473080f1963   3 minutes ago   376MB
+REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
+gromacs-openmp-2005.4   latest    e0228510f76f   22 minutes ago   456MB
 ```
 
 Save the image with `docker` to a tarball:
 
 ```bash
-docker save -o gromacs.tar gromacs
+docker save -o gromacs.tar gromacs-openmp-2005.4
 ```
 
 ---
@@ -95,7 +110,7 @@ docker save -o gromacs.tar gromacs
 You can load a tarball with `udocker` that is a docker image, and that you saved previously with docker:
 
 ```bash
-udocker load -i gromacs.tar gromacs
+udocker load -i gromacs.tar gromacs-openmp-2005.4
 ```
 
 And now you can check several things:
@@ -103,7 +118,7 @@ And now you can check several things:
 ```bash
 udocker images
 REPOSITORY
-gromacs:latest                                               .
+gromacs-openmp-2005.4:latest                                               .
 
 ```
 
@@ -112,11 +127,11 @@ gromacs:latest                                               .
 ## Create a container and run it
 
 ```bash
-udocker create --name=grom gromacs
+udocker create --name=grom gromacs-openmp-2005.4
 
 udocker ps
 CONTAINER ID                         P M NAMES              IMAGE               
-e2e014d9-9770-3fb5-a4a9-098a95371adf . W ['grom']           gromacs:latest      
+e2e014d9-9770-3fb5-a4a9-098a95371adf . W ['grom']           gromacs-openmp-2005.4:latest      
 
 udocker run grom env
  ****************************************************************************** 
@@ -126,7 +141,7 @@ udocker run grom env
  ****************************************************************************** 
  executing: env
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/gromacs/bin
-LD_LIBRARY_PATH=:/usr/local/gromacs/lib
+LD_LIBRARY_PATH=/usr/local/gromacs/lib
 ```
 
 ---
@@ -135,16 +150,24 @@ LD_LIBRARY_PATH=:/usr/local/gromacs/lib
 
 ```bash
 udocker run grom gmx mdrun -h
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING ad754a36-b951-38da-a116-a05fb572d7ca                * 
+ *                                                                            * 
  ****************************************************************************** 
  executing: gmx
-                       :-) GROMACS - gmx mdrun, 2022 (-:
+                      :-) GROMACS - gmx mdrun, 2025.4 (-:
+
 Executable:   /usr/local/gromacs/bin/gmx
 Data prefix:  /usr/local/gromacs
 Working dir:  /home
 Command line:
   gmx mdrun -h
+
 SYNOPSIS
 gmx mdrun [-s [<.tpr>]] [-cpi [<.cpt>]] [-table [<.xvg>]] [-tablep [<.xvg>]]
+...
 ```
 
 ---
@@ -154,11 +177,13 @@ gmx mdrun [-s [<.tpr>]] [-cpi [<.cpt>]] [-table [<.xvg>]] [-tablep [<.xvg>]]
 You can check the dockerfile: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
 
 ```dockerfile
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL maintainer="Mario David <mariojmdavid@gmail.com>"
+ARG gromacs_ver
+RUN apt-get update \
 ...
 ENV PATH=$PATH:/usr/local/gromacs/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/gromacs/lib
+ENV LD_LIBRARY_PATH=/usr/local/gromacs/lib
 WORKDIR /home
 ```
 
@@ -172,7 +197,7 @@ Just check the `ENV` and `WORKDIR`:
 udocker run grom env
 ...
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/gromacs/bin
-LD_LIBRARY_PATH=:/usr/local/gromacs/lib
+LD_LIBRARY_PATH=/usr/local/gromacs/lib
 
 udocker run grom pwd
 ...
@@ -221,10 +246,24 @@ Now you can import this container into an image with a given tag (empty tag defa
 
 ```bash
 udocker import mypython.tar mypython:v1.0
-udocker images
+```
+
+---
+
+## `udocker` list images long format
+
+```bash
+udocker images -l
 REPOSITORY
 ...
-mypython:v1.0                                                .
+almalinux:9    .
+ /home/david/.udocker/repos/almalinux/9
+    /sha256:c9bcec02f046478f7ecf78b9568b666cc3b63a2effe339b1022e3b550faca3e8 (0 MB)
+    /sha256:08d3c44badca17b0b810e53779272d43e9542081ae05f516071ae4d5d2369271 (67 MB)
+mypython:v1.0    .
+ /home/david/.udocker/repos/mypython/v1.0
+    /9e1605be9a6064f41fe0ee83c6ad3cd644d77d5b3c8ff45af4157719ccd627a3.json (0 MB)
+    /9e1605be9a6064f41fe0ee83c6ad3cd644d77d5b3c8ff45af4157719ccd627a3.layer (780 MB)
 ```
 
 ---
@@ -237,12 +276,13 @@ mypython:v1.0                                                .
 
 ## Mounting a directory in the container - I
 
-Assume you have a directory you want to use inside the container, and grab yourself a tpr file:
+Assume you have a directory you want to use inside the container.
+First grab yourself a tpr file:
 
 ```bash
 mkdir -p $HOME/udocker-tutorial/gromacs/input
 cd $HOME/udocker-tutorial/gromacs/input/
-wget --no-check-certificate https://download.ncg.ingrid.pt/webdav/gromacs-input/md.tpr
+wget --no-check-certificate https://download.a.acnca.pt/webdav/gromacs-input/md.tpr
 ```
 
 ---
