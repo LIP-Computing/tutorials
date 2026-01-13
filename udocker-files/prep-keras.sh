@@ -6,7 +6,7 @@
 #SBATCH --gres=gpu
 
 export TUT_DIR=$HOME/udocker-tutorial
-export PATH=$HOME/udocker-1.3.10/udocker:$PATH
+export PATH=$HOME/udocker-1.3.17/udocker:$PATH
 cd $TUT_DIR
 export UDOCKER_DIR=$TUT_DIR/.udocker
 module load python
@@ -20,7 +20,7 @@ echo ">> List images"
 udocker images
 echo
 echo ">> Create container"
-udocker create --name=tf_gpu tensorflow/tensorflow:2.11.0-gpu
+udocker create --name=tf_gpu tensorflow/tensorflow:2.20.0-gpu
 echo
 echo ">> Set nvidia mode"
 udocker setup --nvidia --force tf_gpu

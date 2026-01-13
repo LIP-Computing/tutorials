@@ -55,7 +55,7 @@ Mario David <david@lip.pt>, Jorge Gomes <jorge@lip.pt>
 Access the ACNCA (former INCD) advanced computing facility at Lisbon using ssh:
 
 ```bash
-ssh -l <username> cirrus.a.incd.pt
+ssh -l <username> cirrus.a.acnca.pt
 module load python
 ```
 
@@ -63,16 +63,16 @@ module load python
 * Install from a released version: <https://github.com/indigo-dc/udocker/releases>:
 
 ```bash
-wget https://github.com/indigo-dc/udocker/releases/download/1.3.10/udocker-1.3.10.tar.gz
-tar zxvf udocker-1.3.10.tar.gz
-export PATH=$HOME/udocker-1.3.10/udocker:$PATH
+wget https://github.com/indigo-dc/udocker/releases/download/1.3.17/udocker-1.3.17.tar.gz
+tar zxvf udocker-1.3.17.tar.gz
+export PATH=$HOME/udocker-1.3.17/udocker:$PATH
 ```
 
 ---
 
 ## In the beginning - I
 
-Make a directory for the tutorial and set en variable of `udocker` to that dir:
+Make a directory for the tutorial and set the environment variable of `udocker` to that dir:
 
 ```bash
 mkdir udocker-tutorial
@@ -111,7 +111,7 @@ cp -r tutorials/udocker-files .
 ## Pull a nice image
 
 ```bash
-udocker pull tensorflow/tensorflow:2.11.0-gpu
+udocker pull tensorflow/tensorflow:2.20.0-gpu
 ```
 
 First we create and prepare the container, later we run the actual job, the creation of the container
@@ -139,7 +139,7 @@ Check job status with `squeue`
 Creating a container:
 
 ```bash
-udocker create --name=tf_gpu tensorflow/tensorflow:2.11.0-gpu
+udocker create --name=tf_gpu tensorflow/tensorflow:2.20.0-gpu
 ```
 
 Set the nvidia mode:
