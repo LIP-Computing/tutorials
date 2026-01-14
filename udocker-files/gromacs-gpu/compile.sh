@@ -9,7 +9,7 @@ tar zxvf gromacs-${gromacs_ver}.tar.gz
 cd gromacs-${gromacs_ver}
 mkdir -p /tmp/gromacs-${gromacs_ver}/build
 cd /tmp/gromacs-${gromacs_ver}/build
-cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_OPENMP=ON -DGMX_GPU=CUDA
+cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_OPENMP=ON -DGMX_GPU=CUDA -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
 make \
 make install \
 rm -rf /tmp/gromacs-${gromacs_ver}*
