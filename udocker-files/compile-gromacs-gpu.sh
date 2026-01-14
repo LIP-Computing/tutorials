@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=run_gromacs
+#SBATCH --job-name=compile_gromacs
 #SBATCH --ntasks=64
 #SBATCH --partition=gpu
-#SBATCH --output=gromacs-%j.out
-#SBATCH --error=gromacs-%j.err
+#SBATCH --output=gromacs-compile-%j.out
+#SBATCH --error=gromacs-compile-%j.err
 
 export TUT_DIR=$HOME/udocker-tutorial
 export GROM_INPUT=$TUT_DIR/udocker-files/gromacs-gpu
