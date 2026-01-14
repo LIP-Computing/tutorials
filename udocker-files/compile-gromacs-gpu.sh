@@ -6,6 +6,7 @@
 #SBATCH --error=gromacs-%j.err
 
 export TUT_DIR=$HOME/udocker-tutorial
+export GROM_INPUT=$TUT_DIR/udocker-files/gromacs-gpu
 export PATH=$HOME/udocker-1.3.17/udocker:$PATH
 export UDOCKER_DIR=$TUT_DIR/.udocker
 export OUT_NAME=output/ud-tutorial
@@ -13,4 +14,4 @@ module load python
 cd $TUT_DIR
 
 echo "###############################"
-udocker run -v=$TUT_DIR/gromacs-gpu:/home/user -w=/home/user grom_gpu /home/user/compile.sh
+udocker run -v=$GROM_INPUT:/home/user -w=/home/user grom_gpu /home/user/compile.sh
