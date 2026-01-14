@@ -13,4 +13,4 @@ module load python
 cd $TUT_DIR
 
 echo "###############################"
-udocker run -v=$TUT_DIR/gromacs:/home/user -w=/home/user grom_gpu /home/user/compile.sh
+udocker run -v=$TUT_DIR/gromacs-gpu:/home/user -w=/home/user grom_gpu /home/user/compile.sh
