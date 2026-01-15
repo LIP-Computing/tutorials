@@ -1,6 +1,6 @@
 #!/bin/bash
 PATH=$PATH:/usr/local/gromacs/bin
-LD_LIBRARY_PATH=/usr/local/gromacs/lib
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/gromacs/lib
 gromacs_ver=2025.4
 
 apt update
@@ -15,4 +15,5 @@ cd /tmp/gromacs-${gromacs_ver}/build
 cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_OPENMP=ON -DGMX_GPU=CUDA -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
 make
 make install
+cd /home/user
 rm -rf /tmp/gromacs-${gromacs_ver}*
