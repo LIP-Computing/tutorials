@@ -79,8 +79,11 @@ udocker install
 
 ```bash
 git clone https://github.com/mariojmdavid/docker-gromacs-cuda.git
-cd docker-gromacs-cuda/gromacs-cpu/
+cd docker-gromacs-cuda/gromacs/
 docker build --build-arg gromacs_ver=2025.4 -t gromacs-openmp-2005.4 -f Dockerfile-cpu .
+
+## Or you can build instead the GPU version
+docker build --build-arg gromacs_ver=2025.4 -t gromacs-gpu-2005.4 -f Dockerfile-gpu .
 ```
 
 * (Will take quite awhile, 30 minutes on my desktop)

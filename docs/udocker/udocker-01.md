@@ -105,6 +105,12 @@ Reproducibility:
 * The whole application and run-time environment is in the container.
 * Can be easily stored for later replay, reuse and preservation.
 
+![bg right:40% w:500px](imgs/containers-arch.png)
+
+---
+
+## Using containers for applications III
+
 Maintainability:
 
 * Easier application maintenance, distribution and deployment.
@@ -154,6 +160,10 @@ Maintainability:
   * Can we run without other complex kernel functionalities ?
   * Can we run as a regular user without privileges?
 
+---
+
+## Containers for batch processing - III
+
 * When `udocker` started to be developed these were major limitations:
   * Now other tools can also address, at least partially, some of these issues.
     * singularity/apptainer, podman etc..
@@ -188,7 +198,7 @@ Maintainability:
 
 * Documentation: <https://indigo-dc.github.io/udocker/>.
 
-![bg right:40% w:500px](imgs/udocker-doc.png)
+![bg right:40% w:450px](imgs/udocker-doc.png)
 
 ---
 
@@ -385,7 +395,7 @@ The created container can be run as many times as you wish.
 
 ## `udocker`: pull - Images II
 
-![bg right:50% w:600px](imgs/udocker-pull.png)
+![w:600px](imgs/udocker-pull.png)
 
 ---
 
@@ -399,6 +409,7 @@ The created container can be run as many times as you wish.
 
 * Accessing files is easy:
   * just cd into `${UDOCKER_DIR}/.udocker/containers/CONTAINER-ID/ROOT`.
+
 * The creation can be slow depending on underlying filesystem (e.g. Lustre, GPFS):
   * Alternative use the /tmp or some partition local to the host.
 
@@ -513,7 +524,7 @@ In this comparison Gromacs was run using CUDA and OpenMP:
 
 ---
 
-## `udocker` & Phenomenology
+## `udocker` & Phenomenology I
 
 MasterCode connects several complex codes:
 
@@ -521,6 +532,10 @@ MasterCode connects several complex codes:
 * Scanning through large parameter spaces.
 * High Throughput Computing.
 * C++, Fortran, many authors, legacy code.
+
+---
+
+## `udocker` & Phenomenology II
 
 Performance Degradation (*udocker in P1 mode*)
   
