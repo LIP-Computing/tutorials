@@ -194,11 +194,12 @@ Epoch 5/5
 
 ## And now Gromacs
 
-* I have a tarball that I built with docker from a Dockerfile in part 3 of this tutorial: `gromacs.tar`.
+* I have a tarball that I built with docker from a Dockerfile in part 3 of this tutorial: `gromacs-gpu.tar`.
+  It was built from a base docker image nvidia/cuda12.6 and compiled to support GPUs.
 * It was saved with:
-  * `docker save -o gromacs.tar gromacs`
+  * `docker save -o gromacs-gpu.tar gromacs-gpu-2025.4`
 * Now we will load the tarball with `udocker`:
-  * `udocker load -i gromacs.tar gromacs`
+  * `udocker load -i gromacs-gpu.tar gromacs-gpu-2025.4`
 
 ---
 
@@ -208,7 +209,7 @@ Epoch 5/5
 udocker images
 
 REPOSITORY
-gromacs:latest    .
+gromacs-gpu-2025.4:latest    .
 tensorflow/tensorflow:2.20.0-gpu    .
 ```
 
@@ -219,7 +220,7 @@ ls -al $HOME/udocker-tutorial/.udocker/repos
 total 16
 drwxr-x---+ 4 david csys 4096 jan 20 17:38 .
 drwxr-x---+ 8 david csys 4096 jan 20 16:54 ..
-drwxr-x---+ 3 david csys 4096 jan 20 17:38 gromacs
+drwxr-x---+ 3 david csys 4096 jan 20 17:38 gromacs-gpu-2025.4
 drwxr-x---+ 3 david csys 4096 jan 20 17:04 tensorflow
 ```
 
@@ -228,8 +229,8 @@ drwxr-x---+ 3 david csys 4096 jan 20 17:04 tensorflow
 ## Submit job to create container
 
 ```bash
-cd udocker-files; chmod 755 prep-gromacs.sh # if needed
-sbatch prep-gromacs.sh
+cd udocker-files; chmod 755 prep-gromacs-gpu.sh # if needed
+sbatch prep-gromacs-gpu.sh
 ```
 
 ---
@@ -245,7 +246,7 @@ wget --no-check-certificate https://download.a.acnca.pt/webdav/gromacs-input/md.
 ```
 
 ```bash
-sbatch run-gromacs.sh
+sbatch run-gromacs-gpu.sh
 ```
 
 ---
