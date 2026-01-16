@@ -2,6 +2,7 @@
 #SBATCH --job-name=prep_gromacs
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu
+#SBATCH --gres=gpu
 #SBATCH --output=gromacs-gpu-prep-%j.out
 #SBATCH --error=gromacs-gpu-prep-%j.err
 
@@ -20,7 +21,7 @@ echo ">> List images"
 udocker images
 echo
 echo ">> Create container"
-udocker create --name=grom_gpu nvidia/cuda:13.1.0-devel-ubuntu24.04
+udocker create --name=grom_gpu gromacs-gpu-2025.4
 echo
 echo ">> Set nvidia mode"
 udocker setup --nvidia --force grom_gpu

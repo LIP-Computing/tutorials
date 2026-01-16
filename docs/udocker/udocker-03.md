@@ -75,18 +75,18 @@ udocker install
 
 * *But `udocker` does not support `build` the dockerfile...*
   * Use `docker` itself in you <lap|desk>top
-  * Example: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
+  * Example: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs/Dockerfile-gpu>
 
 ```bash
 git clone https://github.com/mariojmdavid/docker-gromacs-cuda.git
 cd docker-gromacs-cuda/gromacs/
-docker build --build-arg gromacs_ver=2025.4 -t gromacs-openmp-2005.4 -f Dockerfile-cpu .
+docker build --build-arg gromacs_ver=2025.4 -t gromacs-openmp-2025.4 -f Dockerfile-cpu .
 
 ## Or you can build instead the GPU version
 docker build --build-arg gromacs_ver=2025.4 -t gromacs-gpu-2005.4 -f Dockerfile-gpu .
 ```
 
-* (Will take quite awhile, 30 minutes on my desktop)
+* (Will take quite awhile, 30+ minutes on my desktop)
 
 ---
 
@@ -96,14 +96,14 @@ After you build the image with docker:
 
 ```bash
 docker images
-REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
-gromacs-openmp-2005.4   latest    e0228510f76f   22 minutes ago   456MB
+REPOSITORY              TAG                        IMAGE ID       CREATED         SIZE
+gromacs-gpu-2025.4      latest                     9aabe656c32e   5 hours ago     7.46GB
 ```
 
 Save the image with `docker` to a tarball:
 
 ```bash
-docker save -o gromacs.tar gromacs-openmp-2005.4
+docker save -o gromacs-gpu.tar gromacs-gpu-2025.4
 ```
 
 ---
@@ -113,7 +113,7 @@ docker save -o gromacs.tar gromacs-openmp-2005.4
 You can load a tarball with `udocker` that is a docker image, and that you saved previously with docker:
 
 ```bash
-udocker load -i gromacs.tar gromacs-openmp-2005.4
+udocker load -i gromacs-gpu.tar gromacs-gpu-2025.4
 ```
 
 And now you can check several things:
@@ -121,7 +121,7 @@ And now you can check several things:
 ```bash
 udocker images
 REPOSITORY
-gromacs-openmp-2005.4:latest                                               .
+gromacs-gpu-2025.4:latest                                               .
 
 ```
 
@@ -130,13 +130,13 @@ gromacs-openmp-2005.4:latest                                               .
 ## Create a container and run it
 
 ```bash
-udocker create --name=grom gromacs-openmp-2005.4
+udocker create --name=grom_gpu gromacs-gpu-2025.4
 
 udocker ps
 CONTAINER ID                         P M NAMES              IMAGE               
-e2e014d9-9770-3fb5-a4a9-098a95371adf . W ['grom']           gromacs-openmp-2005.4:latest      
+e2e014d9-9770-3fb5-a4a9-098a95371adf . W ['grom_gpu']       gromacs-gpu-2025.4:latest      
 
-udocker run grom env
+udocker run grom_gpu env
  ****************************************************************************** 
  *                                                                            * 
  *               STARTING e2e014d9-9770-3fb5-a4a9-098a95371adf                * 
@@ -152,7 +152,7 @@ LD_LIBRARY_PATH=/usr/local/gromacs/lib
 ## Running gromacs with `udocker`
 
 ```bash
-udocker run grom gmx mdrun -h
+udocker run grom_gpu gmx mdrun -h
  
  ****************************************************************************** 
  *                                                                            * 
@@ -177,7 +177,7 @@ gmx mdrun [-s [<.tpr>]] [-cpi [<.cpt>]] [-table [<.xvg>]] [-tablep [<.xvg>]]
 
 ## Environment in dockerfile is preserved - I
 
-You can check the dockerfile: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs-cpu/Dockerfile-cpu>
+You can check the dockerfile: <https://github.com/mariojmdavid/docker-gromacs-cuda/blob/master/gromacs/Dockerfile-cpu>
 
 ```dockerfile
 FROM ubuntu:24.04
@@ -197,12 +197,12 @@ WORKDIR /home
 Just check the `ENV` and `WORKDIR`:
 
 ```bash
-udocker run grom env
+udocker run grom_gpu env
 ...
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/gromacs/bin
 LD_LIBRARY_PATH=/usr/local/gromacs/lib
 
-udocker run grom pwd
+udocker run grom_gpu pwd
 ...
 /home
 ```
@@ -296,7 +296,7 @@ We will bind mount the directory in the `/home/user` inside the container
 (if this directory does not exist inside the container, then it will be created):
 
 ```bash
-udocker run -v=$HOME/udocker-tutorial/gromacs:/home/user -w=/home/user grom /bin/bash
+udocker run -v=$HOME/udocker-tutorial/gromacs:/home/user -w=/home/user grom_gpu /bin/bash
 ```
 
 ---
